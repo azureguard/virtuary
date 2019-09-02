@@ -14,7 +14,7 @@ import com.virtuary.app.databinding.FragmentSignUpBinding
 /**
  * Fragment for the starting screen of the app
  */
-class SignupFragment : Fragment() {
+class SignUpFragment : Fragment() {
 
     private lateinit var viewModel: SignUpViewModel
 

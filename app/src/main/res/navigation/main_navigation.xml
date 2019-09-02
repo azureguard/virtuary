@@ -24,7 +24,7 @@
             tools:layout="@layout/fragment_login"/>
     <fragment
             android:id="@+id/signupFragment"
-            android:name="com.virtuary.app.screens.signUp.SignupFragment"
+            android:name="com.virtuary.app.screens.signUp.SignUpFragment"
             android:label="SignupFragment"
             tools:layout="@layout/fragment_sign_up"/>
 </navigation>
