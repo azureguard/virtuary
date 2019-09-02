@@ -4,7 +4,9 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+                name="signUpViewModel"
+                type="com.virtuary.app.screens.signUp.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,6 +37,8 @@
                 android:layout_marginEnd="32dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:text="@={signUpViewModel.name}"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -49,6 +53,7 @@
                 android:ems="10"
                 android:inputType="textEmailAddress"
                 android:textSize="24sp"
+                android:text="@={signUpViewModel.email}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/email_text" />
@@ -78,6 +83,7 @@
                 android:ems="10"
                 android:inputType="textPassword"
                 android:textSize="24sp"
+                android:text="@={signUpViewModel.password}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -95,6 +101,7 @@
                 android:textAllCaps="false"
                 android:textColorLink="@color/black_overlay"
                 android:textSize="18sp"
+                android:onClick="@{() -> signUpViewModel.onClick()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

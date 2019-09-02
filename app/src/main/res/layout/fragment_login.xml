@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+                name="loginViewModel"
+                type="com.virtuary.app.screens.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,11 +38,12 @@
                 android:layout_marginEnd="32dp"
                 android:ems="10"
                 android:inputType="textEmailAddress"
+                android:text="@={loginViewModel.email}"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/password_text" />
+                app:layout_constraintTop_toBottomOf="@+id/email_text" />
 
         <TextView
                 android:id="@+id/password_text"
@@ -54,7 +58,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login_password_edit" />
+                app:layout_constraintTop_toBottomOf="@+id/login_email_edit" />
 
         <EditText
                 android:id="@+id/login_password_edit"
@@ -65,10 +69,12 @@
                 android:layout_marginEnd="32dp"
                 android:ems="10"
                 android:inputType="textPassword"
+                android:text="@={loginViewModel.password}"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email_text" />
+                app:layout_constraintTop_toBottomOf="@+id/password_text" />
 
         <Button
                 android:id="@+id/login_button"
@@ -78,13 +84,14 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
                 android:background="@color/colorPrimary"
+                android:onClick="@{() -> loginViewModel.onClick()}"
                 android:text="@string/login"
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login_email_edit" />
+                app:layout_constraintTop_toBottomOf="@+id/login_password_edit" />
 
         <TextView
                 android:id="@+id/forgot_password"

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentLoginBinding
 
@@ -15,11 +16,20 @@ import com.virtuary.app.databinding.FragmentLoginBinding
  */
 class LoginFragment : Fragment() {
 
+    private lateinit var viewModel: LoginViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         val binding: FragmentLoginBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_login, container, false)
+
+        // Get the viewmodel
+        viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+
+        // Set the viewmodel for databinding - this allows the bound layout access to all of the
+        // data in the VieWModel
+        binding.loginViewModel = viewModel
 
         return binding.root
     }
