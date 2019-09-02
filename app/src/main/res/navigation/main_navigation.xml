@@ -8,5 +8,27 @@
             android:id="@+id/landingFragment"
             android:name="com.virtuary.app.screens.landing.LandingFragment"
             android:label="LandingFragment"
-            tools:layout="@layout/fragment_landing"/>
+            tools:layout="@layout/fragment_landing">
+        <action
+                android:id="@+id/action_landingFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:launchSingleTop="true"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+                android:id="@+id/action_landingFragment_to_signupFragment"
+                app:destination="@id/signupFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/loginFragment"
+            android:name="com.virtuary.app.screens.login.LoginFragment"
+            android:label="LoginFragment"
+            tools:layout="@layout/fragment_login"/>
+    <fragment
+            android:id="@+id/signupFragment"
+            android:name="com.virtuary.app.screens.signUp.SignupFragment"
+            android:label="SignupFragment"
+            tools:layout="@layout/fragment_sign_up"/>
 </navigation>

@@ -9,4 +9,6 @@
     <string name="forgot_password">Forgot password?</string>
     <string name="sign_up">Sign up</string>
     <string name="name">Name</string>
+    <string name="virtuary_logo">Virtuary Logo</string>
+    <string name="virtuary_description">Artifact Registry Platform</string>
 </resources>

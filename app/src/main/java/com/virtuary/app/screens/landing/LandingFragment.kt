@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentLandingBinding
 
@@ -22,7 +23,19 @@ class LandingFragment : Fragment() {
         val binding: FragmentLandingBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_landing, container, false)
 
+        // Hide activity bar in the first fragment
         (activity as AppCompatActivity).supportActionBar!!.hide()
+
+        // Listener for button for navigation
+        binding.signUpButton.setOnClickListener {
+            findNavController().navigate(LandingFragmentDirections.actionLandingFragmentToSignupFragment())
+            (activity as AppCompatActivity).supportActionBar!!.show()
+        }
+
+        binding.logInButton.setOnClickListener {
+            findNavController().navigate(LandingFragmentDirections.actionLandingFragmentToLoginFragment())
+            (activity as AppCompatActivity).supportActionBar!!.show()
+        }
 
         return binding.root
     }
