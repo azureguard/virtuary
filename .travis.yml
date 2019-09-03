@@ -1,0 +1,62 @@
+language: android
+jdk: oraclejdk8
+branches:
+  only:
+  - master
+  - develop
+  - "/^release\\/.*$/"
+env:
+  global:
+  - ANDROID_API_LEVEL=29
+  - ANDROID_BUILD_TOOLS_VERSION=29.0.2
+  - CLOUD_PROJECT_ID=testa-de68b
+  - BRANCH_REGEX="^(master$|release\/*)"
+android:
+  licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - google-gdk-license-.+
+  components:
+  - tools
+  - platform-tools
+  - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+  - android-$ANDROID_API_LEVEL
+  - extra-google-google_play_services
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - addon-google_apis-google-$ANDROID_API_LEVEL
+before_install:
+- openssl aes-256-cbc -K $encrypted_9fbf645b6066_key -iv $encrypted_9fbf645b6066_iv
+  -in secrets.tar.enc -out secrets.tar -d
+- tar xvf secrets.tar
+- yes | sdkmanager --update || exit 0
+- chmod +x gradlew
+before_script:
+- if [ $TRAVIS_PULL_REQUEST != 'false' ] || [[ $TRAVIS_BRANCH =~ BRANCH_REGEX ]];
+  then wget https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.tar.gz
+  && tar zxf google-cloud-sdk.tar.gz google-cloud-sdk && echo n | ./google-cloud-sdk/install.sh
+  && ./google-cloud-sdk/bin/gcloud auth activate-service-account --key-file service-account.json
+  && ./google-cloud-sdk/bin/gcloud config set project $CLOUD_PROJECT_ID; fi
+script:
+- "./gradlew build check"
+- if [ $TRAVIS_PULL_REQUEST != 'false' ]|| [[ $TRAVIS_BRANCH =~ BRANCH_REGEX ]]; then
+  ./gradlew assembleDebug && ./gradlew assembleDebugAndroidTest && gcloud firebase
+  test android run --app app/build/outputs/apk/debug/app-debug.apk --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+  --device model=Nexus5,version=21,locale=en,orientation=portrait; fi
+- if [ $TRAVIS_PULL_REQUEST == 'false' ] && [ $TRAVIS_BRANCH == 'master' ]; then ./gradlew
+  assembleRelease; fi
+before_deploy:
+- export APP_VERSION=$(./gradlew :app:printVersionName)
+deploy:
+  provider: releases
+  api_key:
+    secure: jc41EjGN/E4BPJg+b1vv/OEzyvZO854r1RwMC9ihLVC+2d3QqBqn6uMbfe1w29iP5dtFH6yOO9jgrtNV0AZNE1/6CsAw0aX4P2SYqGlhld179GXKkkwLoOzQFl5vN2HUuD7GryUVIhcnNo2P/to11DdR1u5n7E4YyNFUPg51vfQf87xmGqF0xIK0L1i5f3awX27Ex3xpMl6q6KCUP4OEXz/hYZV6/NJbZUOgCXlUFt7o8HYBmx6UZGGoZ7Foetlc0OgAacv9GDhFD2E6/9KMPtk6aH4MG9KrmDyahNd5CL9XFwCge+BRickomN7C3KHnGLSKmBESfP28pgr6r18IGvBTffUFEAhCRg5S95Qkm4S/En7V3GRcynYBnmS33fgr6zqkQ3wJrZhad5MRFXW8Eaj547ggTm7G05lnGIygoXfMyY+yhurlGJK+OQbx+QPZ6u+R12Bm00lM6oqZOTCj/FmwfGQh/tliiQXstFNekP/0krtAgnfFJH7NbMLoS9OtHvi/qI4uZe0DK46sO4WvUUpA5B16oDKFd9wBW+xeS7voH0a4W6JaeIUjUpHVVLEIFpzrqDOgNuQU5WWF39m7MXs8KcGNo3QcE25dCNxkS95RGRgJBV999v1kAGqetqIQK1paFXC1+B3vH1Q5ZssIEwM+3vVVGAooXWLliyRv1SY=
+  file: app/build/outputs/apk/release/*
+  file_glob: true
+  skip_cleanup: true
+  overwrite: true
+  name: "$APP_VERSION"
+  tag_name: "$APP_VERSION"
+  on:
+    branch: master
+    repo: azureguard/virtuary
