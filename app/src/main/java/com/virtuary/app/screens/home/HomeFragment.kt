@@ -28,6 +28,8 @@ class HomeFragment: Fragment() {
 
         binding.rvItemList.adapter = ArtifactAdapter(viewModel.artifactsTitle, viewModel.artifactsRelatedTo)
 
+        
+
         return binding.root
     }
 }
