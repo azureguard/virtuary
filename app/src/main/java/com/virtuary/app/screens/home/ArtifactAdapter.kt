@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -34,11 +35,15 @@ class ArtifactAdapter(private val artifactsTitle: List<String>,
         holder.tvArtifactCard.setOnClickListener {
             Log.i("ArtifactCard", "Card clicked!")
         }
+
+        // TODO: change artifact image
+        holder.ivArtifactImg.setImageResource(R.drawable.ic_launcher_background)
     }
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         var tvArtifactTitle: TextView = view.artifact_title
         var tvArtifactRelatedTo: TextView = view.artifact_related_to
         var tvArtifactCard: CardView = view.artifact_card
+        var ivArtifactImg: ImageView = view.artifact_image
     }
 }

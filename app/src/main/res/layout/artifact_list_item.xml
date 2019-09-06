@@ -23,16 +23,27 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            >
+            android:padding="16dp">
+
+
+            <ImageView
+                android:id="@+id/artifact_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_launcher_background" />
 
             <TextView
                 android:id="@+id/title_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title :"
+                android:layout_width="40dp"
+                android:layout_height="16dp"
 
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:text="Title :"
+                app:layout_constraintBottom_toTopOf="@+id/related_to_text"
+                app:layout_constraintStart_toEndOf="@+id/artifact_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -48,10 +59,10 @@
                 android:id="@+id/related_to_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
                 android:text="Related to :"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/artifact_image"
                 app:layout_constraintTop_toBottomOf="@+id/title_text" />
 
             <TextView
@@ -59,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/related_to_text"
                 app:layout_constraintStart_toEndOf="@+id/related_to_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
