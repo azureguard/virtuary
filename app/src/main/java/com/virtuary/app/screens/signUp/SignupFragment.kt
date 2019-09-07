@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentSignUpBinding
@@ -33,6 +35,40 @@ class SignUpFragment : Fragment() {
         // Set the viewmodel for databinding - this allows the bound layout access to all of the
         // data in the VieWModel
         binding.signUpViewModel = viewModel
+
+        // Specify the current activity as the lifecycle owner of the binding. This is used so that
+        // the binding can observe LiveData updates
+        binding.lifecycleOwner = this
+
+        // Sets up event listening to show error when the email is invalid
+        viewModel.invalidEmail.observe(this, Observer { invalid ->
+            if (invalid) {
+                binding.emailText.error = "Invalid Email"
+                binding.emailText.isErrorEnabled = true
+            } else {
+                binding.emailText.isErrorEnabled = false
+            }
+        })
+
+        // Sets up event listening to show error when the password is invalid
+        viewModel.invalidPassword.observe(this, Observer { invalid ->
+            if(invalid) {
+                binding.passwordText.error = "Invalid Password"
+                binding.passwordText.isErrorEnabled = true
+            } else {
+                binding.passwordText.isErrorEnabled = false
+            }
+        })
+
+        // Sets up event listening to show error when the name is invalid
+        viewModel.invalidName.observe(this, Observer { invalid ->
+            if(invalid) {
+                binding.nameText.error = "Invalid Name"
+                binding.nameText.isErrorEnabled = true
+            } else {
+                binding.nameText.isErrorEnabled = false
+            }
+        })
 
         return binding.root
     }

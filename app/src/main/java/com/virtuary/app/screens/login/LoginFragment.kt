@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.virtuary.app.R
@@ -38,6 +40,31 @@ class LoginFragment : Fragment() {
         binding.forgotPassword.setOnClickListener {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
         }
+
+        // Specify the current activity as the lifecycle owner of the binding. This is used so that
+        // the binding can observe LiveData updates
+        binding.lifecycleOwner = this
+
+        // Sets up event listening to show error when the email is invalid
+        viewModel.invalidEmail.observe(this, Observer { invalid ->
+            if (invalid) {
+                binding.emailEdit.error = "Invalid Email"
+                binding.emailEdit.isErrorEnabled = true
+            } else {
+                binding.emailEdit.isErrorEnabled = false
+            }
+        })
+
+        // Sets up event listening to show error when the password is invalid
+        viewModel.invalidPassword.observe(this, Observer { invalid ->
+            if(invalid) {
+                binding.passwordEdit.error = "Invalid Password"
+                binding.passwordEdit.isErrorEnabled = true
+            } else {
+                binding.passwordEdit.isErrorEnabled = false
+            }
+        })
+
         return binding.root
     }
 }
