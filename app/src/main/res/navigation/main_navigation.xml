@@ -7,7 +7,6 @@
     <fragment
             android:id="@+id/landingFragment"
             android:name="com.virtuary.app.screens.landing.LandingFragment"
-            android:label="LandingFragment"
             tools:layout="@layout/fragment_landing">
         <action
                 android:id="@+id/action_landingFragment_to_loginFragment"
@@ -20,11 +19,20 @@
     <fragment
             android:id="@+id/loginFragment"
             android:name="com.virtuary.app.screens.login.LoginFragment"
-            android:label="LoginFragment"
-            tools:layout="@layout/fragment_login"/>
+            android:label="Log in"
+            tools:layout="@layout/fragment_login" >
+        <action
+                android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+                app:destination="@id/forgotPasswordFragment" />
+    </fragment>
     <fragment
             android:id="@+id/signupFragment"
             android:name="com.virtuary.app.screens.signUp.SignUpFragment"
-            android:label="SignupFragment"
-            tools:layout="@layout/fragment_sign_up"/>
+            android:label="Sign Up"
+            tools:layout="@layout/fragment_sign_up" />
+    <fragment
+            android:id="@+id/forgotPasswordFragment"
+            android:name="com.virtuary.app.screens.forgotPassword.ForgotPasswordFragment"
+            android:label="Forgot Password"
+            tools:layout="@layout/fragment_forgot_password"/>
 </navigation>

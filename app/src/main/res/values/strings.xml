@@ -11,4 +11,6 @@
     <string name="name">Name</string>
     <string name="virtuary_logo">Virtuary Logo</string>
     <string name="virtuary_description">Artifact Registry Platform</string>
+    <string name="enter_your_email">Enter Your Email</string>
+    <string name="confirm">Confirm</string>
 </resources>
