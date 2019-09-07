@@ -42,6 +42,7 @@
 
                 android:layout_marginStart="16dp"
                 android:text="Title :"
+                android:textColor="@android:color/black"
                 app:layout_constraintBottom_toTopOf="@+id/related_to_text"
                 app:layout_constraintStart_toEndOf="@+id/artifact_image"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -51,6 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:textColor="@android:color/black"
                 app:layout_constraintBaseline_toBaselineOf="@+id/title_text"
                 app:layout_constraintStart_toEndOf="@+id/title_text" />
 
@@ -61,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="Related to :"
+                android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/artifact_image"
                 app:layout_constraintTop_toBottomOf="@+id/title_text" />
@@ -70,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:textColor="@android:color/black"
                 app:layout_constraintBaseline_toBaselineOf="@+id/related_to_text"
                 app:layout_constraintStart_toEndOf="@+id/related_to_text" />
 

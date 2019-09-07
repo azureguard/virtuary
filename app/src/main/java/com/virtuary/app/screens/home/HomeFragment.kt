@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentHomeBinding
-import com.virtuary.app.home.item.ArtifactAdapter
 
 class HomeFragment: Fragment() {
 
