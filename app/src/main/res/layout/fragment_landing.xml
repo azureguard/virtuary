@@ -10,7 +10,7 @@
             tools:context=".screens.landing.LandingFragment">
 
         <ImageView
-                android:id="@+id/virtuaryLogo"
+                android:id="@+id/virtuary_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
@@ -24,7 +24,7 @@
                 app:srcCompat="@drawable/ic_launcher_background" />
 
         <TextView
-                android:id="@+id/appDescription"
+                android:id="@+id/app_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -40,10 +40,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/virtuaryLogo" />
+                app:layout_constraintTop_toBottomOf="@+id/virtuary_logo" />
 
         <Button
-                android:id="@+id/signUpButton"
+                android:id="@+id/sign_up_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -51,15 +51,15 @@
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/colorSecondary"
                 android:text="@string/sign_up"
-                app:layout_constraintBottom_toTopOf="@+id/logInButton"
+                app:layout_constraintBottom_toTopOf="@+id/log_in_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appDescription"
+                app:layout_constraintTop_toBottomOf="@+id/app_description"
                 app:layout_constraintVertical_bias="1.0" />
 
         <Button
-                android:id="@+id/logInButton"
+                android:id="@+id/log_in_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"

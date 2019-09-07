@@ -24,6 +24,9 @@ class SignUpFragment : Fragment() {
         val binding: FragmentSignUpBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_sign_up, container, false)
 
+        // Set up button
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         // Get the viewmodel
         viewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)
 

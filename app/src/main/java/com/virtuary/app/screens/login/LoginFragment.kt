@@ -25,6 +25,9 @@ class LoginFragment : Fragment() {
         val binding: FragmentLoginBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_login, container, false)
 
+        // Set up button
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         // Get the viewmodel
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
