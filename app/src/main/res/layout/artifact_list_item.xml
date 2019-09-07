@@ -81,6 +81,7 @@
                 android:layout_marginStart="12dp"
                 android:text="@string/related_to_text"
                 android:textColor="@android:color/black"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/artifact_image"
                 app:layout_constraintTop_toBottomOf="@+id/location_pin" />
