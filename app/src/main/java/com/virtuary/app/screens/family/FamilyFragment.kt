@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.virtuary.app.R
-import com.virtuary.app.databinding.ActivityMainBinding
 import com.virtuary.app.databinding.FragmentFamilyBinding
-import kotlinx.android.synthetic.main.activity_main.*
 
 class FamilyFragment: Fragment() {
 
