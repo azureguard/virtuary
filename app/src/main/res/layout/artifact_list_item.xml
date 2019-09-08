@@ -38,7 +38,7 @@
 
             <TextView
                 android:id="@+id/artifact_title"
-                android:layout_width="@dimen/artifact_title_show_width"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:ellipsize="end"
@@ -48,7 +48,6 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/location_pin"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/artifact_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,7 +65,7 @@
 
             <TextView
                 android:id="@+id/artifact_current_location"
-                android:layout_width="@dimen/artifact_current_location_show_width"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:ellipsize="end"
@@ -74,7 +73,6 @@
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/location_pin"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/location_pin" />
 
             <TextView
@@ -91,7 +89,7 @@
 
             <TextView
                 android:id="@+id/artifact_related_to"
-                android:layout_width="@dimen/artifact_related_to_show_width"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:ellipsize="end"
@@ -99,7 +97,6 @@
                 android:textColor="@android:color/black"
                 app:layout_constraintBaseline_toBaselineOf="@+id/related_to_text"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/related_to_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
