@@ -16,12 +16,12 @@ class SignUpViewModel : ViewModel() {
     val invalidEmail: LiveData<Boolean>
         get() = _invalidEmail
 
-    // Event which triggered when the email inputted is invalid
+    // Event which triggered when the password inputted is invalid
     private val _invalidPassword = MutableLiveData<Boolean>()
     val invalidPassword: LiveData<Boolean>
         get() = _invalidPassword
 
-    // Event which triggered when the email inputted is invalid
+    // Event which triggered when the name inputted is invalid
     private val _invalidName = MutableLiveData<Boolean>()
     val invalidName: LiveData<Boolean>
         get() = _invalidName
