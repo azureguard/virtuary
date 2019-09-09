@@ -1,6 +1,5 @@
 package com.virtuary.app.screens.login
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
