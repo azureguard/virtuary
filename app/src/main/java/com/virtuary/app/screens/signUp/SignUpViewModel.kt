@@ -1,8 +1,9 @@
 package com.virtuary.app.screens.signUp
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.databinding.ObservableField
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
@@ -31,5 +32,28 @@ class SignUpViewModel : ViewModel() {
         _invalidPassword.value = password.get() == null || password.get()!!.isEmpty()
         _invalidName.value = name.get() == null || name.get()!!.isEmpty()
         Log.i("Testing OnClick Login", "${email.get()} and ${password.get()} and ${name.get()}")
+        val fbAuth = FirebaseAuth.getInstance()
+        fbAuth.createUserWithEmailAndPassword(email.get()!!, password.get()!!)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = fbAuth.currentUser
+                    val profileUpdates = UserProfileChangeRequest.Builder()
+                        .setDisplayName(name.get())
+                        .build()
+
+                    user?.updateProfile(profileUpdates)
+                        ?.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                // TODO: handle case where sign up is successful but name is not?
+                            }
+                        }
+                } else {
+                    // TODO: Unable to make a toast without context
+//                    Toast.makeText(
+//                        baseContext, "Authentication failed.",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                }
+            }
     }
 }
