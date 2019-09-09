@@ -30,6 +30,6 @@ class SignUpViewModel : ViewModel() {
         _invalidEmail.value = email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get()).matches()
         _invalidPassword.value = password.get() == null || password.get()!!.isEmpty()
         _invalidName.value = name.get() == null || name.get()!!.isEmpty()
-        Log.i("Testing OnClick Login", "${email.get()} and ${password.get()} and ${name.get()}");
+        Log.i("Testing OnClick Login", "${email.get()} and ${password.get()} and ${name.get()}")
     }
 }
