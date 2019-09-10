@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main_navigation"
+        app:startDestination="@id/landingFragment">
+    <fragment
+            android:id="@+id/landingFragment"
+            android:name="com.virtuary.app.screens.landing.LandingFragment"
+            tools:layout="@layout/fragment_landing">
+        <action
+                android:id="@+id/action_landingFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:launchSingleTop="true" />
+        <action
+                android:id="@+id/action_landingFragment_to_signupFragment"
+                app:destination="@id/signupFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/loginFragment"
+            android:name="com.virtuary.app.screens.login.LoginFragment"
+            android:label="Log in"
+            tools:layout="@layout/fragment_login" >
+        <action
+                android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+                app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/signupFragment"
+            android:name="com.virtuary.app.screens.signUp.SignUpFragment"
+            android:label="Sign Up"
+            tools:layout="@layout/fragment_sign_up" />
+    <fragment
+            android:id="@+id/forgotPasswordFragment"
+            android:name="com.virtuary.app.screens.forgotPassword.ForgotPasswordFragment"
+            android:label="Forgot Password"
+            tools:layout="@layout/fragment_forgot_password"/>
+</navigation>
