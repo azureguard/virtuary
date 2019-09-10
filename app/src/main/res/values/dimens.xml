@@ -2,4 +2,5 @@
 <resources>
     <dimen name="family_member_name_field">42sp</dimen>
     <dimen name="family_member_image_size">150sp</dimen>
+    <dimen name="artifact_home_image_size">100sp</dimen>
 </resources>
