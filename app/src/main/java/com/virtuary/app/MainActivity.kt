@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import kotlinx.android.synthetic.main.main_activity.*
 
 /**
  * Creates an Activity that hosts all of the fragments in the app
@@ -18,7 +19,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
 
         val navController = findNavController(R.id.nav_host_fragment)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
+        // Specify set of top level root page to show burger menu
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment),drawer_layout)
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
