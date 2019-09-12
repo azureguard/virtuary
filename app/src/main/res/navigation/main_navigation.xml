@@ -50,4 +50,12 @@
             android:name="com.virtuary.app.screens.family.FamilyFragment"
             android:label="Family"
             tools:layout="@layout/fragment_family" />
+    <action
+            android:id="@+id/action_global_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/main_navigation" />
+    <action
+            android:id="@+id/action_global_familyFragment"
+            app:destination="@id/familyFragment"
+            app:popUpTo="@id/main_navigation" />
 </navigation>
