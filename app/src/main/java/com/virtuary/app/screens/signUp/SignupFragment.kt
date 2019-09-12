@@ -13,7 +13,7 @@ import com.virtuary.app.databinding.FragmentSignUpBinding
 
 
 /**
- * Fragment for the starting screen of the app
+ * Fragment for the Signup screen of the app
  */
 class SignUpFragment : Fragment() {
 

@@ -12,7 +12,7 @@ import com.virtuary.app.databinding.FragmentForgotPasswordBinding
 
 
 /**
- * Fragment for the starting screen of the app
+ * Fragment for the Forgot Password screen of the app
  */
 class ForgotPasswordFragment : Fragment() {
 

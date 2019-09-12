@@ -14,7 +14,7 @@ import com.virtuary.app.databinding.FragmentLoginBinding
 
 
 /**
- * Fragment for the starting screen of the app
+ * Fragment for the Login screen of the app
  */
 class LoginFragment : Fragment() {
 
