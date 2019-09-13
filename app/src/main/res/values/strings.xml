@@ -14,4 +14,13 @@
     <string name="virtuary_description">Artifact Registry Platform</string>
     <string name="enter_your_email">Enter Your Email</string>
     <string name="confirm">Confirm</string>
+    <string name="home">Home</string>
+    <string name="my_items">My Items</string>
+    <string name="family">Family</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
+    <string name="profile_picture">Profile picture</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

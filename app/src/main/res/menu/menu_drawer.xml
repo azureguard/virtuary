@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+            android:id="@+id/navigation"
+            android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_home"
+                android:checked="true"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:title="@string/home" />
+        <item
+                android:id="@+id/nav_family"
+                android:icon="@drawable/ic_group_black_24dp"
+                android:title="@string/family" />
+    </group>
+    <group
+            android:id="@+id/miscellaneous"
+            android:checkableBehavior="none">
+        <item
+                android:id="@+id/nav_edit_profile"
+                android:title="@string/edit_profile" />
+        <item
+                android:id="@+id/nav_about"
+                android:title="@string/about" />
+        <item
+                android:id="@+id/nav_settings"
+                android:title="@string/settings" />
+    </group>
+</menu>

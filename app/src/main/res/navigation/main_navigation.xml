@@ -15,6 +15,11 @@
         <action
                 android:id="@+id/action_landingFragment_to_signupFragment"
                 app:destination="@id/signupFragment" />
+        <action
+                android:id="@+id/action_landingFragment_to_homeFragment"
+                app:destination="@id/homeFragment"
+                app:popUpTo="@+id/landingFragment"
+                app:popUpToInclusive="true" />
     </fragment>
     <fragment
             android:id="@+id/loginFragment"
@@ -35,4 +40,22 @@
             android:name="com.virtuary.app.screens.forgotPassword.ForgotPasswordFragment"
             android:label="Forgot Password"
             tools:layout="@layout/fragment_forgot_password"/>
+    <fragment
+            android:id="@+id/homeFragment"
+            android:name="com.virtuary.app.screens.home.HomeFragment"
+            android:label="Home"
+            tools:layout="@layout/fragment_home" />
+    <fragment
+            android:id="@+id/familyFragment"
+            android:name="com.virtuary.app.screens.family.FamilyFragment"
+            android:label="Family"
+            tools:layout="@layout/fragment_family" />
+    <action
+            android:id="@+id/action_global_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/main_navigation" />
+    <action
+            android:id="@+id/action_global_familyFragment"
+            app:destination="@id/familyFragment"
+            app:popUpTo="@id/main_navigation" />
 </navigation>
