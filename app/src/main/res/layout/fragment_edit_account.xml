@@ -6,7 +6,7 @@
 
         <variable
             name="editAccountFragment"
-            type="com.virtuary.app.screens.preferences.EditAccountFragment" />
+            type="com.virtuary.app.screens.preferences.ManageAccountFragment" />
     </data>
 
     <TableLayout

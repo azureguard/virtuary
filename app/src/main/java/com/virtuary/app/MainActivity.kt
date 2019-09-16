@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_edit_profile -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_editAccount)
+                findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_manageAccount)
             }
 
             R.id.nav_settings -> {

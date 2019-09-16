@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentEditAccountBinding
 
-class EditAccountFragment : Fragment() {
+class ManageAccountFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,10 +20,10 @@ class EditAccountFragment : Fragment() {
             inflater, R.layout.fragment_edit_account, container, false
         )
         binding.editAccount.setOnClickListener {
-            findNavController().navigate(EditAccountFragmentDirections.actionEditAccountToEditProfileDetails())
+            findNavController().navigate(ManageAccountFragmentDirections.actionManageAccountToEditProfileDetails())
         }
         binding.changePassword.setOnClickListener {
-            findNavController().navigate(EditAccountFragmentDirections.actionEditAccountToChangePassword())
+            findNavController().navigate(ManageAccountFragmentDirections.actionManageAccountToChangePassword())
         }
         binding.forgotPassword.setOnClickListener {
             TODO()

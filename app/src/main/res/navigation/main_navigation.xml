@@ -80,14 +80,14 @@
                 app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/editAccount"
-        android:name="com.virtuary.app.screens.preferences.EditAccountFragment"
+        android:id="@+id/manageAccount"
+        android:name="com.virtuary.app.screens.preferences.ManageAccountFragment"
         android:label="Manage Account">
         <action
-            android:id="@+id/action_editAccount_to_changePassword"
+            android:id="@+id/action_manageAccount_to_changePassword"
             app:destination="@id/changePassword" />
         <action
-            android:id="@+id/action_editAccount_to_editProfileDetails"
+            android:id="@+id/action_manageAccount_to_editProfileDetails"
             app:destination="@id/editProfileDetails"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -95,8 +95,8 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <action
-        android:id="@+id/action_global_editAccount"
-        app:destination="@id/editAccount"
+        android:id="@+id/action_global_manageAccount"
+        app:destination="@id/manageAccount"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_exit_anim"
@@ -106,8 +106,8 @@
         android:name="com.virtuary.app.screens.preferences.ChangePassword"
         android:label="Change Password">
         <action
-            android:id="@+id/action_changePassword_to_editAccount"
-            app:destination="@id/editAccount" />
+            android:id="@+id/action_changePassword_to_manageAccount"
+            app:destination="@id/manageAccount" />
     </fragment>
     <fragment
         android:id="@+id/editProfileDetails"
@@ -115,7 +115,7 @@
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile_details">
         <action
-            android:id="@+id/action_editProfileDetails_to_editAccount"
-            app:destination="@id/editAccount" />
+            android:id="@+id/action_editProfileDetails_to_manageAccount"
+            app:destination="@id/manageAccount" />
     </fragment>
 </navigation>
