@@ -1,6 +1,5 @@
 package com.virtuary.app.screens.addItem
 
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,7 +22,6 @@ class AddItemViewModel: ViewModel() {
         _selectionRelatedTo.value = mutableListOf()
         _addedRelatedTo.value = mutableListOf()
         addSelectionList()
-        Log.i("selection", "selection = ${_selectionRelatedTo.value!![1]}")
     }
 
     // check title input if it is empty
@@ -55,7 +53,6 @@ class AddItemViewModel: ViewModel() {
 
     private fun addRelatedTo(item: String) {
         _addedRelatedTo.add(item)
-        Log.i("123", "item = $item")
     }
 
     private fun addSelectionList() {
