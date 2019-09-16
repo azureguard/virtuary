@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".screens.preferences.EditProfileDetails">
+    tools:context=".screens.manageAccount.EditProfileDetails">
 
     <data>
 
         <variable
             name="editProfileViewModel"
-            type="com.virtuary.app.screens.preferences.EditProfileDetailsViewModel" />
+            type="com.virtuary.app.screens.manageAccount.EditProfileDetailsViewModel" />
     </data>
 
     <ScrollView

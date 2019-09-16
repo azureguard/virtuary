@@ -81,7 +81,7 @@
     </fragment>
     <fragment
         android:id="@+id/manageAccount"
-        android:name="com.virtuary.app.screens.preferences.ManageAccountFragment"
+        android:name="com.virtuary.app.screens.manageAccount.ManageAccountFragment"
         android:label="Manage Account">
         <action
             android:id="@+id/action_manageAccount_to_changePassword"
@@ -114,7 +114,7 @@
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <fragment
         android:id="@+id/changePassword"
-        android:name="com.virtuary.app.screens.preferences.ChangePassword"
+        android:name="com.virtuary.app.screens.manageAccount.ChangePassword"
         android:label="Change Password">
         <action
             android:id="@+id/action_changePassword_to_manageAccount"
@@ -126,7 +126,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileDetails"
-        android:name="com.virtuary.app.screens.preferences.EditProfileDetails"
+        android:name="com.virtuary.app.screens.manageAccount.EditProfileDetails"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile_details">
         <action

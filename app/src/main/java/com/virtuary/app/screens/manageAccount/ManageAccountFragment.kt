@@ -1,4 +1,4 @@
-package com.virtuary.app.screens.preferences
+package com.virtuary.app.screens.manageAccount
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.virtuary.app.R
-import com.virtuary.app.databinding.FragmentEditAccountBinding
+import com.virtuary.app.databinding.FragmentManageAccountBinding
 
 class ManageAccountFragment : Fragment() {
 
@@ -16,8 +16,8 @@ class ManageAccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentEditAccountBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_edit_account, container, false
+        val binding: FragmentManageAccountBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_manage_account, container, false
         )
         binding.editAccount.setOnClickListener {
             findNavController().navigate(ManageAccountFragmentDirections.actionManageAccountToEditProfileDetails())

@@ -1,4 +1,4 @@
-package com.virtuary.app.screens.preferences
+package com.virtuary.app.screens.manageAccount
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
