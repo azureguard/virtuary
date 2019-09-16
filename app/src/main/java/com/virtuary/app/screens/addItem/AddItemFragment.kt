@@ -117,7 +117,6 @@ class AddItemFragment: Fragment() {
         return binding.root
     }
 
-    // Reference from https://stackoverflow.com/questions/44148883/select-image-from-gallery-using-kotlin
     private fun selectImageInAlbum() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
