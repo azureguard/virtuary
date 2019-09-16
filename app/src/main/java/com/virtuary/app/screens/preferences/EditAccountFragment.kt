@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentEditAccountBinding
 
@@ -22,7 +23,7 @@ class EditAccountFragment : Fragment() {
             TODO()
         }
         binding.changePassword.setOnClickListener {
-            TODO()
+            findNavController().navigate(EditAccountFragmentDirections.actionEditAccountToChangePassword())
         }
         binding.forgotPassword.setOnClickListener {
             TODO()

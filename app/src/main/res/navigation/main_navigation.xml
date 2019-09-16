@@ -83,6 +83,9 @@
         android:id="@+id/editAccount"
         android:name="com.virtuary.app.screens.preferences.EditAccountFragment"
         android:label="EditAccount" >
+        <action
+            android:id="@+id/action_editAccount_to_changePassword"
+            app:destination="@id/changePassword" />
     </fragment>
     <action
         android:id="@+id/action_global_editAccount"
@@ -91,4 +94,12 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_exit_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <fragment
+        android:id="@+id/changePassword"
+        android:name="com.virtuary.app.screens.preferences.ChangePassword"
+        android:label="ChangePassword" >
+        <action
+            android:id="@+id/action_changePassword_to_editAccount"
+            app:destination="@id/editAccount" />
+    </fragment>
 </navigation>

@@ -33,4 +33,6 @@
     <string name="story">Story :</string>
     <string name="profile_edit_general">Edit account</string>
     <string name="profile_change_password">Change password</string>
+    <string name="profile_new_password">New password</string>
+    <string name="profile_current_password">Current password</string>
 </resources>
