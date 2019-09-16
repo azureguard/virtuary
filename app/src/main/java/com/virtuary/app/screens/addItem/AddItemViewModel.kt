@@ -35,16 +35,19 @@ class AddItemViewModel: ViewModel() {
         _emptyTitle.value = title.get() == null || title.get()!!.isEmpty()
     }
 
-    fun onItemSelected(itemIndex: Int) {
+    // related to item selected
+    fun onItemSelected(itemIndex: Int): Boolean {
         if (_selectionRelatedTo.value!![itemIndex] != "None" && _selectionRelatedTo.value!![itemIndex] != "-") {
             addRelatedTo(_selectionRelatedTo.value!![itemIndex])
-            Log.i("Hello", "item addedRelated to = ${selectionRelatedTo.value!![0]}")
-            Log.i("Hello", "item selectionRelated to = ${selectionRelatedTo.value!![itemIndex]}")
-
             _selectionRelatedTo.value!!.removeAt(itemIndex)
+
+            return true
         }
+
+        return false
     }
 
+    // remove click on chips
     fun onRemoveClick(name: String) {
         _selectionRelatedTo.add(name)
         _addedRelatedTo.value!!.remove(name)

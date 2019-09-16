@@ -3,4 +3,7 @@
     <dimen name="family_member_name_field">42sp</dimen>
     <dimen name="family_member_image_size">150sp</dimen>
     <dimen name="artifact_home_image_size">100sp</dimen>
+    <dimen name="add_item_image_height">250sp</dimen>
+    <dimen name="add_item_icon_width">101sp</dimen>
+    <dimen name="add_item_icon_height">84sp</dimen>
 </resources>

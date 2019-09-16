@@ -23,4 +23,8 @@
     <string name="profile_picture">Profile picture</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title">Title</string>
+    <string name="current_location">Current Location</string>
+    <string name="related_to">Related to</string>
+    <string name="story">Story</string>
 </resources>

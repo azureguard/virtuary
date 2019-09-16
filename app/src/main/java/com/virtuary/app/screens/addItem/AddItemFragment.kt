@@ -1,5 +1,7 @@
 package com.virtuary.app.screens.addItem
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.chip.Chip
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentAddItemBinding
+import kotlinx.android.synthetic.main.fragment_add_item.add_item_image
+import kotlinx.android.synthetic.main.fragment_add_item.add_item_image_icon
 
 class AddItemFragment: Fragment() {
 
@@ -22,12 +26,15 @@ class AddItemFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // inflate the layout
-        val binding: FragmentAddItemBinding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_add_item, container, false)
+        val binding: FragmentAddItemBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_add_item, container, false
+        )
 
         // get the home view model
         // assign for databinding so the data in view model can be accessed
-        val viewModel: AddItemViewModel = ViewModelProviders.of(this).get(AddItemViewModel::class.java)
+        val viewModel: AddItemViewModel =
+            ViewModelProviders.of(this).get(AddItemViewModel::class.java)
         binding.addItemViewModel = viewModel
 
         // can observe LiveData updates
@@ -43,14 +50,21 @@ class AddItemFragment: Fragment() {
             }
         })
 
-        binding.spinner.adapter = ArrayAdapter<String>(activity!!,
-                                                R.layout.support_simple_spinner_dropdown_item,
-                                                viewModel.selectionRelatedTo.value!!)
+        // build the drop down add item menu
+        binding.addItemRelatedToSpinner.adapter = ArrayAdapter<String>(
+            activity!!,
+            R.layout.support_simple_spinner_dropdown_item,
+            viewModel.selectionRelatedTo.value!!
+        )
 
-        binding.spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+
+
+        binding.addItemRelatedToSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                viewModel.onItemSelected(binding.spinner.selectedItemPosition)
-                binding.spinner.setSelection(0)
+                if (viewModel.onItemSelected(binding.addItemRelatedToSpinner.selectedItemPosition)) {
+                    // set selection to "-" if item selected to avoid confusion in manipulating array
+                    binding.addItemRelatedToSpinner.setSelection(0)
+                }
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -60,6 +74,7 @@ class AddItemFragment: Fragment() {
 
         viewModel.addedRelatedTo.observe(this,
             Observer<MutableList<String>> { data ->
+                // make chip view for each item in the list
                 val chipGroup = binding.addItemRelatedToList
                 val inflator = LayoutInflater.from(chipGroup.context)
 
@@ -75,17 +90,66 @@ class AddItemFragment: Fragment() {
                         viewModel.onRemoveClick(chipName)
                     }
 
-                  chip
+                    chip
                 }
 
+                // remove any views already in ChipGroup
                 chipGroup.removeAllViews()
 
+                // add the new children to the ChipGroup
                 for (chip in children) {
                     chipGroup.addView(chip as View)
                 }
-            })
+            }
+        )
+
+        // sets click listener for adding image in gallery
+        binding.addItemImageIcon.setOnClickListener {
+            selectImageInAlbum()
+        }
+
+        binding.addItemImage.setOnClickListener {
+            if (binding.addItemImageIcon.visibility == View.INVISIBLE) {
+                selectImageInAlbum()
+            }
+        }
 
         return binding.root
     }
-    
+
+    // Reference from https://stackoverflow.com/questions/44148883/select-image-from-gallery-using-kotlin
+    private fun selectImageInAlbum() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+
+        // check if the Activity component is available to handle the intent
+        if (intent.resolveActivity(context!!.packageManager) != null) {
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+                                    REQUEST_SELECT_IMAGE_IN_ALBUM)
+        }
+    }
+
+//    private fun takePhoto() {
+//        val intent1 = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//        if (intent1.resolveActivity(context!!.packageManager) != null) {
+//            startActivityForResult(intent1, REQUEST_TAKE_PHOTO)
+//        }
+//    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // result code is OK only when the user selects an image
+        if (resultCode == Activity.RESULT_OK)
+            if (requestCode == REQUEST_SELECT_IMAGE_IN_ALBUM){
+                // returns the content URI for the selected Image
+                val selectedImage = data!!.data
+                add_item_image_icon.visibility = View.INVISIBLE
+                add_item_image.setImageURI(selectedImage)
+            }
+    }
+
+    // define static properties
+    companion object {
+//        private val REQUEST_TAKE_PHOTO = 0
+        private const val REQUEST_SELECT_IMAGE_IN_ALBUM = 1
+    }
 }
