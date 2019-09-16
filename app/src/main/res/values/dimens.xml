@@ -8,4 +8,5 @@
     <dimen name="add_item_icon_height">84dp</dimen>
     <dimen name="member_list_item_width">250dp</dimen>
     <dimen name="member_list_item_image_height">150dp</dimen>
+    <dimen name="edit_profile_image">200dp</dimen>
 </resources>

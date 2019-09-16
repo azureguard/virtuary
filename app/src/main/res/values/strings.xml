@@ -33,4 +33,6 @@
     <string name="profile_change_password">Change password</string>
     <string name="profile_new_password">New password</string>
     <string name="profile_current_password">Current password</string>
+    <string name="profile_image_description">Your profile picture</string>
+    <string name="profile_edit_image_description">Edit your profile picture</string>
 </resources>
