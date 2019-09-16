@@ -21,7 +21,7 @@ class ChangePassword : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.change_password_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_change_password, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
