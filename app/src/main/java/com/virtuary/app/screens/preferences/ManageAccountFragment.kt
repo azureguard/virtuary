@@ -26,7 +26,7 @@ class ManageAccountFragment : Fragment() {
             findNavController().navigate(ManageAccountFragmentDirections.actionManageAccountToChangePassword())
         }
         binding.forgotPassword.setOnClickListener {
-            TODO()
+            findNavController().navigate(ManageAccountFragmentDirections.actionManageAccountToForgotPasswordFragment())
         }
 
         return binding.root
