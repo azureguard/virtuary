@@ -20,7 +20,7 @@ class EditAccountFragment : Fragment() {
             inflater, R.layout.fragment_edit_account, container, false
         )
         binding.editAccount.setOnClickListener {
-            TODO()
+            findNavController().navigate(EditAccountFragmentDirections.actionEditAccountToEditProfileDetails())
         }
         binding.changePassword.setOnClickListener {
             findNavController().navigate(EditAccountFragmentDirections.actionEditAccountToChangePassword())
