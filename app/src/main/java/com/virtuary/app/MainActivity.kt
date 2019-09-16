@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_edit_profile -> {
-                TODO() // Implement edit profile fragment and connect it here
+                findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_editAccount)
             }
 
             R.id.nav_settings -> {

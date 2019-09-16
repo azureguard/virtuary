@@ -31,4 +31,6 @@
     <string name="current_location">Current Location :</string>
     <string name="related_to">Related to :</string>
     <string name="story">Story :</string>
+    <string name="profile_edit_general">Edit account</string>
+    <string name="profile_change_password">Change password</string>
 </resources>
