@@ -57,8 +57,6 @@ class AddItemFragment: Fragment() {
             viewModel.selectionRelatedTo.value!!
         )
 
-
-
         binding.addItemRelatedToSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 if (viewModel.onItemSelected(binding.addItemRelatedToSpinner.selectedItemPosition)) {
@@ -128,6 +126,7 @@ class AddItemFragment: Fragment() {
         }
     }
 
+    // TODO : in-app camera
 //    private fun takePhoto() {
 //        val intent1 = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 //        if (intent1.resolveActivity(context!!.packageManager) != null) {
