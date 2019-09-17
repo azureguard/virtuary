@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginViewModel : ViewModel() {
     val email = ObservableField("")
@@ -22,5 +23,7 @@ class LoginViewModel : ViewModel() {
     fun onClick() {
         _invalidEmail.value = email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get()).matches()
         _invalidPassword.value = password.get() == null || password.get()!!.isEmpty()
+        val fbAuth = FirebaseAuth.getInstance()
+        fbAuth.signInWithEmailAndPassword(email.get()!!, password.get()!!)
     }
 }
