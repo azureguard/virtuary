@@ -1,6 +1,6 @@
 package com.virtuary.app.models
 
-import com.google.type.Date
+import java.util.Date
 
 data class Item(
     val name: String? = null,
