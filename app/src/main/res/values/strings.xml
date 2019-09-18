@@ -27,8 +27,8 @@
     <string name="related_items">Related Items</string>
     <string name="show_all">Show All</string>
     <string name="this_user_has_no_item">This user has no item</string>
-    <string name="title">Title</string>
-    <string name="current_location">Current Location</string>
-    <string name="related_to">Related to</string>
-    <string name="story">Story</string>
+    <string name="title">Title :</string>
+    <string name="current_location">Current Location :</string>
+    <string name="related_to">Related to :</string>
+    <string name="story">Story :</string>
 </resources>
