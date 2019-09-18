@@ -25,7 +25,7 @@
             android:id="@+id/loginFragment"
             android:name="com.virtuary.app.screens.login.LoginFragment"
             android:label="Log in"
-            tools:layout="@layout/fragment_login" >
+            tools:layout="@layout/fragment_login">
         <action
                 android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
                 app:destination="@id/forgotPasswordFragment" />
@@ -39,7 +39,7 @@
             android:id="@+id/forgotPasswordFragment"
             android:name="com.virtuary.app.screens.forgotPassword.ForgotPasswordFragment"
             android:label="Forgot Password"
-            tools:layout="@layout/fragment_forgot_password"/>
+            tools:layout="@layout/fragment_forgot_password" />
     <fragment
             android:id="@+id/homeFragment"
             android:name="com.virtuary.app.screens.home.HomeFragment"
@@ -49,7 +49,11 @@
             android:id="@+id/familyFragment"
             android:name="com.virtuary.app.screens.family.FamilyFragment"
             android:label="Family"
-            tools:layout="@layout/fragment_family" />
+            tools:layout="@layout/fragment_family">
+        <action
+                android:id="@+id/action_familyFragment_to_memberFragment"
+                app:destination="@id/memberFragment" />
+    </fragment>
     <action
             android:id="@+id/action_global_homeFragment"
             app:destination="@id/homeFragment"
@@ -66,4 +70,13 @@
     <action
             android:id="@+id/action_global_aboutFragment"
             app:destination="@id/aboutFragment" />
+    <fragment
+            android:id="@+id/memberFragment"
+            android:name="com.virtuary.app.screens.family.member.MemberFragment"
+            android:label="Details"
+            tools:layout="@layout/fragment_family_member" >
+        <argument
+                android:name="name"
+                app:argType="string" />
+    </fragment>
 </navigation>

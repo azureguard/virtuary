@@ -7,18 +7,20 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyBinding
 
-class FamilyFragment: Fragment() {
+class FamilyFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentFamilyBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_family, container,false)
+        val binding: FragmentFamilyBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_family, container, false)
 
         // create family view model
         val familyViewModel = ViewModelProviders.of(this).get(FamilyViewModel::class.java)
@@ -29,8 +31,18 @@ class FamilyFragment: Fragment() {
 
         // assign family list adapter
         binding.rvFamilyList.adapter?.setHasStableIds(true)
-        binding.rvFamilyList.adapter = FamilyAdapter(familyViewModel.familyMemberName)
+        binding.rvFamilyList.adapter =
+            FamilyAdapter(familyViewModel.familyMemberName, ::memberOnClick)
 
         return binding.root
+    }
+
+    // TODO: Change implementation to pass id to re fetch or using other implementation
+    private fun memberOnClick(name: String) {
+        findNavController().navigate(
+            FamilyFragmentDirections.actionFamilyFragmentToMemberFragment(
+                name
+            )
+        )
     }
 }

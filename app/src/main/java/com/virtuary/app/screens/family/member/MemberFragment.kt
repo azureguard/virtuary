@@ -5,6 +5,7 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyMemberBinding
@@ -17,6 +18,9 @@ class MemberFragment : Fragment() {
 
     private lateinit var memberViewModel: MemberViewModel
 
+    // argument got from navigation action
+    private val args: MemberFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,6 +29,9 @@ class MemberFragment : Fragment() {
         val binding: FragmentFamilyMemberBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_family_member, container, false
         )
+
+        // Set the name by the argument passed from navigation
+        binding.memberName.text = args.name
 
         // get the home view model
         // assign for databinding so the data in view model can be accessed

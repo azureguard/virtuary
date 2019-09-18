@@ -1,6 +1,5 @@
 package com.virtuary.app.screens.family
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.virtuary.app.R
 import kotlinx.android.synthetic.main.family_item_view.view.*
 
-class FamilyAdapter(private val familyMemberName: List<String>)
-    : RecyclerView.Adapter<FamilyAdapter.ViewHolder>() {
+class FamilyAdapter(
+    private val familyMemberName: List<String>,
+    private val memberOnClick: (name: String) -> Unit
+) : RecyclerView.Adapter<FamilyAdapter.ViewHolder>() {
+
     override fun getItemCount(): Int {
         return familyMemberName.size
     }
@@ -20,9 +22,9 @@ class FamilyAdapter(private val familyMemberName: List<String>)
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.family_item_view, parent, false)
 
-        // TODO: change onClick behaviour to family member profile
+        // For now pass only the name to the member detail page
         view.family_member_image.setOnClickListener {
-            Log.i("FamilyItemImage", "Family Item Clicked!")
+            memberOnClick(view.family_member_name.text.toString())
         }
 
         return ViewHolder(view)
@@ -33,7 +35,7 @@ class FamilyAdapter(private val familyMemberName: List<String>)
         holder.tvFamilyMemberName.text = familyMemberName[position]
     }
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var ivFamilyMemberImage: ImageView = view.family_member_image
         var tvFamilyMemberName: TextView = view.family_member_name
     }
