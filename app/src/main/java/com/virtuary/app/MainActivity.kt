@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_about -> {
-                TODO() // Implement about fragment and connect it here
+                findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_aboutFragment)
             }
 
             R.id.nav_edit_profile -> {
