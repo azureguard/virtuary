@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Specify set of top level root page to show burger menu
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.familyFragment), drawer_layout)
+        appBarConfiguration =
+            AppBarConfiguration(setOf(R.id.homeFragment, R.id.familyFragment), drawer_layout)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // Listener for drawer items
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // https://stackoverflow.com/questions/32806735/refresh-header-in-navigation-drawer/35952939#35952939
         drawerToggle = object : ActionBarDrawerToggle(
             this, drawer_layout, R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        ){
+        ) {
 //            override fun onDrawerOpened(drawerView: View) {
 //                super.onDrawerOpened(drawerView)
 //                drawer_user_name.text = "Friedrich"
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // TODO: May have better Implementation, but for now this works fine
         // Close drawer manually since super.onOptionsItemSelected doesn't close drawer when it's opened
-        if(drawer_layout.isDrawerOpen(GravityCompat.START)) {
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawerToggle.onOptionsItemSelected(item)
             return true
         }
@@ -88,6 +89,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         drawerToggle.onConfigurationChanged(newConfig)
+    }
+
+    // Function to set the label in the action bar
+    fun setActionBarTitle(title: String) {
+        supportActionBar?.title = title
     }
 
     // Function for drawer item navigation

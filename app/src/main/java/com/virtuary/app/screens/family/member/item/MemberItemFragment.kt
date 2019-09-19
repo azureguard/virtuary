@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
+import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyMemberItemBinding
 import com.virtuary.app.screens.home.ArtifactAdapter
@@ -15,6 +17,9 @@ import com.virtuary.app.screens.home.ArtifactAdapter
  * Fragment for the family member items
  */
 class MemberItemFragment : Fragment() {
+
+    // argument got from navigation action
+    private val args: MemberItemFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentFamilyMemberItemBinding
 
@@ -32,6 +37,9 @@ class MemberItemFragment : Fragment() {
             container,
             false
         )
+
+        // Dynamically change the label on the action bar
+        (activity as MainActivity).setActionBarTitle("${args.name}'s items")
 
         // get the home view model
         // assign for databinding so the data in view model can be accessed

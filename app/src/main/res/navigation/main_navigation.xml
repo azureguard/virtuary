@@ -74,7 +74,19 @@
             android:id="@+id/memberFragment"
             android:name="com.virtuary.app.screens.family.member.MemberFragment"
             android:label="Details"
-            tools:layout="@layout/fragment_family_member" >
+            tools:layout="@layout/fragment_family_member">
+        <argument
+                android:name="name"
+                app:argType="string" />
+        <action
+                android:id="@+id/action_memberFragment_to_memberItemFragment"
+                app:destination="@id/memberItemFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/memberItemFragment"
+            android:name="com.virtuary.app.screens.family.member.item.MemberItemFragment"
+            android:label="MemberItemFragment"
+            tools:layout="@layout/fragment_family_member_item">
         <argument
                 android:name="name"
                 app:argType="string" />
