@@ -2,20 +2,22 @@ package com.virtuary.app.screens.home
 
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel : ViewModel() {
 
     // TODO: for testing (delete later)
-    val artifactsTitle: List<String>
-            = listOf("Love Letter", "Baseball",
-        "SchoolSchoolSchoolSchoolSchoolSchoolSchoolSchoolSchool", "Flag", "Movie Ticket")
+    val artifactsTitle: List<String> = listOf(
+        "Love Letter", "Baseball",
+        "SchoolSchoolSchoolSchoolSchoolSchoolSchoolSchoolSchool", "Flag", "Movie Ticket"
+    )
 
     // TODO: assign member list who related to each artifact here
     private var artifactsMemberList: ArrayList<List<String>> = arrayListOf()
     val artifactsRelatedTo: ArrayList<String> = arrayListOf()
 
-    val artifactsLocation: List<String>
-            = listOf("Lorem Ipsum is simply dummy text of the printing and typesetting industry", "Indonesia",
-        "Indonesia", "Indonesia", "Indonesia")
+    val artifactsLocation: List<String> = listOf(
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry", "Indonesia",
+        "Indonesia", "Indonesia", "Indonesia"
+    )
 
     init {
         addMemberList()
@@ -37,7 +39,7 @@ class HomeViewModel: ViewModel() {
                 result += member
 
                 // put "," after member iff it is not the last member
-                if (listOfMember.indexOf(member) != (listOfMember.size -1)) {
+                if (listOfMember.indexOf(member) != (listOfMember.size - 1)) {
                     result += ", "
                 }
             }
