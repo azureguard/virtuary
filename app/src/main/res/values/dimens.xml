@@ -2,8 +2,10 @@
 <resources>
     <dimen name="family_member_name_field">42sp</dimen>
     <dimen name="family_member_image_size">150dp</dimen>
-    <dimen name="artifact_home_image_size">100dp</dimen>
+    <dimen name="artifact_home_image_size">100sp</dimen>
     <dimen name="add_item_image_height">250dp</dimen>
     <dimen name="add_item_icon_width">101dp</dimen>
     <dimen name="add_item_icon_height">84dp</dimen>
+    <dimen name="member_list_item_width">250dp</dimen>
+    <dimen name="member_list_item_image_height">150dp</dimen>
 </resources>
