@@ -25,7 +25,6 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-
             <ImageView
                 android:id="@+id/artifact_image"
                 android:layout_width="@dimen/artifact_home_image_size"
@@ -46,46 +45,39 @@
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/location_pin"
+                app:layout_constraintBottom_toTopOf="@+id/artifact_current_location"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/artifact_image"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
-            <ImageView
-                android:id="@+id/location_pin"
-                android:contentDescription="@null"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/related_to_text"
-                app:layout_constraintStart_toEndOf="@+id/artifact_image"
-                app:layout_constraintTop_toBottomOf="@+id/artifact_title"
-                app:srcCompat="@drawable/ic_room_black_24dp" />
 
             <TextView
                 android:id="@+id/artifact_current_location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:drawableStart="@drawable/ic_room_black_24dp"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textColor="@android:color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/location_pin"
+                android:gravity="center_vertical"
+                app:layout_constraintBottom_toTopOf="@+id/related_to_text"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/location_pin" />
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/artifact_image"
+                app:layout_constraintTop_toBottomOf="@+id/artifact_title" />
 
             <TextView
                 android:id="@+id/related_to_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/related_to_text"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/artifact_image"
-                app:layout_constraintTop_toBottomOf="@+id/location_pin" />
+                app:layout_constraintTop_toBottomOf="@+id/artifact_current_location" />
 
             <TextView
                 android:id="@+id/artifact_related_to"
