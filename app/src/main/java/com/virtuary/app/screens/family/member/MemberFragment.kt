@@ -53,7 +53,7 @@ class MemberFragment : Fragment() {
 
         // assign adapter so all item list behave the same way
         binding.rvMemberItemList.adapter = MemberItemAdapter(
-            memberViewModel.artifactsTitle
+            memberViewModel.artifactsTitle, ::relatedItemOnClick
         )
         binding.rvMemberItemList.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -69,5 +69,14 @@ class MemberFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    // TODO: Change implementation to pass id to re fetch or using other implementation
+    private fun relatedItemOnClick(name : String){
+        findNavController().navigate(
+            MemberFragmentDirections.actionMemberFragmentToItemFragment(
+                name
+            )
+        )
     }
 }

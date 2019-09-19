@@ -8,11 +8,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
+import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentItemBinding
+import com.virtuary.app.screens.family.member.MemberFragmentArgs
 
 class ItemFragment : Fragment() {
+
+    // argument got from navigation action
+    private val args: MemberFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +66,9 @@ class ItemFragment : Fragment() {
                 }
             }
         )
+
+        // Set the action bar label to the clicked item name
+        (activity as MainActivity).setActionBarTitle(args.name)
 
         return binding.root
     }

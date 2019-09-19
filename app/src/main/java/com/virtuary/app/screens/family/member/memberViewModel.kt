@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class MemberViewModel : ViewModel() {
 
     // Live Data To be observed for conditional layout rendering initialized to 0
-    private val _itemSize = MutableLiveData(0)
+    private val _itemSize = MutableLiveData(1)
     val itemSize: LiveData<Int>
         get() = _itemSize
 
