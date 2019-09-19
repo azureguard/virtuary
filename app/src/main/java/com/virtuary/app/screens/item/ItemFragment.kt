@@ -38,10 +38,11 @@ class ItemFragment : Fragment() {
             Observer<MutableList<String>> { data ->
                 // make chip view for each item in the list
                 val chipGroup = binding.itemRelatedToList
-                val inflator = LayoutInflater.from(chipGroup.context)
+                val chipInflater = LayoutInflater.from(chipGroup.context)
 
                 val children = data.map { chipName ->
-                    val chip = inflator.inflate(R.layout.related_to_list, chipGroup, false) as Chip
+                    val chip =
+                        chipInflater.inflate(R.layout.related_to_list, chipGroup, false) as Chip
                     chip.text = chipName
                     chip.isCloseIconVisible = false
                     chip.isClickable = false
