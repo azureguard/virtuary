@@ -10,18 +10,14 @@
                 type="com.virtuary.app.screens.family.FamilyViewModel" />
     </data>
 
-    <LinearLayout
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_family_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/family_item_view" />
 
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_family_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                tools:listitem="@layout/family_item_view" />
-    </LinearLayout>
 </layout>
