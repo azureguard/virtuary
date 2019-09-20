@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentHomeBinding
 
@@ -36,6 +37,10 @@ class HomeFragment : Fragment() {
             homeViewModel.artifactsLocation,
             this
         )
+
+        binding.addItemButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddItemFragment())
+        }
 
         return binding.root
     }
