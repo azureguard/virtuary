@@ -81,6 +81,9 @@
         <action
                 android:id="@+id/action_memberFragment_to_memberItemFragment"
                 app:destination="@id/memberItemFragment" />
+        <action
+                android:id="@+id/action_memberFragment_to_itemFragment"
+                app:destination="@id/itemFragment" />
     </fragment>
     <fragment
             android:id="@+id/memberItemFragment"
@@ -90,6 +93,9 @@
         <argument
                 android:name="name"
                 app:argType="string" />
+        <action
+                android:id="@+id/action_memberFragment_to_itemFragment"
+                app:destination="@id/itemFragment" />
     </fragment>
     <fragment
         android:id="@+id/manageAccount"
@@ -148,5 +154,14 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+            android:id="@+id/itemFragment"
+            android:name="com.virtuary.app.screens.item.ItemFragment"
+            android:label="ItemFragment"
+            tools:layout="@layout/fragment_item">
+        <argument
+                android:name="name"
+                app:argType="string" />
     </fragment>
 </navigation>

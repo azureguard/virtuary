@@ -1,6 +1,5 @@
 package com.virtuary.app.screens.family.member
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.virtuary.app.R
 import kotlinx.android.synthetic.main.member_list_item.view.*
 
-class MemberItemAdapter(private val artifactsTitle: List<String>) :
+class MemberItemAdapter(
+    private val artifactsTitle: List<String>,
+    private val relatedItemOnClick: (name: String) -> Unit
+) :
     RecyclerView.Adapter<MemberItemAdapter.ViewHolder>() {
 
     // Restrict to show only maximum of 5 items
@@ -24,7 +26,7 @@ class MemberItemAdapter(private val artifactsTitle: List<String>) :
 
         // TODO: change click behaviour for each artifact
         view.member_item_card.setOnClickListener {
-            Log.i("memberArtifactCard", "Card clicked!")
+            relatedItemOnClick(view.artifact_title.text.toString())
         }
 
         return ViewHolder(view)
