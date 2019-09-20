@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.virtuary.app.R
@@ -56,6 +57,16 @@ class MemberFragment : Fragment() {
         )
         binding.rvMemberItemList.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+        binding.showAllButton.setOnClickListener {
+            // TODO : for now pass name to the next fragment,
+            //  It may be changed to pass ID or add ID for other argument (need to change the argument in main_navigation.xml)
+            findNavController().navigate(
+                MemberFragmentDirections.actionMemberFragmentToMemberItemFragment(
+                    args.name
+                )
+            )
+        }
 
         return binding.root
     }
