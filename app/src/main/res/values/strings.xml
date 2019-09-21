@@ -37,4 +37,5 @@
     <string name="profile_edit_image_description">Edit your profile picture</string>
     <string name="edit_item">Edit Item</string>
     <string name="remove_item">Remove Item</string>
+    <string name="search_hint">Search item or user</string>
 </resources>

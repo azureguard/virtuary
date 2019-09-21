@@ -1,21 +1,25 @@
 package com.virtuary.app.screens.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.DisplayMetrics
+import android.view.*
+import android.widget.SearchView
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
 
+class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var binding: FragmentHomeBinding
 
     private lateinit var homeViewModel: HomeViewModel
+
+    private lateinit var searchView: SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +46,60 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddItemFragment())
         }
 
+        // To indicate there's option button other than up or hamburger button in action bar
+        setHasOptionsMenu(true)
+
+        // Change the behaviour of onBackPressed to handle closing search bar
+        // https://stackoverflow.com/questions/51043428/handling-back-button-in-android-navigation-component
+        val callback = object : OnBackPressedCallback(
+            true // default to enabled
+        ) {
+            override fun handleOnBackPressed() {
+                if (searchView.isIconified) {
+                    requireActivity().finish()
+                } else {
+                    searchView.isIconified = true
+                }
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            callback
+        )
+
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_search, menu)
+        val searchItem = menu.findItem(R.id.app_bar_search)
+        searchView = searchItem.actionView as SearchView
+        searchView.queryHint = getString(R.string.search_hint)
+        searchView.setOnQueryTextListener(this)
+
+        // Make the search bar fill the entire action bar
+        val displayMetrics = DisplayMetrics()
+        (activity as MainActivity).windowManager.defaultDisplay.getMetrics(displayMetrics)
+        searchView.maxWidth = displayMetrics.widthPixels
+        searchView.setOnSearchClickListener {
+            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        }
+        searchView.setOnCloseListener {
+            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            false
+        }
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    // Called when the action bar search text has been submitted using button or others
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return true
+    }
+
+    // Called when the action bar search text has changed.
+    override fun onQueryTextChange(query: String?): Boolean {
+        return true
     }
 }
