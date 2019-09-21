@@ -50,7 +50,8 @@ class MemberItemFragment : Fragment() {
         binding.rvItemList.adapter = ArtifactAdapter(
             memberItemViewModel.artifactsTitle,
             memberItemViewModel.artifactsRelatedTo,
-            memberItemViewModel.artifactsLocation
+            memberItemViewModel.artifactsLocation,
+            this
         )
 
         return binding.root

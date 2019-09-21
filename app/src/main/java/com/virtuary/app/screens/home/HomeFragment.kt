@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentHomeBinding
 
-class HomeFragment: Fragment() {
+class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -30,7 +30,12 @@ class HomeFragment: Fragment() {
         binding.homeViewModel = homeViewModel
 
         // assign adapter so all item list behave the same way
-        binding.rvItemList.adapter = ArtifactAdapter(homeViewModel.artifactsTitle, homeViewModel.artifactsRelatedTo, homeViewModel.artifactsLocation)
+        binding.rvItemList.adapter = ArtifactAdapter(
+            homeViewModel.artifactsTitle,
+            homeViewModel.artifactsRelatedTo,
+            homeViewModel.artifactsLocation,
+            this
+        )
 
         return binding.root
     }
