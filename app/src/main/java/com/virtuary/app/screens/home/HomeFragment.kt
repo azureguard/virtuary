@@ -71,6 +71,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         return binding.root
     }
 
+    // Function to inflate the action bar menu (including search)
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_search, menu)
         val searchItem = menu.findItem(R.id.app_bar_search)
