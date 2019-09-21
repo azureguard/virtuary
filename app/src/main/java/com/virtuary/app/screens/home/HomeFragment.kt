@@ -75,7 +75,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         inflater.inflate(R.menu.menu_search, menu)
         val searchItem = menu.findItem(R.id.app_bar_search)
         searchView = searchItem.actionView as SearchView
-        searchView.queryHint = getString(R.string.search_hint)
+        searchView.queryHint = getString(R.string.home_search_hint)
         searchView.setOnQueryTextListener(this)
 
         // Make the search bar fill the entire action bar
@@ -92,6 +92,9 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
         super.onCreateOptionsMenu(menu, inflater)
     }
+
+    //TODO: Using one of this function, connect it to the viewModel to do search
+    // two of the function need to be here, just change one of the function implementation
 
     // Called when the action bar search text has been submitted using button or others
     override fun onQueryTextSubmit(query: String?): Boolean {
