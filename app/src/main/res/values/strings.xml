@@ -35,4 +35,6 @@
     <string name="profile_current_password">Current password</string>
     <string name="profile_image_description">Your profile picture</string>
     <string name="profile_edit_image_description">Edit your profile picture</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="remove_item">Remove Item</string>
 </resources>

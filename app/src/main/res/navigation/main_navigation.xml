@@ -41,10 +41,10 @@
         android:label="Forgot Password"
         tools:layout="@layout/fragment_forgot_password" />
     <fragment
-            android:id="@+id/homeFragment"
-            android:name="com.virtuary.app.screens.home.HomeFragment"
-            android:label="Home"
-            tools:layout="@layout/fragment_home" >
+        android:id="@+id/homeFragment"
+        android:name="com.virtuary.app.screens.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_addItemFragment"
             app:destination="@id/addItemFragment" />
@@ -53,13 +53,12 @@
         android:id="@+id/addItemFragment"
         android:name="com.virtuary.app.screens.addItem.AddItemFragment"
         android:label="Add Item"
-        tools:layout="@layout/fragment_add_item"
-        />
+        tools:layout="@layout/fragment_add_item" />
     <fragment
-            android:id="@+id/familyFragment"
-            android:name="com.virtuary.app.screens.family.FamilyFragment"
-            android:label="Family"
-            tools:layout="@layout/fragment_family">
+        android:id="@+id/familyFragment"
+        android:name="com.virtuary.app.screens.family.FamilyFragment"
+        android:label="Family"
+        tools:layout="@layout/fragment_family">
         <action
             android:id="@+id/action_familyFragment_to_memberFragment"
             app:destination="@id/memberFragment" />
@@ -168,13 +167,25 @@
     <fragment
         android:id="@+id/itemFragment"
         android:name="com.virtuary.app.screens.item.ItemFragment"
-        android:label="ItemFragment"
+        android:label="Item Fragment"
         tools:layout="@layout/fragment_item">
         <argument
             android:name="name"
             app:argType="string" />
+        <action
+            android:id="@+id/action_itemFragment_to_editItemFragment"
+            app:destination="@id/editItemFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_itemFragment"
         app:destination="@id/itemFragment" />
+    <fragment
+        android:id="@+id/editItemFragment"
+        android:name="com.virtuary.app.screens.item.editItem.EditItemFragment"
+        android:label="Edit Item"
+        tools:layout="@layout/fragment_edit_item">
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
 </navigation>

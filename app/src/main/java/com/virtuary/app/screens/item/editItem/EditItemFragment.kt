@@ -1,4 +1,4 @@
-package com.virtuary.app.screens.addItem
+package com.virtuary.app.screens.item.editItem
 
 import android.app.Activity
 import android.content.Intent
@@ -12,13 +12,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import com.virtuary.app.R
-import com.virtuary.app.databinding.FragmentAddItemBinding
-import kotlinx.android.synthetic.main.fragment_add_item.add_item_image
-import kotlinx.android.synthetic.main.fragment_add_item.add_item_image_icon
+import com.virtuary.app.databinding.FragmentEditItemBinding
+import kotlinx.android.synthetic.main.fragment_edit_item.edit_item_image
+import kotlinx.android.synthetic.main.fragment_edit_item.edit_item_image_icon
 
-class AddItemFragment : Fragment() {
+class EditItemFragment : Fragment() {
+
+    private lateinit var editItemViewModel: EditItemViewModel
+    private lateinit var editItemViewModelFactory: EditItemViewModelFactory
+
+    // argument got from navigation action
+    private val args: EditItemFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,43 +33,46 @@ class AddItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // inflate the layout
-        val binding: FragmentAddItemBinding = DataBindingUtil.inflate(
+        val binding: FragmentEditItemBinding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_add_item, container, false
+            R.layout.fragment_edit_item, container, false
         )
 
-        // get the add item view model
+        // pass data to the view model through factory
+        editItemViewModelFactory = EditItemViewModelFactory(args.name)
+
+        // get the edit item view model
         // assign for databinding so the data in view model can be accessed
-        val addItemViewModel: AddItemViewModel =
-            ViewModelProviders.of(this).get(AddItemViewModel::class.java)
-        binding.addItemViewModel = addItemViewModel
+        editItemViewModel =
+            ViewModelProviders.of(this, editItemViewModelFactory).get(EditItemViewModel::class.java)
+        binding.editItemViewModel = editItemViewModel
 
         // can observe LiveData updates
         binding.lifecycleOwner = this
 
         // sets up event listening to show error when the title is empty
-        addItemViewModel.emptyTitle.observe(this, Observer { invalid ->
+        editItemViewModel.emptyTitle.observe(this, Observer { invalid ->
             if (invalid) {
-                binding.addItemTitleLayout.error = "Enter title"
-                binding.addItemTitleLayout.isErrorEnabled = true
+                binding.editItemTitleLayout.error = "Enter title"
+                binding.editItemTitleLayout.isErrorEnabled = true
             } else {
-                binding.addItemTitleLayout.isErrorEnabled = false
+                binding.editItemTitleLayout.isErrorEnabled = false
             }
         })
 
         // build the drop down add item menu
-        binding.addItemRelatedToSpinner.adapter = ArrayAdapter<String>(
+        binding.editItemRelatedToSpinner.adapter = ArrayAdapter<String>(
             activity!!,
             R.layout.support_simple_spinner_dropdown_item,
-            addItemViewModel.selectionRelatedTo.value!!
+            editItemViewModel.selectionRelatedTo.value!!
         )
 
-        binding.addItemRelatedToSpinner.onItemSelectedListener =
+        binding.editItemRelatedToSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    if (addItemViewModel.onItemSelected(binding.addItemRelatedToSpinner.selectedItemPosition)) {
+                    if (editItemViewModel.onItemSelected(binding.editItemRelatedToSpinner.selectedItemPosition)) {
                         // set selection to "-" if item selected to avoid confusion in manipulating array
-                        binding.addItemRelatedToSpinner.setSelection(0)
+                        binding.editItemRelatedToSpinner.setSelection(0)
                     }
                 }
 
@@ -71,10 +81,10 @@ class AddItemFragment : Fragment() {
                 }
             }
 
-        addItemViewModel.addedRelatedTo.observe(this,
+        editItemViewModel.addedRelatedTo.observe(this,
             Observer<MutableList<String>> { data ->
                 // make chip view for each item in the list
-                val chipGroup = binding.addItemRelatedToList
+                val chipGroup = binding.editItemRelatedToList
                 val chipInflater = LayoutInflater.from(chipGroup.context)
 
                 val children = data.map { chipName ->
@@ -87,7 +97,7 @@ class AddItemFragment : Fragment() {
 
                     chip.setOnCloseIconClickListener {
                         chipGroup.removeView(chip as View)
-                        addItemViewModel.onRemoveClick(chipName)
+                        editItemViewModel.onRemoveClick(chipName)
                     }
 
                     chip
@@ -104,12 +114,12 @@ class AddItemFragment : Fragment() {
         )
 
         // sets click listener for adding image in gallery
-        binding.addItemImageIcon.setOnClickListener {
+        binding.editItemImageIcon.setOnClickListener {
             selectImageInAlbum()
         }
 
-        binding.addItemImage.setOnClickListener {
-            if (binding.addItemImageIcon.visibility == View.INVISIBLE) {
+        binding.editItemImage.setOnClickListener {
+            if (binding.editItemImageIcon.visibility == View.INVISIBLE) {
                 selectImageInAlbum()
             }
         }
@@ -130,28 +140,19 @@ class AddItemFragment : Fragment() {
         }
     }
 
-    // TODO : in-app camera
-//    private fun takePhoto() {
-//        val intent1 = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        if (intent1.resolveActivity(context!!.packageManager) != null) {
-//            startActivityForResult(intent1, REQUEST_TAKE_PHOTO)
-//        }
-//    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // result code is OK only when the user selects an image
         if (resultCode == Activity.RESULT_OK)
             if (requestCode == REQUEST_SELECT_IMAGE_IN_ALBUM) {
                 // returns the content URI for the selected Image
                 val selectedImage = data!!.data
-                add_item_image_icon.visibility = View.INVISIBLE
-                add_item_image.setImageURI(selectedImage)
+                edit_item_image_icon.visibility = View.INVISIBLE
+                edit_item_image.setImageURI(selectedImage)
             }
     }
 
     // define static properties
     companion object {
-        //        private val REQUEST_TAKE_PHOTO = 0
         private const val REQUEST_SELECT_IMAGE_IN_ALBUM = 1
     }
 }

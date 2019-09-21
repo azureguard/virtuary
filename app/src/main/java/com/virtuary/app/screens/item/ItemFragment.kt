@@ -1,24 +1,25 @@
 package com.virtuary.app.screens.item
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentItemBinding
-import com.virtuary.app.screens.family.member.MemberFragmentArgs
+import com.virtuary.app.screens.addItem.AddItemFragment
 
 class ItemFragment : Fragment() {
 
     // argument got from navigation action
-    private val args: MemberFragmentArgs by navArgs()
+    private val args: ItemFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +32,14 @@ class ItemFragment : Fragment() {
             R.layout.fragment_item, container, false
         )
 
-        // get the home view model
+        // pass title to the edit item fragment
+        // TODO: change passing data
+        binding.itemTitle.text = args.name
+
+        // set options menu
+        setHasOptionsMenu(true)
+
+        // get the item view model
         // assign for databinding so the data in view model can be accessed
         val viewModel: ItemViewModel = ViewModelProviders.of(this).get(ItemViewModel::class.java)
 
@@ -71,5 +79,28 @@ class ItemFragment : Fragment() {
         (activity as MainActivity).setActionBarTitle(args.name)
 
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_item, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_edit_item -> {
+                findNavController().navigate(
+                    ItemFragmentDirections.actionItemFragmentToEditItemFragment(
+                        args.name
+                    )
+                )
+            }
+            R.id.nav_remove_item -> {
+                // TODO: change remove button behaviour
+                Log.i("RemoveItem", "Remove Item Menu Button clicked")
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
