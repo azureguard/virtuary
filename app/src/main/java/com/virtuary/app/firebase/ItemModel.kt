@@ -1,8 +1,11 @@
-package com.virtuary.app.models
+package com.virtuary.app.firebase
 
-import java.util.Date
+import com.google.firebase.firestore.DocumentId
+import java.util.*
 
 data class Item(
+    @DocumentId
+    val documentId: String? = null,
     val name: String? = null,
     val originalLocation: String? = null,
     val currentLocation: String? = null,
