@@ -7,6 +7,7 @@ import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -45,18 +46,23 @@ class MemberItemFragment : Fragment(), SearchView.OnQueryTextListener {
         // Dynamically change the label on the action bar
         (activity as MainActivity).setActionBarTitle("${args.name}'s items")
 
-        // get the home view model
+        // get the member item view model
         // assign for databinding so the data in view model can be accessed
         memberItemViewModel = ViewModelProviders.of(this).get(MemberItemViewModel::class.java)
         binding.memberItemViewModel = memberItemViewModel
 
         // assign adapter so all item list behave the same way
-        binding.rvItemList.adapter = ArtifactAdapter(
-            memberItemViewModel.artifactsTitle,
-            memberItemViewModel.artifactsRelatedTo,
-            memberItemViewModel.artifactsLocation,
-            this
-        )
+        val adapter = ArtifactAdapter(this)
+        binding.rvItemList.adapter = adapter
+
+        memberItemViewModel.artifacts.observe(this, Observer {
+            it?.let {
+                // check difference between the new list against the old one
+                // run all the needed changes on the recycler view
+                // will detect any items that were added, removed, changed, updated the items shown by recycler view
+                adapter.submitList(it)
+            }
+        })
 
         // To indicate there's option button other than up or hamburger button in action bar
         setHasOptionsMenu(true)
