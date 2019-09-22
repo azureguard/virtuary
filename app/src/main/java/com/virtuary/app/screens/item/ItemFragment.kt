@@ -1,6 +1,5 @@
 package com.virtuary.app.screens.item
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -14,7 +13,6 @@ import com.google.android.material.chip.Chip
 import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentItemBinding
-import com.virtuary.app.screens.addItem.AddItemFragment
 
 class ItemFragment : Fragment() {
 
@@ -32,7 +30,6 @@ class ItemFragment : Fragment() {
             R.layout.fragment_item, container, false
         )
 
-        // pass title to the edit item fragment
         // TODO: change passing data
         binding.itemTitle.text = args.name
 
@@ -89,6 +86,7 @@ class ItemFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_edit_item -> {
+                // pass title to the edit item fragment
                 findNavController().navigate(
                     ItemFragmentDirections.actionItemFragmentToEditItemFragment(
                         args.name

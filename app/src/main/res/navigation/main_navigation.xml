@@ -167,7 +167,6 @@
     <fragment
         android:id="@+id/itemFragment"
         android:name="com.virtuary.app.screens.item.ItemFragment"
-        android:label="Item Fragment"
         tools:layout="@layout/fragment_item">
         <argument
             android:name="name"
