@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="addItemViewModel"
-            type="com.virtuary.app.screens.addItem.AddItemViewModel" />
+            name="editItemViewModel"
+            type="com.virtuary.app.screens.item.editItem.EditItemViewModel" />
     </data>
 
     <ScrollView
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/add_item_image"
+                android:id="@+id/edit_item_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/add_item_image_height"
                 android:background="@drawable/black_bottom_border_line"
@@ -28,21 +28,21 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/add_item_image_icon"
+                android:id="@+id/edit_item_image_icon"
                 android:layout_width="@dimen/add_item_icon_width"
                 android:layout_height="@dimen/add_item_icon_height"
                 android:adjustViewBounds="true"
                 android:baselineAlignBottom="false"
                 android:contentDescription="@null"
                 android:outlineProvider="none"
-                app:layout_constraintBottom_toBottomOf="@+id/add_item_image"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_item_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
 
             <TextView
-                android:id="@+id/add_item_title_text"
+                android:id="@+id/edit_item_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
@@ -54,10 +54,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_image" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_item_image" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_item_title_layout"
+                android:id="@+id/edit_item_title_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -65,21 +65,21 @@
                 android:textColorHint="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_title_text">
+                app:layout_constraintTop_toBottomOf="@+id/edit_item_title_text">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/add_item_title_edit"
+                    android:id="@+id/edit_item_title_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_background"
                     android:padding="8dp"
                     android:singleLine="true"
-                    android:text="@={addItemViewModel.title}"
+                    android:text="@={editItemViewModel.title}"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/add_item_location_text"
+                android:id="@+id/edit_item_location_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
@@ -91,11 +91,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_title_layout" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_item_title_layout" />
 
 
             <EditText
-                android:id="@+id/add_item_location_edit"
+                android:id="@+id/edit_item_location_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -105,14 +105,14 @@
                 android:inputType="none"
                 android:padding="8dp"
                 android:singleLine="true"
-                android:text="@={addItemViewModel.location}"
+                android:text="@={editItemViewModel.location}"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_location_text" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_item_location_text" />
 
             <TextView
-                android:id="@+id/add_item_related_to_text"
+                android:id="@+id/edit_item_related_to_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
@@ -124,10 +124,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_location_edit" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_item_location_edit" />
 
             <Spinner
-                android:id="@+id/add_item_related_to_spinner"
+                android:id="@+id/edit_item_related_to_spinner"
                 android:layout_width="200sp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -136,10 +136,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_related_to_text" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_item_related_to_text" />
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/add_item_related_to_list"
+                android:id="@+id/edit_item_related_to_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -148,11 +148,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_related_to_spinner"
+                app:layout_constraintTop_toBottomOf="@+id/edit_item_related_to_spinner"
                 app:singleSelection="false" />
 
             <TextView
-                android:id="@+id/add_item_story_text"
+                android:id="@+id/edit_item_story_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
@@ -164,10 +164,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_related_to_list" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_item_related_to_list" />
 
             <EditText
-                android:id="@+id/add_item_story"
+                android:id="@+id/edit_item_story"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -178,26 +178,26 @@
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
                 android:padding="8dp"
-                android:text="@={addItemViewModel.story}"
+                android:text="@={editItemViewModel.story}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_story_text" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_item_story_text" />
 
             <Button
-                android:id="@+id/add_item_confirm"
+                android:id="@+id/edit_item_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
                 android:background="@color/colorPrimary"
-                android:onClick="@{() -> addItemViewModel.onClick()}"
+                android:onClick="@{() -> editItemViewModel.onClick()}"
                 android:text="@string/confirm"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.91"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_story"
+                app:layout_constraintTop_toBottomOf="@+id/edit_item_story"
                 app:layout_constraintVertical_bias="0.13" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
