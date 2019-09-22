@@ -43,4 +43,8 @@
     <string name="family_search_hint">Search family member</string>
     <string name="member_item_search_hint">Search family member</string>
     <string name="search">search</string>
+    <string name="add_item_dialog_take_picture">Take Picture</string>
+    <string name="add_item_dialog_take_picture_description">Take a new photo or select one from your existing photo library</string>
+    <string name="add_item_dialog_camera">Camera</string>
+    <string name="add_item_dialog_gallery">Gallery</string>
 </resources>
