@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@+id/landingFragment">
+    app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/landingFragment"
         android:name="com.virtuary.app.screens.landing.LandingFragment"
@@ -66,7 +66,8 @@
     <action
         android:id="@+id/action_global_homeFragment"
         app:destination="@id/homeFragment"
-        app:popUpTo="@id/main_navigation" />
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:popUpTo="@+id/main_navigation" />
     <action
         android:id="@+id/action_global_familyFragment"
         app:destination="@id/familyFragment"
@@ -109,7 +110,8 @@
     <fragment
         android:id="@+id/manageAccount"
         android:name="com.virtuary.app.screens.manageAccount.ManageAccountFragment"
-        android:label="Manage Account">
+        android:label="Manage Account"
+        tools:layout="@layout/fragment_manage_account">
         <action
             android:id="@+id/action_manageAccount_to_changePassword"
             app:destination="@id/changePassword"
@@ -126,7 +128,7 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_manageAccount_to_forgotPasswordFragment"
-            app:destination="@id/forgotPasswordFragment"
+            app:destination="@id/navigation"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -142,7 +144,8 @@
     <fragment
         android:id="@+id/changePassword"
         android:name="com.virtuary.app.screens.manageAccount.ChangePassword"
-        android:label="Change Password">
+        android:label="Change Password"
+        tools:layout="@layout/fragment_change_password">
         <action
             android:id="@+id/action_changePassword_to_manageAccount"
             app:destination="@id/manageAccount"
@@ -187,4 +190,81 @@
             android:name="name"
             app:argType="string" />
     </fragment>
+    <action
+        android:id="@+id/action_global_landingFragment"
+        app:destination="@id/navigation"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popUpTo="@id/landingFragment"
+        app:popUpToInclusive="true"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <navigation
+        android:id="@+id/navigation"
+        app:startDestination="@id/landingFragment" >
+        <fragment
+            android:id="@+id/signupFragment"
+            android:name="com.virtuary.app.screens.signUp.SignUpFragment"
+            android:label="Sign Up"
+            tools:layout="@layout/fragment_sign_up">
+            <action
+                android:id="@+id/action_signupFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popUpTo="@+id/landingFragment"
+                app:popUpToInclusive="false" />
+        </fragment>
+        <fragment
+            android:id="@+id/forgotPasswordFragment"
+            android:name="com.virtuary.app.screens.forgotPassword.ForgotPasswordFragment"
+            android:label="Forgot Password"
+            tools:layout="@layout/fragment_forgot_password" />
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="com.virtuary.app.screens.login.LoginFragment"
+            android:label="Login"
+            tools:layout="@layout/fragment_login">
+            <action
+                android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+                app:destination="@id/forgotPasswordFragment" />
+            <action
+                android:id="@+id/action_loginFragment_to_homeFragment"
+                app:destination="@id/homeFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"
+                app:popUpTo="@+id/main_navigation" />
+        </fragment>
+        <fragment
+            android:id="@+id/landingFragment"
+            android:name="com.virtuary.app.screens.landing.LandingFragment"
+            tools:layout="@layout/fragment_landing">
+            <action
+                android:id="@+id/action_landingFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:launchSingleTop="true"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            <action
+                android:id="@+id/action_landingFragment_to_signupFragment"
+                app:destination="@id/signupFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            <action
+                android:id="@+id/action_landingFragment_to_homeFragment"
+                app:destination="@id/homeFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"
+                app:popUpTo="@+id/landingFragment"
+                app:popUpToInclusive="true" />
+        </fragment>
+    </navigation>
 </navigation>
