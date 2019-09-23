@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentLoginBinding
 
@@ -20,11 +21,14 @@ class LoginFragment : Fragment() {
 
     private lateinit var viewModel: LoginViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         val binding: FragmentLoginBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_login, container, false)
+            inflater, R.layout.fragment_login, container, false
+        )
 
         // Get the viewmodel
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
@@ -53,13 +57,20 @@ class LoginFragment : Fragment() {
 
         // Sets up event listening to show error when the password is invalid
         viewModel.invalidPassword.observe(this, Observer { invalid ->
-            if(invalid) {
+            if (invalid) {
                 binding.passwordEdit.error = "Invalid Password"
                 binding.passwordEdit.isErrorEnabled = true
             } else {
                 binding.passwordEdit.isErrorEnabled = false
             }
         })
+
+        val auth = FirebaseAuth.getInstance()
+        auth.addAuthStateListener {
+            if (auth.currentUser != null) findNavController().navigate(
+                LoginFragmentDirections.actionGlobalHomeFragment()
+            )
+        }
 
         return binding.root
     }
