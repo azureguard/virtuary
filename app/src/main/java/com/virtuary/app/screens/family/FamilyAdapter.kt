@@ -45,6 +45,7 @@ class FamilyAdapter(
         }
     }
 }
+
 class UserDiffCallBack : DiffUtil.ItemCallback<User>() {
     override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
         // TODO: check ID instead

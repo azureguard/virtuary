@@ -14,17 +14,17 @@ class FamilyViewModel
     // TODO: delete later
     private val familyMemberName: List<String> = listOf(
         "Hello World Kevin Steve Daryl Huston Kevin !!!!!!!!!!!!!!!!!!!!",
-        "Hello World Steve",
+        "Hello World :)",
         "Hello World Daryl",
         "Hello World Huston",
         "Hello World Bob",
         "Hello World Lev",
         "Hello World Kevin !!!!!!!",
         "Hello World Steve!!!!!!",
-        "Hello World Daryl",
-        "Hello World Huston",
-        "Hello World Bob",
-        "Hello World Lev"
+        "Hello World Daryl2",
+        "Hello World Huston2",
+        "Hello World Bob2",
+        "Hello World Lev2"
     )
 
     private val familyMemberEmail: List<String> =
@@ -44,6 +44,7 @@ class FamilyViewModel
         )
 
     init {
+        _users.value = mutableListOf()
         addUsers()
     }
 
@@ -53,7 +54,7 @@ class FamilyViewModel
                 User(
                     familyMemberName[index],
                     familyMemberEmail[index]
-                    )
+                )
             )
         }
     }
