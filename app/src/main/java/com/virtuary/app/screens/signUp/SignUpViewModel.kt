@@ -11,6 +11,23 @@ class SignUpViewModel : ViewModel() {
     val name = ObservableField("")
     val email = ObservableField("")
     val password = ObservableField("")
+    private val inProgress = MutableLiveData<Boolean>(false)
+    private val isSuccess = MutableLiveData<Boolean>(false)
+    private val errorMessage = MutableLiveData<String>("")
+    private val fbAuth = FirebaseAuth.getInstance()
+
+
+    fun getInProgress(): LiveData<Boolean> {
+        return inProgress
+    }
+
+    fun getIsSuccess(): LiveData<Boolean> {
+        return isSuccess
+    }
+
+    fun getErrorMessage(): LiveData<String> {
+        return errorMessage
+    }
 
     // Event which triggered when the email inputted is invalid
     private val _invalidEmail = MutableLiveData<Boolean>()
@@ -28,31 +45,39 @@ class SignUpViewModel : ViewModel() {
         get() = _invalidName
 
     fun onClick() {
-        _invalidEmail.value = email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get()).matches()
-        _invalidPassword.value = password.get() == null || password.get()!!.isEmpty() || password.get()!!.length < 6
+        _invalidEmail.value =
+            email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get()).matches()
+        _invalidPassword.value =
+            password.get() == null || password.get()!!.isEmpty() || password.get()!!.length < 6
         _invalidName.value = name.get() == null || name.get()!!.isEmpty()
-        val fbAuth = FirebaseAuth.getInstance()
-        fbAuth.createUserWithEmailAndPassword(email.get()!!, password.get()!!)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val user = fbAuth.currentUser
-                    val profileUpdates = UserProfileChangeRequest.Builder()
-                        .setDisplayName(name.get())
-                        .build()
 
-                    user?.updateProfile(profileUpdates)
-                        ?.addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                // TODO: handle case where sign up is successful but name is not?
+        if (!(invalidEmail.value!! && invalidPassword.value!! && invalidName.value!!)) {
+            inProgress.value = true
+            fbAuth.createUserWithEmailAndPassword(email.get()!!, password.get()!!)
+                .addOnCompleteListener { task ->
+                    isSuccess.value = task.isSuccessful
+                    if (task.isSuccessful) {
+                        val user = fbAuth.currentUser
+                        val profileUpdates = UserProfileChangeRequest.Builder()
+                            .setDisplayName(name.get())
+                            .build()
+
+                        user?.updateProfile(profileUpdates)
+                            ?.addOnCompleteListener { task ->
+                                if (!isSuccess.value!!) {
+                                    // TODO: handle case where sign up is successful but name is not?
+                                }
                             }
-                        }
-                } else {
-                    // TODO: Unable to make a toast without context
+                    } else {
+                        errorMessage.value = "Error"
+                        // TODO: Unable to make a toast without context
 //                    Toast.makeText(
 //                        baseContext, "Authentication failed.",
 //                        Toast.LENGTH_SHORT
 //                    ).show()
+                    }
+                    inProgress.value = false
                 }
-            }
+        }
     }
 }

@@ -6,11 +6,13 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.main_activity.*
 
 /**
@@ -19,12 +21,15 @@ import kotlinx.android.synthetic.main.main_activity.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var drawerToggle: ActionBarDrawerToggle
+    private lateinit var auth: FirebaseAuth
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+        auth = FirebaseAuth.getInstance()
 
-        val navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
         // Specify set of top level root page to show burger menu
         appBarConfiguration =
             AppBarConfiguration(setOf(R.id.homeFragment, R.id.familyFragment), drawer_layout)
@@ -43,11 +48,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                drawer_user_name.text = "Friedrich"
 //            }
         }
+
+        if (auth.currentUser == null) {
+            navController.navigate(R.id.action_global_landingFragment)
+        }
+
         drawer_layout.addDrawerListener(drawerToggle)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
@@ -100,23 +109,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun displayScreen(itemId: Int) {
         when (itemId) {
             R.id.nav_home -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_homeFragment)
+                navController.navigate(R.id.action_global_homeFragment)
             }
 
             R.id.nav_family -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_familyFragment)
+                navController.navigate(R.id.action_global_familyFragment)
             }
 
             R.id.nav_about -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_aboutFragment)
+                navController.navigate(R.id.action_global_aboutFragment)
             }
 
             R.id.nav_edit_profile -> {
-                findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_manageAccount)
+                navController.navigate(R.id.action_global_manageAccount)
             }
 
             R.id.nav_settings -> {
                 TODO() // Implement settings fragment and connect it here
+            }
+
+            R.id.logout -> {
+                auth.signOut()
+                navController.navigate(R.id.action_global_landingFragment)
             }
         }
     }

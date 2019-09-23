@@ -1,15 +1,19 @@
 package com.virtuary.app.screens.signUp
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentSignUpBinding
+import com.virtuary.app.util.hideKeyboard
 
 
 /**
@@ -45,6 +49,11 @@ class SignUpFragment : Fragment() {
                 binding.emailText.isErrorEnabled = false
             }
         })
+        binding.emailEdit.setOnFocusChangeListener { _, hasFocus ->
+            run {
+                if (hasFocus) binding.emailText.isErrorEnabled = false
+            }
+        }
 
         // Sets up event listening to show error when the password is invalid
         viewModel.invalidPassword.observe(this, Observer { invalid ->
@@ -55,16 +64,69 @@ class SignUpFragment : Fragment() {
                 binding.passwordText.isErrorEnabled = false
             }
         })
-
+        binding.passwordEdit.setOnFocusChangeListener { _, hasFocus ->
+            run {
+                if (hasFocus) binding.passwordText.isErrorEnabled = false
+            }
+        }
         // Sets up event listening to show error when the name is invalid
         viewModel.invalidName.observe(this, Observer { invalid ->
             if(invalid) {
-                binding.nameText.error = "Invalid Name"
+                binding.nameText.error = "Please enter your name"
                 binding.nameText.isErrorEnabled = true
             } else {
                 binding.nameText.isErrorEnabled = false
             }
         })
+        binding.nameEdit.setOnFocusChangeListener { _, hasFocus ->
+            run {
+                if (hasFocus) binding.nameText.isErrorEnabled = false
+            }
+        }
+
+        binding.passwordEdit.setOnKeyListener { v, keyCode, event ->
+            run {
+                if (event.keyCode == KeyEvent.KEYCODE_ENTER ||
+                    event.action == KeyEvent.ACTION_DOWN ||
+                    keyCode == EditorInfo.IME_ACTION_DONE
+                ) {
+                    hideKeyboard()
+                    viewModel.onClick()
+                }
+                return@run true
+            }
+        }
+
+        viewModel.getInProgress().observe(this, Observer<Boolean> { inProgress ->
+            run {
+                if (inProgress) {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.signupButton.isEnabled = false
+                    hideKeyboard()
+                } else {
+                    binding.progressBar.visibility = View.GONE
+                    binding.signupButton.isEnabled = true
+                }
+            }
+        })
+
+        viewModel.getIsSuccess().observe(this, Observer<Boolean> { isSuccess ->
+            run {
+                if (isSuccess) {
+                    findNavController().navigate(SignUpFragmentDirections.actionSignupFragmentToLoginFragment())
+                }
+            }
+        })
+
+        viewModel.getErrorMessage().observe(this, Observer<String> { errorMessage ->
+            run {
+                if (errorMessage.isNotEmpty()) {
+                    binding.emailText.error = "Email already in use"
+                    binding.emailText.isErrorEnabled = true
+                }
+            }
+        })
+
 
         return binding.root
     }
