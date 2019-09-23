@@ -29,7 +29,7 @@ class SignUpViewModel : ViewModel() {
 
     fun onClick() {
         _invalidEmail.value = email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get()).matches()
-        _invalidPassword.value = password.get() == null || password.get()!!.isEmpty()
+        _invalidPassword.value = password.get() == null || password.get()!!.isEmpty() || password.get()!!.length < 6
         _invalidName.value = name.get() == null || name.get()!!.isEmpty()
         val fbAuth = FirebaseAuth.getInstance()
         fbAuth.createUserWithEmailAndPassword(email.get()!!, password.get()!!)

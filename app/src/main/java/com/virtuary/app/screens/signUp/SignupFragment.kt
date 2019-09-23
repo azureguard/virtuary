@@ -49,7 +49,7 @@ class SignUpFragment : Fragment() {
         // Sets up event listening to show error when the password is invalid
         viewModel.invalidPassword.observe(this, Observer { invalid ->
             if(invalid) {
-                binding.passwordText.error = "Invalid Password"
+                binding.passwordText.error = "Password need to be of length 6 or more"
                 binding.passwordText.isErrorEnabled = true
             } else {
                 binding.passwordText.isErrorEnabled = false
