@@ -1,5 +1,6 @@
 package com.virtuary.app.screens.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -10,11 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.virtuary.app.MainNavigationDirections
 import com.virtuary.app.R
 import com.virtuary.app.databinding.ArtifactListItemBinding
+import com.virtuary.app.firebase.Item
 
 class ArtifactAdapter(
     private val parentFragment: Fragment
 ) :
-    ListAdapter<Artifact, ArtifactAdapter.ViewHolder>(ArtifactDiffCallBack()) {
+    ListAdapter<Item, ArtifactAdapter.ViewHolder>(ArtifactDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent, parentFragment)
@@ -27,10 +29,12 @@ class ArtifactAdapter(
     class ViewHolder private constructor(val binding: ArtifactListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Artifact) {
-            binding.artifactTitle.text = item.title
-            binding.artifactRelatedTo.text = item.relatedTo
-            binding.artifactCurrentLocation.text = item.location
+        fun bind(item: Item) {
+
+            binding.artifactTitle.text = item.name
+            binding.artifactRelatedTo.text = convertListToText(item.relations)
+            binding.artifactCurrentLocation.text = item.currentLocation
+            Log.i("item", "item name = ${item.name}, item relations = ${item.relations}, item location = ${item.currentLocation}")
 
             // TODO: change artifact image
             binding.artifactImage.setImageResource(R.drawable.ic_launcher_background)
@@ -50,16 +54,32 @@ class ArtifactAdapter(
                 return ViewHolder(binding)
             }
         }
+
+        private fun convertListToText(relations: List<String>?): String {
+            var result = ""
+
+            for (member in relations!!) {
+                result += member
+
+                // put "," after member iff it is not the last member
+                val lastMember = relations[relations.size-1]
+                if (lastMember != member) {
+                    result += ", "
+                }
+            }
+
+            return result
+        }
     }
 }
 
-class ArtifactDiffCallBack : DiffUtil.ItemCallback<Artifact>() {
-    override fun areItemsTheSame(oldItem: Artifact, newItem: Artifact): Boolean {
+class ArtifactDiffCallBack : DiffUtil.ItemCallback<Item>() {
+    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
         // TODO: check ID instead
-        return oldItem.title == newItem.title
+        return oldItem.documentId == newItem.documentId
     }
 
-    override fun areContentsTheSame(oldItem: Artifact, newItem: Artifact): Boolean {
+    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
         return oldItem == newItem
     }
 
