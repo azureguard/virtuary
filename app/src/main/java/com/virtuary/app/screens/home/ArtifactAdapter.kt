@@ -27,7 +27,6 @@ class ArtifactAdapter(
     class ViewHolder private constructor(val binding: ArtifactListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        // TODO: change the bind argument to pass the data class only (remove the position)
         fun bind(item: Artifact) {
             binding.artifactTitle.text = item.title
             binding.artifactRelatedTo.text = item.relatedTo
@@ -42,7 +41,7 @@ class ArtifactAdapter(
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ArtifactListItemBinding.inflate(layoutInflater, parent, false)
 
-                // TODO: change click behaviour for each artifact
+                // TODO: pass id on navigation instead of title
                 binding.artifactCard.setOnClickListener {
                     parentFragment.findNavController()
                         .navigate(MainNavigationDirections.actionGlobalItemFragment(binding.artifactTitle.text.toString()))

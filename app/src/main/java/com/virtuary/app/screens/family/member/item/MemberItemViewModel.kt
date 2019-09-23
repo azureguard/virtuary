@@ -21,7 +21,7 @@ class MemberItemViewModel : ViewModel() {
     private var artifactsMemberList: MutableList<List<String>> = mutableListOf()
     private val artifactsRelatedTo: MutableList<String> = mutableListOf()
 
-    val artifactsLocation: List<String> = listOf(
+    private val artifactsLocation: List<String> = listOf(
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry", "Indonesia",
         "Indonesia", "Indonesia", "Indonesia"
     )
