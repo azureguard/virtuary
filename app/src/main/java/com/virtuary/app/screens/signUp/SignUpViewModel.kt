@@ -65,16 +65,11 @@ class SignUpViewModel : ViewModel() {
                         user?.updateProfile(profileUpdates)
                             ?.addOnCompleteListener { task ->
                                 if (!isSuccess.value!!) {
-                                    // TODO: handle case where sign up is successful but name is not?
+                                    errorMessage.value = "Unable to set user profile"
                                 }
                             }
                     } else {
                         errorMessage.value = "Error"
-                        // TODO: Unable to make a toast without context
-//                    Toast.makeText(
-//                        baseContext, "Authentication failed.",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
                     }
                     inProgress.value = false
                 }

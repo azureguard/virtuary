@@ -84,7 +84,7 @@ class SignUpFragment : Fragment() {
             }
         }
 
-        binding.passwordEdit.setOnKeyListener { v, keyCode, event ->
+        binding.passwordEdit.setOnKeyListener { _, keyCode, event ->
             run {
                 if (event.keyCode == KeyEvent.KEYCODE_ENTER ||
                     event.action == KeyEvent.ACTION_DOWN ||
@@ -113,7 +113,7 @@ class SignUpFragment : Fragment() {
         viewModel.getIsSuccess().observe(this, Observer<Boolean> { isSuccess ->
             run {
                 if (isSuccess) {
-                    findNavController().navigate(SignUpFragmentDirections.actionSignupFragmentToLoginFragment())
+                    findNavController().navigate(SignUpFragmentDirections.actionGlobalHomeFragment())
                 }
             }
         })
