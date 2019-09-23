@@ -6,13 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.virtuary.app.firebase.FirestoreRepository
 import com.virtuary.app.firebase.Item
-import com.virtuary.app.screens.item.ItemViewModel
 
 class AddItemViewModel : ViewModel() {
     val title = ObservableField("")
     val location = ObservableField("")
     val story = ObservableField("")
-    val repository: FirestoreRepository = FirestoreRepository()
+    private val repository: FirestoreRepository = FirestoreRepository()
 
     private val _selectionRelatedTo = MutableLiveData<MutableList<String>>()
     val selectionRelatedTo: LiveData<MutableList<String>>
