@@ -7,6 +7,7 @@ import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.virtuary.app.MainActivity
@@ -35,12 +36,17 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.homeViewModel = homeViewModel
 
         // assign adapter so all item list behave the same way
-        binding.rvItemList.adapter = ArtifactAdapter(
-            homeViewModel.artifactsTitle,
-            homeViewModel.artifactsRelatedTo,
-            homeViewModel.artifactsLocation,
-            this
-        )
+        val adapter = ArtifactAdapter(this)
+        binding.rvItemList.adapter = adapter
+
+        homeViewModel.artifacts.observe(this, Observer {
+            it?.let {
+                // check difference between the new list against the old one
+                // run all the needed changes on the recycler view
+                // will detect any items that were added, removed, changed, updated the items shown by recycler view
+                adapter.submitList(it)
+            }
+        })
 
         binding.addItemButton.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddItemFragment())
