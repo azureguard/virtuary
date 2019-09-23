@@ -51,7 +51,7 @@ class SignUpViewModel : ViewModel() {
             password.get() == null || password.get()!!.isEmpty() || password.get()!!.length < 6
         _invalidName.value = name.get() == null || name.get()!!.isEmpty()
 
-        if (!(invalidEmail.value!! && invalidPassword.value!! && invalidName.value!!)) {
+        if (!(invalidEmail.value!! || invalidPassword.value!! || invalidName.value!!)) {
             inProgress.value = true
             fbAuth.createUserWithEmailAndPassword(email.get()!!, password.get()!!)
                 .addOnCompleteListener { task ->
