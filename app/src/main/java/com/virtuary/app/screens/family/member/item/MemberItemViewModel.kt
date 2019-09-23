@@ -7,6 +7,7 @@ import com.virtuary.app.firebase.FirestoreRepository
 import com.virtuary.app.firebase.Item
 
 class MemberItemViewModel : ViewModel() {
+    private val repository: FirestoreRepository = FirestoreRepository()
 
     private val _artifacts = MutableLiveData<MutableList<Item>>()
     val artifacts: LiveData<MutableList<Item>>
