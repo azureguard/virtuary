@@ -33,6 +33,7 @@ class EditItemViewModel(itemTitle: String) : ViewModel() {
 
     fun onClick() {
         _emptyTitle.value = title.get() == null || title.get()!!.isEmpty()
+
     }
 
     // related to item selected

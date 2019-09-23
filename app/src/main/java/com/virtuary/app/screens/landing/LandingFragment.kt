@@ -38,8 +38,8 @@ class LandingFragment : Fragment() {
         }
 
         // TODO: Change the navigation & the navigation graph (for now automatically go to home)
-        findNavController().navigate(LandingFragmentDirections.actionLandingFragmentToHomeFragment())
-        (activity as AppCompatActivity).supportActionBar!!.show()
+//        findNavController().navigate(LandingFragmentDirections.actionLandingFragmentToHomeFragment())
+//        (activity as AppCompatActivity).supportActionBar!!.show()
 
         return binding.root
     }

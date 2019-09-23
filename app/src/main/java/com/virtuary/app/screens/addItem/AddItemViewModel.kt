@@ -4,15 +4,18 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.virtuary.app.firebase.FirestoreRepository
+import com.virtuary.app.firebase.Item
 
-class AddItemViewModel: ViewModel() {
+class AddItemViewModel : ViewModel() {
     val title = ObservableField("")
     val location = ObservableField("")
     val story = ObservableField("")
+    private val repository: FirestoreRepository = FirestoreRepository()
 
     private val _selectionRelatedTo = MutableLiveData<MutableList<String>>()
     val selectionRelatedTo: LiveData<MutableList<String>>
-       get() = _selectionRelatedTo
+        get() = _selectionRelatedTo
 
     private val _addedRelatedTo = MutableLiveData<MutableList<String>>()
     val addedRelatedTo: LiveData<MutableList<String>>
@@ -31,6 +34,13 @@ class AddItemViewModel: ViewModel() {
 
     fun onClick() {
         _emptyTitle.value = title.get() == null || title.get()!!.isEmpty()
+        val item = Item(
+            name = title.get(),
+            originalLocation = location.get(),
+            story = story.get(),
+            relations = addedRelatedTo.value
+        )
+        repository.addItem(item)
     }
 
     // related to item selected
