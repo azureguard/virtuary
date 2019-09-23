@@ -7,6 +7,7 @@ import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -35,10 +36,20 @@ class FamilyFragment : Fragment(), SearchView.OnQueryTextListener {
         // implement grid layout
         binding.rvFamilyList.layoutManager = GridLayoutManager(activity, 2)
 
-        // assign family list adapter
         binding.rvFamilyList.adapter?.setHasStableIds(true)
-        binding.rvFamilyList.adapter =
-            FamilyAdapter(familyViewModel.familyMemberName, ::memberOnClick)
+
+        // assign family list adapter
+        val adapter = FamilyAdapter(::memberOnClick)
+        binding.rvFamilyList.adapter = adapter
+
+        familyViewModel.users.observe(this, Observer {
+            it?.let {
+                // check difference between the new list against the old one
+                // run all the needed changes on the recycler view
+                // will detect any items that were added, removed, changed, updated the items shown by recycler view
+                adapter.submitList(it)
+            }
+        })
 
         // To indicate there's option button other than up or hamburger button in action bar
         setHasOptionsMenu(true)
