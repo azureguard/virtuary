@@ -63,7 +63,7 @@ class SignUpViewModel : ViewModel() {
                             .build()
 
                         user?.updateProfile(profileUpdates)
-                            ?.addOnCompleteListener { task ->
+                            ?.addOnCompleteListener {
                                 if (!isSuccess.value!!) {
                                     errorMessage.value = "Unable to set user profile"
                                 }

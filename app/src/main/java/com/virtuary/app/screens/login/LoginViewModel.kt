@@ -43,7 +43,7 @@ class LoginViewModel : ViewModel() {
         _invalidEmail.value =
             email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get()!!).matches()
         _invalidPassword.value = password.get() == null || password.get()!!.isEmpty()
-        if (!(invalidEmail.value!! && invalidEmail.value!!) && email.get()!!.isNotEmpty() && password.get()!!.isNotEmpty()) {
+        if (!(invalidEmail.value!! && invalidPassword.value!!)) {
             inProgress.value = true
             auth.signInWithEmailAndPassword(email.get()!!, password.get()!!).addOnCompleteListener {
                 isSuccess.value = it.isSuccessful
