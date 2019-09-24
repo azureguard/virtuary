@@ -31,7 +31,9 @@ class ItemFragment : Fragment() {
         )
 
         // TODO: change passing data
-        binding.itemTitle.text = args.name
+        binding.itemTitle.text = args.item.name
+        binding.itemCurrentLocation.text = args.item.currentLocation
+        binding.itemStory.text = args.item.story
 
         // set options menu
         setHasOptionsMenu(true)
@@ -41,7 +43,7 @@ class ItemFragment : Fragment() {
         val viewModel: ItemViewModel = ViewModelProviders.of(this).get(ItemViewModel::class.java)
 
         binding.itemViewModel = viewModel
-
+        viewModel.addRelatedTo(args.item.relations)
         // can observe LiveData updates
         binding.lifecycleOwner = this
 
@@ -73,7 +75,7 @@ class ItemFragment : Fragment() {
         )
 
         // Set the action bar label to the clicked item name
-        (activity as MainActivity).setActionBarTitle(args.name)
+        (activity as MainActivity).setActionBarTitle(args.item.name!!)
 
         return binding.root
     }
@@ -89,7 +91,7 @@ class ItemFragment : Fragment() {
                 // pass title to the edit item fragment
                 findNavController().navigate(
                     ItemFragmentDirections.actionItemFragmentToEditItemFragment(
-                        args.name
+                        args.item.name!!
                     )
                 )
             }

@@ -18,18 +18,21 @@ class ItemAdapter(
     ListAdapter<Item, ItemAdapter.ViewHolder>(ItemDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent, parentFragment)
+        return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), parentFragment)
     }
 
     class ViewHolder private constructor(val binding: ArtifactListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Item) {
-
+        fun bind(item: Item, parentFragment: Fragment) {
+            binding.artifactCard.setOnClickListener {
+                parentFragment.findNavController()
+                    .navigate(MainNavigationDirections.actionGlobalItemFragment(item))
+            }
             binding.artifactTitle.text = item.name
             binding.artifactRelatedTo.text = item.relations?.joinToString(separator = ", ")
             binding.artifactCurrentLocation.text = item.currentLocation
@@ -39,15 +42,9 @@ class ItemAdapter(
         }
 
         companion object {
-            fun from(parent: ViewGroup, parentFragment: Fragment): ViewHolder {
+            fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ArtifactListItemBinding.inflate(layoutInflater, parent, false)
-
-                // TODO: pass id on navigation instead of title
-                binding.artifactCard.setOnClickListener {
-                    parentFragment.findNavController()
-                        .navigate(MainNavigationDirections.actionGlobalItemFragment(binding.artifactTitle.text.toString()))
-                }
 
                 return ViewHolder(binding)
             }

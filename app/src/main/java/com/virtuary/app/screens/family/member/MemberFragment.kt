@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyMemberBinding
+import com.virtuary.app.firebase.Item
 
 
 /**
@@ -71,11 +72,10 @@ class MemberFragment : Fragment() {
         return binding.root
     }
 
-    // TODO: Change implementation to pass id to re fetch or using other implementation
-    private fun relatedItemOnClick(name : String){
+    private fun relatedItemOnClick(item : Item){
         findNavController().navigate(
             MemberFragmentDirections.actionMemberFragmentToItemFragment(
-                name
+                item
             )
         )
     }

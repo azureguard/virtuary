@@ -7,11 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.virtuary.app.R
+import com.virtuary.app.firebase.Item
 import kotlinx.android.synthetic.main.member_list_item.view.*
 
 class MemberItemAdapter(
     private val artifactsTitle: List<String>,
-    private val relatedItemOnClick: (name: String) -> Unit
+    private val relatedItemOnClick: (item: Item) -> Unit
 ) :
     RecyclerView.Adapter<MemberItemAdapter.ViewHolder>() {
 
@@ -24,9 +25,9 @@ class MemberItemAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.member_list_item, parent, false)
 
-        // TODO: change click behaviour for each artifact
+        // TODO: implement query by family member to pass items related
         view.member_item_card.setOnClickListener {
-            relatedItemOnClick(view.artifact_title.text.toString())
+            relatedItemOnClick(Item(name = "A"))
         }
 
         return ViewHolder(view)
