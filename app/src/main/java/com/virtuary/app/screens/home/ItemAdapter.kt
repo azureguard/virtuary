@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.virtuary.app.MainNavigationDirections
 import com.virtuary.app.R
 import com.virtuary.app.databinding.ArtifactListItemBinding
+import com.virtuary.app.firebase.Item
 
-class ArtifactAdapter(
+class ItemAdapter(
     private val parentFragment: Fragment
 ) :
-    ListAdapter<Artifact, ArtifactAdapter.ViewHolder>(ArtifactDiffCallBack()) {
+    ListAdapter<Item, ItemAdapter.ViewHolder>(ItemDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent, parentFragment)
@@ -27,10 +28,11 @@ class ArtifactAdapter(
     class ViewHolder private constructor(val binding: ArtifactListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Artifact) {
-            binding.artifactTitle.text = item.title
-            binding.artifactRelatedTo.text = item.relatedTo
-            binding.artifactCurrentLocation.text = item.location
+        fun bind(item: Item) {
+
+            binding.artifactTitle.text = item.name
+            binding.artifactRelatedTo.text = item.relations?.joinToString(separator = ", ")
+            binding.artifactCurrentLocation.text = item.currentLocation
 
             // TODO: change artifact image
             binding.artifactImage.setImageResource(R.drawable.ic_launcher_background)
@@ -53,13 +55,13 @@ class ArtifactAdapter(
     }
 }
 
-class ArtifactDiffCallBack : DiffUtil.ItemCallback<Artifact>() {
-    override fun areItemsTheSame(oldItem: Artifact, newItem: Artifact): Boolean {
+class ItemDiffCallBack : DiffUtil.ItemCallback<Item>() {
+    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
         // TODO: check ID instead
-        return oldItem.title == newItem.title
+        return oldItem.documentId == newItem.documentId
     }
 
-    override fun areContentsTheSame(oldItem: Artifact, newItem: Artifact): Boolean {
+    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
         return oldItem == newItem
     }
 
