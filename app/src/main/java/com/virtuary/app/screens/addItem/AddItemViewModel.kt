@@ -36,7 +36,7 @@ class AddItemViewModel : ViewModel() {
         _emptyTitle.value = title.get() == null || title.get()!!.isEmpty()
         val item = Item(
             name = title.get(),
-            originalLocation = location.get(),
+            currentLocation = location.get(),
             story = story.get(),
             relations = addedRelatedTo.value
         )

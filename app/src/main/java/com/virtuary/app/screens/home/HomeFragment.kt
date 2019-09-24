@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentHomeBinding
-import com.virtuary.app.firebase.FirestoreViewModel
 
 
 class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -39,8 +38,6 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         // assign adapter so all item list behave the same way
         val adapter = ArtifactAdapter(this)
         binding.rvItemList.adapter = adapter
-
-//        val firestoreViewModel = ViewModelProviders.of(this).get(FirestoreViewModel::class.java)
 
         homeViewModel.artifacts.observe(this, Observer {
             it?.let {

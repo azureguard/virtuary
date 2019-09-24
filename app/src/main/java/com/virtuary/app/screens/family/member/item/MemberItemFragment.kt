@@ -14,7 +14,6 @@ import androidx.navigation.fragment.navArgs
 import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyMemberItemBinding
-import com.virtuary.app.firebase.FirestoreViewModel
 import com.virtuary.app.screens.home.ArtifactAdapter
 
 /**
@@ -56,9 +55,7 @@ class MemberItemFragment : Fragment(), SearchView.OnQueryTextListener {
         val adapter = ArtifactAdapter(this)
         binding.rvItemList.adapter = adapter
 
-        val firestoreViewModel = ViewModelProviders.of(this).get(FirestoreViewModel::class.java)
-
-        firestoreViewModel.getAllItems().observe(this, Observer {
+        memberItemViewModel.artifacts.observe(this, Observer {
             it?.let {
                 // check difference between the new list against the old one
                 // run all the needed changes on the recycler view

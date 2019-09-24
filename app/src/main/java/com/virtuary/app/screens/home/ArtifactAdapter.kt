@@ -34,7 +34,10 @@ class ArtifactAdapter(
             binding.artifactTitle.text = item.name
             binding.artifactRelatedTo.text = convertListToText(item.relations)
             binding.artifactCurrentLocation.text = item.currentLocation
-            Log.i("item", "item name = ${item.name}, item relations = ${item.relations}, item location = ${item.currentLocation}")
+            Log.i(
+                "item",
+                "item name = ${item.name}, item relations = ${item.relations}, item location = ${item.currentLocation}"
+            )
 
             // TODO: change artifact image
             binding.artifactImage.setImageResource(R.drawable.ic_launcher_background)
@@ -62,7 +65,7 @@ class ArtifactAdapter(
                 result += member
 
                 // put "," after member iff it is not the last member
-                val lastMember = relations[relations.size-1]
+                val lastMember = relations[relations.size - 1]
                 if (lastMember != member) {
                     result += ", "
                 }
