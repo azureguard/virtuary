@@ -36,7 +36,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.homeViewModel = homeViewModel
 
         // assign adapter so all item list behave the same way
-        val adapter = ArtifactAdapter(this)
+        val adapter = ItemAdapter(this)
         binding.rvItemList.adapter = adapter
 
         homeViewModel.artifacts.observe(this, Observer {

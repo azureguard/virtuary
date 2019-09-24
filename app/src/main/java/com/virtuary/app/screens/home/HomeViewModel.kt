@@ -16,13 +16,9 @@ class HomeViewModel : ViewModel() {
 
     private fun getAllItems(): MutableList<Item>? {
         repository.getAllItems().addOnSuccessListener {
-            val artifactsList: MutableList<Item> = mutableListOf()
-            for (doc in it!!) {
-                val artifact = doc.toObject(Item::class.java)
-                artifactsList.add(artifact)
-            }
-            _artifacts.value = artifactsList
+            _artifacts.value = it.toObjects(Item::class.java)
         }
+
         return _artifacts.value
     }
 

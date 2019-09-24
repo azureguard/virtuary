@@ -14,7 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyMemberItemBinding
-import com.virtuary.app.screens.home.ArtifactAdapter
+import com.virtuary.app.screens.home.ItemAdapter
 
 /**
  * Fragment for the family member items
@@ -52,7 +52,7 @@ class MemberItemFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.memberItemViewModel = memberItemViewModel
 
         // assign adapter so all item list behave the same way
-        val adapter = ArtifactAdapter(this)
+        val adapter = ItemAdapter(this)
         binding.rvItemList.adapter = adapter
 
         memberItemViewModel.artifacts.observe(this, Observer {

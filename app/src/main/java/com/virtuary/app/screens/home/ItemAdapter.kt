@@ -1,6 +1,5 @@
 package com.virtuary.app.screens.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -13,10 +12,10 @@ import com.virtuary.app.R
 import com.virtuary.app.databinding.ArtifactListItemBinding
 import com.virtuary.app.firebase.Item
 
-class ArtifactAdapter(
+class ItemAdapter(
     private val parentFragment: Fragment
 ) :
-    ListAdapter<Item, ArtifactAdapter.ViewHolder>(ArtifactDiffCallBack()) {
+    ListAdapter<Item, ItemAdapter.ViewHolder>(ItemDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent, parentFragment)
@@ -32,12 +31,8 @@ class ArtifactAdapter(
         fun bind(item: Item) {
 
             binding.artifactTitle.text = item.name
-            binding.artifactRelatedTo.text = convertListToText(item.relations)
+            binding.artifactRelatedTo.text = item.relations?.joinToString(separator = ", ")
             binding.artifactCurrentLocation.text = item.currentLocation
-            Log.i(
-                "item",
-                "item name = ${item.name}, item relations = ${item.relations}, item location = ${item.currentLocation}"
-            )
 
             // TODO: change artifact image
             binding.artifactImage.setImageResource(R.drawable.ic_launcher_background)
@@ -57,26 +52,10 @@ class ArtifactAdapter(
                 return ViewHolder(binding)
             }
         }
-
-        private fun convertListToText(relations: List<String>?): String {
-            var result = ""
-
-            for (member in relations!!) {
-                result += member
-
-                // put "," after member iff it is not the last member
-                val lastMember = relations[relations.size - 1]
-                if (lastMember != member) {
-                    result += ", "
-                }
-            }
-
-            return result
-        }
     }
 }
 
-class ArtifactDiffCallBack : DiffUtil.ItemCallback<Item>() {
+class ItemDiffCallBack : DiffUtil.ItemCallback<Item>() {
     override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
         // TODO: check ID instead
         return oldItem.documentId == newItem.documentId
