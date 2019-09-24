@@ -5,41 +5,19 @@
     android:id="@+id/main_navigation"
     app:startDestination="@id/homeFragment">
     <fragment
-        android:id="@+id/landingFragment"
-        android:name="com.virtuary.app.screens.landing.LandingFragment"
-        tools:layout="@layout/fragment_landing">
-        <action
-            android:id="@+id/action_landingFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:launchSingleTop="true" />
-        <action
-            android:id="@+id/action_landingFragment_to_signupFragment"
-            app:destination="@id/signupFragment" />
-        <action
-            android:id="@+id/action_landingFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@+id/landingFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.virtuary.app.screens.login.LoginFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
-            app:destination="@id/forgotPasswordFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/signupFragment"
-        android:name="com.virtuary.app.screens.signUp.SignUpFragment"
-        android:label="Sign Up"
-        tools:layout="@layout/fragment_sign_up" />
-    <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.virtuary.app.screens.forgotPassword.ForgotPasswordFragment"
         android:label="Forgot Password"
-        tools:layout="@layout/fragment_forgot_password" />
+        tools:layout="@layout/fragment_forgot_password" >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_pop"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/forgotPasswordFragment"
+            app:popUpToInclusive="true"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.virtuary.app.screens.home.HomeFragment"
@@ -128,7 +106,7 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_manageAccount_to_forgotPasswordFragment"
-            app:destination="@id/navigation"
+            app:destination="@+id/forgotPasswordFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -192,7 +170,7 @@
     </fragment>
     <action
         android:id="@+id/action_global_landingFragment"
-        app:destination="@id/navigation"
+        app:destination="@id/preAuth"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popUpTo="@id/landingFragment"
@@ -200,7 +178,7 @@
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <navigation
-        android:id="@+id/navigation"
+        android:id="@+id/preAuth"
         app:startDestination="@id/landingFragment" >
         <fragment
             android:id="@+id/signupFragment"
@@ -216,18 +194,10 @@
                 app:popUpToInclusive="false" />
         </fragment>
         <fragment
-            android:id="@+id/forgotPasswordFragment"
-            android:name="com.virtuary.app.screens.forgotPassword.ForgotPasswordFragment"
-            android:label="Forgot Password"
-            tools:layout="@layout/fragment_forgot_password" />
-        <fragment
             android:id="@+id/loginFragment"
             android:name="com.virtuary.app.screens.login.LoginFragment"
             android:label="Login"
             tools:layout="@layout/fragment_login">
-            <action
-                android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
-                app:destination="@id/forgotPasswordFragment" />
             <action
                 android:id="@+id/action_loginFragment_to_homeFragment"
                 app:destination="@id/homeFragment"
@@ -236,6 +206,13 @@
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"
                 app:popUpTo="@+id/main_navigation" />
+            <action
+                android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+                app:destination="@id/forgotPasswordFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         </fragment>
         <fragment
             android:id="@+id/landingFragment"
