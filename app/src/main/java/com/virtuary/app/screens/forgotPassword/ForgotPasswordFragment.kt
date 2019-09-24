@@ -33,12 +33,29 @@ class ForgotPasswordFragment : Fragment() {
         // data in the VieWModel
         binding.forgotPasswordViewModel = viewModel
 
+        viewModel.invalidEmail.observe(this, Observer { invalid ->
+            if (invalid) {
+                binding.email.error = "Please enter a valid email"
+                binding.email.isErrorEnabled = true
+            } else {
+                binding.email.isErrorEnabled = false
+            }
+        })
+        binding.emailEdit.setOnFocusChangeListener { _, hasFocus ->
+            run {
+                if (hasFocus) binding.email.isErrorEnabled = false
+            }
+        }
+
         viewModel.getIsSuccess().observe(
             this,
             Observer<Boolean> { isSuccess ->
                 if (isSuccess) findNavController().navigate(
                     ForgotPasswordFragmentDirections.actionForgotPasswordFragmentPop()
-                )
+                ) else {
+                    binding.email.error = "There is no account associated with this email"
+                    binding.email.isErrorEnabled = true
+                }
             })
 
         return binding.root

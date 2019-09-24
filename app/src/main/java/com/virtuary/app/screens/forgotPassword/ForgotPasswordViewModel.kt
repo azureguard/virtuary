@@ -8,15 +8,23 @@ import com.google.firebase.auth.FirebaseAuth
 
 class ForgotPasswordViewModel : ViewModel() {
     val email = ObservableField("")
-    private val isSuccess = MutableLiveData<Boolean>()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
+    private val isSuccess = MutableLiveData<Boolean>()
     fun getIsSuccess(): LiveData<Boolean> {
         return isSuccess
     }
 
+    private val _invalidEmail = MutableLiveData<Boolean>()
+    val invalidEmail: LiveData<Boolean>
+        get() = _invalidEmail
+
     fun onClick() {
-        auth.sendPasswordResetEmail(email.get()!!)
-            .addOnCompleteListener { task -> isSuccess.value = task.isSuccessful }
+        _invalidEmail.value =
+            email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get()!! as CharSequence).matches()
+        if (!invalidEmail.value!!) {
+            auth.sendPasswordResetEmail(email.get()!!)
+                .addOnCompleteListener { task -> isSuccess.value = task.isSuccessful }
+        }
     }
 }
