@@ -35,18 +35,18 @@ class ForgotPasswordFragment : Fragment() {
         // data in the VieWModel
         binding.forgotPasswordViewModel = viewModel
 
-        viewModel.invalidEmail.observe(this, Observer { invalid ->
-            if (invalid) {
-                binding.email.error = "Please enter a valid email"
-                binding.email.isErrorEnabled = true
-            } else {
-                binding.email.isErrorEnabled = false
-            }
-        })
+        viewModel.invalidEmail.observe(
+            this,
+            Observer { invalid ->
+                if (invalid) {
+                    binding.email.error = "Please enter a valid email"
+                    binding.email.isErrorEnabled = true
+                } else {
+                    binding.email.isErrorEnabled = false
+                }
+            })
         binding.emailEdit.setOnFocusChangeListener { _, hasFocus ->
-            run {
-                if (hasFocus) binding.email.isErrorEnabled = false
-            }
+            if (hasFocus) binding.email.isErrorEnabled = false
         }
 
         viewModel.isSuccess.observe(
@@ -63,8 +63,9 @@ class ForgotPasswordFragment : Fragment() {
                 }
             })
 
-        viewModel.inProgress.observe(this, Observer<Boolean> { inProgress ->
-            run {
+        viewModel.inProgress.observe(
+            this,
+            Observer<Boolean> { inProgress ->
                 if (inProgress) {
                     binding.progressBar.visibility = View.VISIBLE
                     binding.sendButton.isEnabled = false
@@ -73,8 +74,7 @@ class ForgotPasswordFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     binding.sendButton.isEnabled = true
                 }
-            }
-        })
+            })
 
         return binding.root
     }
