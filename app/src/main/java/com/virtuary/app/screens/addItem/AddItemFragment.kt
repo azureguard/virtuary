@@ -2,13 +2,16 @@ package com.virtuary.app.screens.addItem
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -18,7 +21,11 @@ import com.virtuary.app.databinding.FragmentAddItemBinding
 import kotlinx.android.synthetic.main.fragment_add_item.add_item_image
 import kotlinx.android.synthetic.main.fragment_add_item.add_item_image_icon
 
-class AddItemFragment : Fragment() {
+class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
+
+    private lateinit var binding: FragmentAddItemBinding
+
+    private lateinit var addItemViewModel: AddItemViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,14 +33,14 @@ class AddItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // inflate the layout
-        val binding: FragmentAddItemBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_add_item, container, false
         )
 
         // get the add item view model
         // assign for databinding so the data in view model can be accessed
-        val addItemViewModel: AddItemViewModel =
+        addItemViewModel =
             ViewModelProviders.of(this).get(AddItemViewModel::class.java)
         binding.addItemViewModel = addItemViewModel
 
@@ -103,18 +110,46 @@ class AddItemFragment : Fragment() {
             }
         )
 
-        // sets click listener for adding image in gallery
+        // Show dialog when the add photo is clicked
         binding.addItemImageIcon.setOnClickListener {
-            selectImageInAlbum()
+            showNoticeDialog()
         }
 
         binding.addItemImage.setOnClickListener {
-            if (binding.addItemImageIcon.visibility == View.INVISIBLE) {
-                selectImageInAlbum()
+            if (binding.addItemImageIcon.visibility == View.GONE) {
+                showNoticeDialog()
             }
         }
 
         return binding.root
+    }
+
+    override fun onDialogCameraClick(dialog: DialogFragment) {
+        takePicture()
+    }
+
+    override fun onDialogGalleryClick(dialog: DialogFragment) {
+        selectImageInAlbum()
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // result code is OK only when the user selects an image
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_SELECT_IMAGE_IN_ALBUM) {
+                // TODO: Do something with the selected image from gallery here
+                // returns the content URI for the selected Image
+                val selectedImage = data!!.data
+                add_item_image_icon.visibility = View.GONE
+                add_item_image.setImageURI(selectedImage)
+            } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
+
+                // TODO: Do something with the captured image from camera here
+                val imageBitmap = data?.extras?.get("data") as Bitmap
+                binding.addItemImage.setImageBitmap(imageBitmap)
+                binding.addItemImageIcon.visibility = View.GONE
+            }
+        }
     }
 
     private fun selectImageInAlbum() {
@@ -130,28 +165,25 @@ class AddItemFragment : Fragment() {
         }
     }
 
-    // TODO : in-app camera
-//    private fun takePhoto() {
-//        val intent1 = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        if (intent1.resolveActivity(context!!.packageManager) != null) {
-//            startActivityForResult(intent1, REQUEST_TAKE_PHOTO)
-//        }
-//    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // result code is OK only when the user selects an image
-        if (resultCode == Activity.RESULT_OK)
-            if (requestCode == REQUEST_SELECT_IMAGE_IN_ALBUM) {
-                // returns the content URI for the selected Image
-                val selectedImage = data!!.data
-                add_item_image_icon.visibility = View.INVISIBLE
-                add_item_image.setImageURI(selectedImage)
+    private fun takePicture() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(activity!!.packageManager)?.also {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
             }
+        }
     }
+
+    private fun showNoticeDialog() {
+        // Create an instance of the dialog fragment and show it
+        val dialog = PhotoDialogFragment()
+        dialog.setTargetFragment(this,0)
+        dialog.show(fragmentManager!!, "NoticeDialogFragment")
+    }
+
 
     // define static properties
     companion object {
-        //        private val REQUEST_TAKE_PHOTO = 0
+        private const val REQUEST_IMAGE_CAPTURE = 0
         private const val REQUEST_SELECT_IMAGE_IN_ALBUM = 1
     }
 }
