@@ -30,7 +30,6 @@ class ItemFragment : Fragment() {
             R.layout.fragment_item, container, false
         )
 
-        // TODO: change passing data
         binding.itemTitle.text = args.item.name
         binding.itemCurrentLocation.text = args.item.currentLocation
         binding.itemStory.text = args.item.story

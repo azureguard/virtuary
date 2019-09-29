@@ -54,7 +54,6 @@ class ItemAdapter(
 
 class ItemDiffCallBack : DiffUtil.ItemCallback<Item>() {
     override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
-        // TODO: check ID instead
         return oldItem.documentId == newItem.documentId
     }
 
