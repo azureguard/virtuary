@@ -8,15 +8,15 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.virtuary.app.screens.forgotPassword.ForgotPasswordFragment"
         android:label="Forgot Password"
-        tools:layout="@layout/fragment_forgot_password" >
+        tools:layout="@layout/fragment_forgot_password">
         <action
             android:id="@+id/action_forgotPasswordFragment_pop"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@id/forgotPasswordFragment"
-            app:popUpToInclusive="true"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/forgotPasswordFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -31,7 +31,16 @@
         android:id="@+id/addItemFragment"
         android:name="com.virtuary.app.screens.addItem.AddItemFragment"
         android:label="Add Item"
-        tools:layout="@layout/fragment_add_item" />
+        tools:layout="@layout/fragment_add_item">
+        <action
+            android:id="@+id/action_addItemFragment_to_itemFragment"
+            app:destination="@id/itemFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/familyFragment"
         android:name="com.virtuary.app.screens.family.FamilyFragment"
@@ -173,13 +182,13 @@
         app:destination="@id/preAuth"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
-        app:popUpTo="@id/landingFragment"
-        app:popUpToInclusive="true"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        app:popUpTo="@id/landingFragment"
+        app:popUpToInclusive="true" />
     <navigation
         android:id="@+id/preAuth"
-        app:startDestination="@id/landingFragment" >
+        app:startDestination="@id/landingFragment">
         <fragment
             android:id="@+id/signupFragment"
             android:name="com.virtuary.app.screens.signUp.SignUpFragment"

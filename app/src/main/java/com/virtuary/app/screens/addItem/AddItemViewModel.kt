@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.DocumentSnapshot
 import com.virtuary.app.firebase.FirestoreRepository
 import com.virtuary.app.firebase.Item
 
@@ -32,15 +33,27 @@ class AddItemViewModel : ViewModel() {
     val emptyTitle: LiveData<Boolean>
         get() = _emptyTitle
 
+    private val _document = MutableLiveData<DocumentSnapshot>()
+    val document: LiveData<DocumentSnapshot>
+        get() = _document
+
     fun onClick() {
         _emptyTitle.value = title.get() == null || title.get()!!.isEmpty()
-        val item = Item(
-            name = title.get(),
-            currentLocation = location.get(),
-            story = story.get(),
-            relations = addedRelatedTo.value
-        )
-        repository.addItem(item)
+        if (!emptyTitle.value!!) {
+            val item = Item(
+                name = title.get(),
+                currentLocation = location.get(),
+                story = story.get(),
+                relations = addedRelatedTo.value
+            )
+
+            repository.addItem(item).continueWith { it.result?.get() }
+                .addOnSuccessListener { snapshotTask ->
+                    snapshotTask?.continueWith { docSnapshot ->
+                        _document.value = docSnapshot.result
+                    }
+                }
+        }
     }
 
     // related to item selected

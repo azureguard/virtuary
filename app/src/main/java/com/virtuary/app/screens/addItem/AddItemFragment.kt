@@ -13,19 +13,22 @@ import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.ktx.toObject
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentAddItemBinding
-import kotlinx.android.synthetic.main.fragment_add_item.add_item_image
-import kotlinx.android.synthetic.main.fragment_add_item.add_item_image_icon
+import com.virtuary.app.firebase.Item
+import kotlinx.android.synthetic.main.fragment_add_item.*
 
 class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
 
     private lateinit var binding: FragmentAddItemBinding
 
-    private lateinit var addItemViewModel: AddItemViewModel
+    private val addItemViewModel by viewModels<AddItemViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,10 +41,7 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
             R.layout.fragment_add_item, container, false
         )
 
-        // get the add item view model
         // assign for databinding so the data in view model can be accessed
-        addItemViewModel =
-            ViewModelProviders.of(this).get(AddItemViewModel::class.java)
         binding.addItemViewModel = addItemViewModel
 
         // can observe LiveData updates
@@ -110,6 +110,15 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
             }
         )
 
+        addItemViewModel.document.observe(this,
+            Observer<DocumentSnapshot> {
+                if (it != null) findNavController().navigate(
+                    AddItemFragmentDirections.actionAddItemFragmentToItemFragment(
+                        addItemViewModel.document.value?.toObject<Item>()!!
+                    )
+                )
+            })
+
         // Show dialog when the add photo is clicked
         binding.addItemImageIcon.setOnClickListener {
             showNoticeDialog()
@@ -176,7 +185,7 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
     private fun showNoticeDialog() {
         // Create an instance of the dialog fragment and show it
         val dialog = PhotoDialogFragment()
-        dialog.setTargetFragment(this,0)
+        dialog.setTargetFragment(this, 0)
         dialog.show(fragmentManager!!, "NoticeDialogFragment")
     }
 
