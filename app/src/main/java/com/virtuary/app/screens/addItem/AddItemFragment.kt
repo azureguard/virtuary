@@ -130,6 +130,17 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
             }
         }
 
+        addItemViewModel.inProgress.observe(this,
+            Observer<Boolean> { inProgress ->
+                if (inProgress) {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.addItemConfirm.isEnabled = false
+                } else {
+                    binding.progressBar.visibility = View.GONE
+                    binding.addItemConfirm.isEnabled = true
+                }
+            })
+
         return binding.root
     }
 

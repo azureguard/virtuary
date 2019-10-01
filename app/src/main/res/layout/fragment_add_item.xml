@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -45,8 +46,9 @@
                 android:id="@+id/add_item_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
                 android:text="@string/title"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp"
@@ -72,18 +74,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_background"
+                    android:inputType="textCapWords"
                     android:padding="8dp"
                     android:singleLine="true"
                     android:text="@={addItemViewModel.title}"
-                    android:textSize="20sp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/add_item_title_text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/add_item_location_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
                 android:text="@string/current_location"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp"
@@ -91,7 +97,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_title_layout" />
+                app:layout_constraintTop_toBottomOf="@id/add_item_title_layout" />
 
 
             <EditText
@@ -102,11 +108,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/rectangle_background"
-                android:inputType="none"
+                android:inputType="none|textPostalAddress"
                 android:padding="8dp"
                 android:singleLine="true"
                 android:text="@={addItemViewModel.location}"
-                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_item_location_text" />
@@ -115,8 +120,9 @@
                 android:id="@+id/add_item_related_to_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
                 android:text="@string/related_to"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp"
@@ -133,6 +139,8 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
+                android:minWidth="200sp"
+                android:spinnerMode="dialog"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -155,8 +163,9 @@
                 android:id="@+id/add_item_story_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
                 android:text="@string/story"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp"
@@ -174,8 +183,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/rectangle_background"
-                android:ems="10"
-                android:gravity="start|top"
+                android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:padding="8dp"
                 android:text="@={addItemViewModel.story}"
@@ -187,18 +195,28 @@
                 android:id="@+id/add_item_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="32dp"
                 android:background="@color/colorPrimary"
                 android:onClick="@{() -> addItemViewModel.onClick()}"
                 android:text="@string/confirm"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.91"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_story"
-                app:layout_constraintVertical_bias="0.13" />
+                app:layout_constraintTop_toBottomOf="@+id/add_item_story" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="3dp"
+                app:layout_constraintBottom_toBottomOf="@+id/add_item_confirm"
+                app:layout_constraintEnd_toEndOf="@+id/add_item_confirm"
+                app:layout_constraintStart_toStartOf="@+id/add_item_confirm"
+                app:layout_constraintTop_toTopOf="@+id/add_item_confirm"
+                tools:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
