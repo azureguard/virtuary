@@ -40,6 +40,10 @@ class AddItemViewModel : ViewModel() {
     val inProgress: LiveData<Boolean>
         get() = _inProgress
 
+    private val _isError = MutableLiveData<Boolean>(false)
+    val isError: LiveData<Boolean>
+        get() = _isError
+
     private val _document = MutableLiveData<DocumentSnapshot>()
     val document: LiveData<DocumentSnapshot>
         get() = _document
@@ -47,6 +51,7 @@ class AddItemViewModel : ViewModel() {
     fun onClick() {
         _emptyTitle.value = title.value?.isEmpty() ?: true
         if (!emptyTitle.value!!) {
+            _isError.value = false
             _inProgress.value = true
             val item = Item(
                 name = title.value,
@@ -59,7 +64,7 @@ class AddItemViewModel : ViewModel() {
                     val snapshot = repository.addItem(item).await()
                     _document.value = snapshot.get().await()
                 } catch (e: FirebaseException) {
-                    // TODO: Error feedback to UI
+                    _isError.value = true
                 }
                 _inProgress.value = false
             }

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -138,6 +139,13 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
                 } else {
                     binding.progressBar.visibility = View.GONE
                     binding.addItemConfirm.isEnabled = true
+                }
+            })
+
+        addItemViewModel.isError.observe(this,
+            Observer<Boolean> { isError ->
+                if (isError) {
+                    Toast.makeText(activity, "Server error", Toast.LENGTH_LONG).show()
                 }
             })
 
