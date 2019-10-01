@@ -1,6 +1,5 @@
 package com.virtuary.app.screens.addItem
 
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,9 +12,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class AddItemViewModel : ViewModel() {
-    val title = ObservableField("")
-    val location = ObservableField("")
-    val story = ObservableField("")
+    val title = MutableLiveData<String>("")
+    val location = MutableLiveData<String>("")
+    val story = MutableLiveData<String>("")
     private val repository: FirestoreRepository = FirestoreRepository()
 
     private val _selectionRelatedTo = MutableLiveData<MutableList<String>>()
@@ -33,7 +32,7 @@ class AddItemViewModel : ViewModel() {
     }
 
     // check title input if it is empty
-    private val _emptyTitle = MutableLiveData<Boolean>()
+    private val _emptyTitle = MutableLiveData<Boolean>(false)
     val emptyTitle: LiveData<Boolean>
         get() = _emptyTitle
 
@@ -46,13 +45,13 @@ class AddItemViewModel : ViewModel() {
         get() = _document
 
     fun onClick() {
-        _emptyTitle.value = title.get() == null || title.get()!!.isEmpty()
+        _emptyTitle.value = title.value?.isEmpty() ?: true
         if (!emptyTitle.value!!) {
             _inProgress.value = true
             val item = Item(
-                name = title.get(),
-                currentLocation = location.get(),
-                story = story.get(),
+                name = title.value,
+                currentLocation = location.value,
+                story = story.value,
                 relations = addedRelatedTo.value
             )
             viewModelScope.launch {
@@ -71,7 +70,7 @@ class AddItemViewModel : ViewModel() {
     fun onItemSelected(itemIndex: Int): Boolean {
         if (_selectionRelatedTo.value!![itemIndex] != "None" && _selectionRelatedTo.value!![itemIndex] != "-") {
             addRelatedTo(_selectionRelatedTo.value!![itemIndex])
-            _selectionRelatedTo.value!!.removeAt(itemIndex)
+            _selectionRelatedTo.value?.removeAt(itemIndex)
 
             return true
         }
@@ -82,7 +81,7 @@ class AddItemViewModel : ViewModel() {
     // remove click on chips
     fun onRemoveClick(name: String) {
         _selectionRelatedTo.add(name)
-        _addedRelatedTo.value!!.remove(name)
+        _addedRelatedTo.value?.remove(name)
     }
 
     private fun addRelatedTo(item: String) {
@@ -90,12 +89,12 @@ class AddItemViewModel : ViewModel() {
     }
 
     private fun addSelectionList() {
-        _selectionRelatedTo.value!!.add("-")
-        _selectionRelatedTo.value!!.add("None")
-        _selectionRelatedTo.value!!.add("Daryl")
-        _selectionRelatedTo.value!!.add("michelle")
-        _selectionRelatedTo.value!!.add("maurice")
-        _selectionRelatedTo.value!!.add("sk")
+        _selectionRelatedTo.value?.add("-")
+        _selectionRelatedTo.value?.add("None")
+        _selectionRelatedTo.value?.add("Daryl")
+        _selectionRelatedTo.value?.add("michelle")
+        _selectionRelatedTo.value?.add("maurice")
+        _selectionRelatedTo.value?.add("sk")
     }
 }
 
