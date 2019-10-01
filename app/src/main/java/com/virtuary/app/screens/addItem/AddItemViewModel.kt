@@ -4,9 +4,13 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.DocumentSnapshot
 import com.virtuary.app.firebase.FirestoreRepository
 import com.virtuary.app.firebase.Item
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class AddItemViewModel : ViewModel() {
     val title = ObservableField("")
@@ -40,19 +44,21 @@ class AddItemViewModel : ViewModel() {
     fun onClick() {
         _emptyTitle.value = title.get() == null || title.get()!!.isEmpty()
         if (!emptyTitle.value!!) {
+            // TODO: Progress feedback to UI
             val item = Item(
                 name = title.get(),
                 currentLocation = location.get(),
                 story = story.get(),
                 relations = addedRelatedTo.value
             )
-
-            repository.addItem(item).continueWith { it.result?.get() }
-                .addOnSuccessListener { snapshotTask ->
-                    snapshotTask?.continueWith { docSnapshot ->
-                        _document.value = docSnapshot.result
-                    }
+            viewModelScope.launch {
+                try {
+                    val snapshot = repository.addItem(item).await()
+                    _document.value = snapshot.get().await()
+                } catch (e: FirebaseException) {
+                    // TODO: Error feedback to UI
                 }
+            }
         }
     }
 
