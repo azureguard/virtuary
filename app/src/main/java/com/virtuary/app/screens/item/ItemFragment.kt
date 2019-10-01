@@ -90,7 +90,7 @@ class ItemFragment : Fragment() {
                 // pass title to the edit item fragment
                 findNavController().navigate(
                     ItemFragmentDirections.actionItemFragmentToEditItemFragment(
-                        args.item.name!!
+                        args.item
                     )
                 )
             }

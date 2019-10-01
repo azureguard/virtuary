@@ -4,13 +4,17 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.virtuary.app.firebase.FirestoreRepository
+import com.virtuary.app.firebase.Item
 
-class EditItemViewModel(itemTitle: String) : ViewModel() {
+class EditItemViewModel(item: Item) : ViewModel() {
     // ONLY "title" passed in from item view fragment
-    // TODO: assign data from database
-    val title = ObservableField(itemTitle)
-    val location = ObservableField("")
-    val story = ObservableField("")
+    private val _item: Item = item
+
+    val title = ObservableField(item.name)
+    val location = ObservableField(item.currentLocation)
+    val story = ObservableField(item.story)
+    private val repository: FirestoreRepository = FirestoreRepository()
 
     private val _selectionRelatedTo = MutableLiveData<MutableList<String>>()
     val selectionRelatedTo: LiveData<MutableList<String>>
@@ -21,9 +25,11 @@ class EditItemViewModel(itemTitle: String) : ViewModel() {
         get() = _addedRelatedTo
 
     init {
-        _selectionRelatedTo.value = mutableListOf()
-        _addedRelatedTo.value = mutableListOf()
-        addSelectionList()
+        _addedRelatedTo.value = item.relations as MutableList<String>?
+        val allUsers = listOf("-", "None", "Daryl", "Michelle", "Maurice", "SK")
+        val selected = item.relations
+        _selectionRelatedTo.value =
+            allUsers.filterNot { selected?.contains(it)!! } as MutableList<String>
     }
 
     // check title input if it is empty
@@ -33,7 +39,13 @@ class EditItemViewModel(itemTitle: String) : ViewModel() {
 
     fun onClick() {
         _emptyTitle.value = title.get() == null || title.get()!!.isEmpty()
-
+        if (!emptyTitle.value!!) {
+            _item.name = title.get()
+            _item.currentLocation = location.get()
+            _item.story = story.get()
+            _item.relations = addedRelatedTo.value
+            repository.editItem(_item)
+        }
     }
 
     // related to item selected
@@ -58,13 +70,9 @@ class EditItemViewModel(itemTitle: String) : ViewModel() {
         _addedRelatedTo.add(item)
     }
 
-    private fun addSelectionList() {
-        _selectionRelatedTo.value!!.add("-")
-        _selectionRelatedTo.value!!.add("None")
-        _selectionRelatedTo.value!!.add("Daryl")
-        _selectionRelatedTo.value!!.add("michelle")
-        _selectionRelatedTo.value!!.add("maurice")
-        _selectionRelatedTo.value!!.add("sk")
+    private fun addSelectionList(selected: List<String>, unselected: List<String>) {
+
+
     }
 }
 
