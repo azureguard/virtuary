@@ -61,7 +61,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:text="@string/show_all"
-                    android:theme="@style/MaterialTheme"
                     app:cornerRadius="100dp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/related_items"
                     app:layout_constraintStart_toEndOf="@+id/related_items" />

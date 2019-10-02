@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -37,7 +38,6 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="32dp"
                 android:text="@string/title"
-                android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -51,12 +51,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                android:text="Cras eros nisl, tristique eget tempor ut, dapibus eget enim. Etiam nec blandit diam. Praesent sed aliquet erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
-                android:textColor="@android:color/black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_title_text" />
+                app:layout_constraintTop_toBottomOf="@+id/item_title_text"
+                tools:text="@tools:sample/lorem[6]" />
 
             <TextView
                 android:id="@+id/item_current_location_text"
@@ -66,7 +64,6 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="32dp"
                 android:text="@string/current_location"
-                android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -80,11 +77,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                android:text="121 Victoria Road, Indonesia, 121 Victoria Road, Indonesia, 121 Victoria Road, Indonesia"
-                android:textColor="@android:color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_current_location_text" />
+                app:layout_constraintTop_toBottomOf="@+id/item_current_location_text"
+                tools:text="@tools:sample/lorem[6]" />
 
             <TextView
                 android:id="@+id/item_related_to_text"
@@ -93,7 +89,6 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/related_to"
-                android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +118,6 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="32dp"
                 android:text="@string/story"
-                android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -138,13 +132,12 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="32dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque bibendum tempor feugiat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis eu turpis tellus. Integer tempor lectus non blandit vestibulum. Vestibulum aliquet, mauris eget cursus semper, ipsum mi viverra mi, at eleifend nunc diam sit amet diam. Curabitur sed facilisis tortor, eget maximus erat. Mauris maximus lacus sed justo lobortis, nec tempor metus interdum."
-                android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_story_text" />
+                app:layout_constraintTop_toBottomOf="@+id/item_story_text"
+                tools:text="@tools:sample/lorem/random" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
