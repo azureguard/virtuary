@@ -4,13 +4,12 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 
 class FirestoreRepository {
-
-    val TAG = "FIREBASE_REPOSITORY"
-    var firestoreDB = FirebaseFirestore.getInstance()
-    var user = FirebaseAuth.getInstance().currentUser
+    private val firestoreDB = FirebaseFirestore.getInstance()
+    val user = FirebaseAuth.getInstance().currentUser
 
 
     // add item to firebase
@@ -26,6 +25,10 @@ class FirestoreRepository {
     // get all items from firebase
     fun getAllItems(): Task<QuerySnapshot> {
         return firestoreDB.collection("Item").get()
+    }
+
+    fun queryAllItems() : Query {
+        return firestoreDB.collection("Item")
     }
 
     // delete specific item
