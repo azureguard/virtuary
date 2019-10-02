@@ -70,10 +70,6 @@ class EditItemViewModel(item: Item) : ViewModel() {
         _addedRelatedTo.add(item)
     }
 
-    private fun addSelectionList(selected: List<String>, unselected: List<String>) {
-
-
-    }
 }
 
 // extension function
