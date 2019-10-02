@@ -28,7 +28,7 @@ class FirestoreRepository {
     }
 
     fun queryAllItems() : Query {
-        return firestoreDB.collection("Item")
+        return firestoreDB.collection("Item").orderBy("timestamp", Query.Direction.DESCENDING)
     }
 
     // delete specific item
