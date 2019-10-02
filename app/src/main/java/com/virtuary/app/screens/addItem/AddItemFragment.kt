@@ -23,6 +23,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentAddItemBinding
 import com.virtuary.app.firebase.Item
+import com.virtuary.app.util.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_add_item.*
 
 class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
@@ -113,11 +114,14 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
 
         addItemViewModel.document.observe(this,
             Observer<DocumentSnapshot> {
-                if (it != null) findNavController().navigate(
-                    AddItemFragmentDirections.actionAddItemFragmentToItemFragment(
-                        addItemViewModel.document.value?.toObject<Item>()!!
+                if (it != null) {
+                    hideKeyboard()
+                    findNavController().navigate(
+                        AddItemFragmentDirections.actionAddItemFragmentToItemFragment(
+                            addItemViewModel.document.value?.toObject<Item>()!!
+                        )
                     )
-                )
+                }
             })
 
         // Show dialog when the add photo is clicked
@@ -134,6 +138,7 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
         addItemViewModel.inProgress.observe(this,
             Observer<Boolean> { inProgress ->
                 if (inProgress) {
+                    hideKeyboard()
                     binding.progressBar.visibility = View.VISIBLE
                     binding.addItemConfirm.isEnabled = false
                 } else {
@@ -203,6 +208,7 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
 
     private fun showNoticeDialog() {
         // Create an instance of the dialog fragment and show it
+        hideKeyboard()
         val dialog = PhotoDialogFragment()
         dialog.setTargetFragment(this, 0)
         dialog.show(fragmentManager!!, "NoticeDialogFragment")
