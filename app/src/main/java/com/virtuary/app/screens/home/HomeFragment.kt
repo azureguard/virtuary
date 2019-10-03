@@ -2,23 +2,26 @@ package com.virtuary.app.screens.home
 
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.ktx.toObjects
 import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentHomeBinding
+import com.virtuary.app.firebase.Item
 
 
 class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var binding: FragmentHomeBinding
 
-    private lateinit var homeViewModel: HomeViewModel
+    private val homeViewModel by viewModels<HomeViewModel>()
 
     private lateinit var searchView: SearchView
 
@@ -30,23 +33,22 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         // inflate the layout
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        // get the home view model
         // assign for databinding so the data in view model can be accessed
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         binding.homeViewModel = homeViewModel
 
         // assign adapter so all item list behave the same way
         val adapter = ItemAdapter(this)
         binding.rvItemList.adapter = adapter
 
-        homeViewModel.artifacts.observe(this, Observer {
-            it?.let {
-                // check difference between the new list against the old one
-                // run all the needed changes on the recycler view
-                // will detect any items that were added, removed, changed, updated the items shown by recycler view
-                adapter.submitList(it)
+        homeViewModel.query.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            if (firebaseFirestoreException  != null ) {
+                Log.e("FIREBASE", "EXCEPT", firebaseFirestoreException)
+                return@addSnapshotListener
             }
-        })
+            adapter.submitList(
+                querySnapshot?.toObjects<Item>()
+            )
+        }
 
         binding.addItemButton.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddItemFragment())
