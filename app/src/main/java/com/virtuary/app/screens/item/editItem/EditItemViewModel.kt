@@ -8,7 +8,6 @@ import com.virtuary.app.firebase.FirestoreRepository
 import com.virtuary.app.firebase.Item
 
 class EditItemViewModel(item: Item) : ViewModel() {
-    // ONLY "title" passed in from item view fragment
     private val _item: Item = item
 
     val title = ObservableField(item.name)
