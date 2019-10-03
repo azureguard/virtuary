@@ -10,8 +10,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import com.virtuary.app.R
@@ -21,11 +21,10 @@ import kotlinx.android.synthetic.main.fragment_edit_item.edit_item_image_icon
 
 class EditItemFragment : Fragment() {
 
-    private lateinit var editItemViewModel: EditItemViewModel
-    private lateinit var editItemViewModelFactory: EditItemViewModelFactory
-
     // argument got from navigation action
     private val args: EditItemFragmentArgs by navArgs()
+
+    private val editItemViewModel by viewModels<EditItemViewModel> { EditItemViewModelFactory(args.item) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,13 +37,7 @@ class EditItemFragment : Fragment() {
             R.layout.fragment_edit_item, container, false
         )
 
-        // pass data to the view model through factory
-        editItemViewModelFactory = EditItemViewModelFactory(args.name)
-
-        // get the edit item view model
         // assign for databinding so the data in view model can be accessed
-        editItemViewModel =
-            ViewModelProviders.of(this, editItemViewModelFactory).get(EditItemViewModel::class.java)
         binding.editItemViewModel = editItemViewModel
 
         // can observe LiveData updates

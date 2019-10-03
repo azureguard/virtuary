@@ -10,11 +10,11 @@ import java.util.*
 data class Item(
     @DocumentId val documentId: String? = null,
     @ServerTimestamp val timestamp: Date? = null,
-    val name: String? = null,
-    val originalLocation: String? = null,
-    val currentLocation: String? = null,
-    val whenExist: Date? = null,
-    val story: String? = null,
-    val relations: List<String>? = null,
-    val pictures: List<String>? = null
+    var name: String? = null,
+    var originalLocation: String? = null,
+    var currentLocation: String? = null,
+    var whenExist: Date? = null,
+    var story: String? = null,
+    var relations: List<String>? = null,
+    var pictures: List<String>? = null
 ) : Parcelable
