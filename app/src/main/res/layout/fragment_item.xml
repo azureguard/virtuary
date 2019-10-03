@@ -43,7 +43,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_image" />
+                app:layout_constraintTop_toBottomOf="@id/item_image" />
 
             <TextView
                 android:id="@+id/item_title"
@@ -54,7 +54,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_title_text"
+                app:layout_constraintTop_toBottomOf="@id/item_title_text"
                 tools:text="@tools:sample/lorem[6]" />
 
             <TextView
@@ -70,7 +70,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_title" />
+                app:layout_constraintTop_toBottomOf="@id/item_title" />
 
             <TextView
                 android:id="@+id/item_current_location"
@@ -81,7 +81,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_current_location_text"
+                app:layout_constraintTop_toBottomOf="@id/item_current_location_text"
                 tools:text="@tools:sample/lorem[6]" />
 
             <TextView
@@ -96,7 +96,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_current_location" />
+                app:layout_constraintTop_toBottomOf="@id/item_current_location" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/item_related_to_list"
@@ -109,7 +109,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_related_to_text"
+                app:layout_constraintTop_toBottomOf="@id/item_related_to_text"
                 app:singleSelection="false" />
 
             <TextView
@@ -125,7 +125,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_related_to_list" />
+                app:layout_constraintTop_toBottomOf="@id/item_related_to_list" />
 
             <TextView
                 android:id="@+id/item_story"
@@ -139,7 +139,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_story_text"
+                app:layout_constraintTop_toBottomOf="@id/item_story_text"
                 tools:text="@tools:sample/lorem/random" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

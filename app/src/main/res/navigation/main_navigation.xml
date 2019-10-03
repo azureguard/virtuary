@@ -43,7 +43,7 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@+id/homeFragment" />
+            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/familyFragment"
@@ -65,7 +65,7 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim"
-        app:popUpTo="@+id/main_navigation" />
+        app:popUpTo="@id/main_navigation" />
     <action
         android:id="@+id/action_global_familyFragment"
         app:destination="@id/familyFragment"
@@ -146,7 +146,7 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_manageAccount_to_forgotPasswordFragment"
-            app:destination="@+id/forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -218,15 +218,15 @@
     </fragment>
     <action
         android:id="@+id/action_global_landingFragment"
-        app:destination="@id/preAuth"
+        app:destination="@id/pre_auth"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim"
-        app:popUpTo="@id/landingFragment"
+        app:popUpTo="@id/homeFragment"
         app:popUpToInclusive="true" />
     <navigation
-        android:id="@+id/preAuth"
+        android:id="@+id/pre_auth"
         app:startDestination="@id/landingFragment">
         <fragment
             android:id="@+id/signupFragment"
@@ -238,7 +238,7 @@
                 app:destination="@id/loginFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
-                app:popUpTo="@+id/landingFragment"
+                app:popUpTo="@id/landingFragment"
                 app:popUpToInclusive="false" />
         </fragment>
         <fragment
@@ -248,15 +248,15 @@
             tools:layout="@layout/fragment_login">
             <action
                 android:id="@+id/action_loginFragment_to_homeFragment"
-                app:destination="@+id/homeFragment"
+                app:destination="@id/homeFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@+id/main_navigation" />
+                app:popUpTo="@id/main_navigation" />
             <action
                 android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
-                app:destination="@+id/forgotPasswordFragment"
+                app:destination="@id/forgotPasswordFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -288,7 +288,7 @@
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@+id/landingFragment"
+                app:popUpTo="@id/landingFragment"
                 app:popUpToInclusive="true" />
         </fragment>
     </navigation>

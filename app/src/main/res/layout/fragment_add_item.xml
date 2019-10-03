@@ -36,7 +36,7 @@
                 android:baselineAlignBottom="false"
                 android:contentDescription="@null"
                 android:outlineProvider="none"
-                app:layout_constraintBottom_toBottomOf="@+id/add_item_image"
+                app:layout_constraintBottom_toBottomOf="@id/add_item_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +51,7 @@
                 android:text="@string/title"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_image" />
+                app:layout_constraintTop_toBottomOf="@id/add_item_image" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/add_item_title_layout"
@@ -61,7 +61,7 @@
                 android:layout_marginEnd="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_title_text">
+                app:layout_constraintTop_toBottomOf="@id/add_item_title_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/add_item_title_edit"
@@ -74,7 +74,7 @@
                     android:text="@={addItemViewModel.title}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/add_item_title_text" />
+                    app:layout_constraintTop_toBottomOf="@id/add_item_title_text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -103,7 +103,7 @@
                 android:text="@={addItemViewModel.location}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_location_text" />
+                app:layout_constraintTop_toBottomOf="@id/add_item_location_text" />
 
             <TextView
                 android:id="@+id/add_item_related_to_text"
@@ -114,7 +114,7 @@
                 android:text="@string/related_to"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_location_edit" />
+                app:layout_constraintTop_toBottomOf="@id/add_item_location_edit" />
 
             <Spinner
                 android:id="@+id/add_item_related_to_spinner"
@@ -127,7 +127,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_related_to_text" />
+                app:layout_constraintTop_toBottomOf="@id/add_item_related_to_text" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/add_item_related_to_list"
@@ -139,7 +139,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_related_to_spinner"
+                app:layout_constraintTop_toBottomOf="@id/add_item_related_to_spinner"
                 app:singleSelection="false" />
 
             <TextView
@@ -151,7 +151,7 @@
                 android:text="@string/story"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_related_to_list" />
+                app:layout_constraintTop_toBottomOf="@id/add_item_related_to_list" />
 
             <EditText
                 android:id="@+id/add_item_story"
@@ -167,7 +167,7 @@
                 android:text="@={addItemViewModel.story}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_story_text" />
+                app:layout_constraintTop_toBottomOf="@id/add_item_story_text" />
 
             <Button
                 android:id="@+id/add_item_confirm"
@@ -181,7 +181,7 @@
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_item_story" />
+                app:layout_constraintTop_toBottomOf="@id/add_item_story" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -189,10 +189,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:elevation="3dp"
-                app:layout_constraintBottom_toBottomOf="@+id/add_item_confirm"
-                app:layout_constraintEnd_toEndOf="@+id/add_item_confirm"
-                app:layout_constraintStart_toStartOf="@+id/add_item_confirm"
-                app:layout_constraintTop_toTopOf="@+id/add_item_confirm"
+                app:layout_constraintBottom_toBottomOf="@id/add_item_confirm"
+                app:layout_constraintEnd_toEndOf="@id/add_item_confirm"
+                app:layout_constraintStart_toStartOf="@id/add_item_confirm"
+                app:layout_constraintTop_toTopOf="@id/add_item_confirm"
                 tools:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

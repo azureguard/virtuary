@@ -53,9 +53,9 @@
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/artifact_current_location"
+                    app:layout_constraintBottom_toTopOf="@id/artifact_current_location"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/artifact_image"
+                    app:layout_constraintStart_toEndOf="@id/artifact_image"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@tools:sample/lorem" />
 
@@ -70,10 +70,10 @@
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                    app:layout_constraintBottom_toTopOf="@+id/related_to_text"
+                    app:layout_constraintBottom_toTopOf="@id/related_to_text"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/artifact_image"
-                    app:layout_constraintTop_toBottomOf="@+id/artifact_title"
+                    app:layout_constraintStart_toEndOf="@id/artifact_image"
+                    app:layout_constraintTop_toBottomOf="@id/artifact_title"
                     tools:text="@tools:sample/cities" />
 
                 <TextView
@@ -84,8 +84,8 @@
                     android:text="@string/related_to_text"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/artifact_image"
-                    app:layout_constraintTop_toBottomOf="@+id/artifact_current_location" />
+                    app:layout_constraintStart_toEndOf="@id/artifact_image"
+                    app:layout_constraintTop_toBottomOf="@id/artifact_current_location" />
 
                 <TextView
                     android:id="@+id/artifact_related_to"
@@ -95,9 +95,9 @@
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/related_to_text"
+                    app:layout_constraintBaseline_toBaselineOf="@id/related_to_text"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/related_to_text"
+                    app:layout_constraintStart_toEndOf="@id/related_to_text"
                     tools:text="@tools:sample/first_names" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,7 +35,7 @@
                 android:baselineAlignBottom="false"
                 android:contentDescription="@null"
                 android:outlineProvider="none"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_item_image"
+                app:layout_constraintBottom_toBottomOf="@id/edit_item_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -52,7 +52,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_image" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_image" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edit_item_title_layout"
@@ -62,7 +62,7 @@
                 android:layout_marginEnd="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_title_text">
+                app:layout_constraintTop_toBottomOf="@id/edit_item_title_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_item_title_edit"
@@ -86,7 +86,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_title_layout" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_title_layout" />
 
 
             <EditText
@@ -104,7 +104,7 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_location_text" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_location_text" />
 
             <TextView
                 android:id="@+id/edit_item_related_to_text"
@@ -117,7 +117,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_location_edit" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_location_edit" />
 
             <Spinner
                 android:id="@+id/edit_item_related_to_spinner"
@@ -129,7 +129,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_related_to_text" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_related_to_text" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/edit_item_related_to_list"
@@ -141,7 +141,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_related_to_spinner"
+                app:layout_constraintTop_toBottomOf="@id/edit_item_related_to_spinner"
                 app:singleSelection="false" />
 
             <TextView
@@ -155,7 +155,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_related_to_list" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_related_to_list" />
 
             <EditText
                 android:id="@+id/edit_item_story"
@@ -172,7 +172,7 @@
                 android:text="@={editItemViewModel.story}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_story_text" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_story_text" />
 
             <Button
                 android:id="@+id/edit_item_confirm"
@@ -185,7 +185,7 @@
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.91"
+                app:layout_constraintTop_toBottomOf="@id/edit_item_story" />
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_item_story"
                 app:layout_constraintVertical_bias="0.13" />

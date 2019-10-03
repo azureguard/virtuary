@@ -31,7 +31,7 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Display1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/app_logo" />
+                app:layout_constraintTop_toBottomOf="@id/app_logo" />
 
             <TextView
                 android:id="@+id/short_description"
@@ -42,7 +42,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/app_name" />
+                app:layout_constraintTop_toBottomOf="@id/app_name" />
 
             <TextView
                 android:id="@+id/long_description"
@@ -54,7 +54,7 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Body1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/short_description"
+                app:layout_constraintTop_toBottomOf="@id/short_description"
                 tools:text="@tools:sample/lorem/random" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

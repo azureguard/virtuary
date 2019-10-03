@@ -36,8 +36,8 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/profile_edit_image_description"
                 android:src="@drawable/ic_edit"
-                app:layout_constraintBottom_toBottomOf="@+id/profile_picture"
-                app:layout_constraintEnd_toEndOf="@+id/profile_picture" />
+                app:layout_constraintBottom_toBottomOf="@id/profile_picture"
+                app:layout_constraintEnd_toEndOf="@id/profile_picture" />
 
             <FrameLayout
                 android:id="@+id/frame_name"
@@ -75,7 +75,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/frame_name" />
+                app:layout_constraintTop_toTopOf="@id/frame_name" />
 
             <TextView
                 android:id="@+id/profile_name"
@@ -87,7 +87,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_name_header"
+                app:layout_constraintTop_toBottomOf="@id/profile_name_header"
                 tools:text="@tools:sample/full_names" />
 
             <TextView
@@ -101,7 +101,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/frame_email" />
+                app:layout_constraintTop_toTopOf="@id/frame_email" />
 
             <TextView
                 android:id="@+id/profile_email"
