@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/profile_picture"
-                android:layout_width="@dimen/edit_profile_image"
-                android:layout_height="@dimen/edit_profile_image"
+                android:layout_width="@dimen/standard_image_size"
+                android:layout_height="@dimen/standard_image_size"
                 android:layout_marginTop="32dp"
                 android:contentDescription="@string/profile_image_description"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -8,7 +8,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/member_item_card"
-        android:layout_width="@dimen/member_list_item_width"
+        android:layout_width="@dimen/member_list_item_card_width"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:theme="@style/Theme.MaterialComponents.DayNight">
@@ -21,7 +21,7 @@
             <ImageView
                 android:id="@+id/artifact_image"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/member_list_item_image_height"
+                android:layout_height="@dimen/standard_image_size"
                 android:layout_marginBottom="8dp"
                 android:contentDescription="@string/related_items"
                 android:scaleType="centerCrop"

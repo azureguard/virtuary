@@ -37,8 +37,8 @@ class PhotoDialogFragment : DialogFragment() {
 
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
-            builder.setMessage(getString(R.string.add_item_dialog_take_picture_description))
-                .setTitle(R.string.add_item_dialog_take_picture)
+            builder.setMessage(getString(R.string.add_item_dialog_add_picture_description))
+                .setTitle(R.string.add_item_dialog_add_picture)
                 .setPositiveButton(
                     R.string.add_item_dialog_camera
                 ) { _, _ ->

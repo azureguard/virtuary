@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="family_member_name_field">42sp</dimen>
-    <dimen name="family_member_image_size">150dp</dimen>
-    <dimen name="artifact_home_image_size">100sp</dimen>
-    <dimen name="add_item_image_height">250dp</dimen>
-    <dimen name="add_item_icon_width">101dp</dimen>
-    <dimen name="add_item_icon_height">84dp</dimen>
-    <dimen name="member_list_item_width">250dp</dimen>
-    <dimen name="member_list_item_image_height">150dp</dimen>
-    <dimen name="edit_profile_image">200dp</dimen>
+    <dimen name="standard_image_size">150dp</dimen>
+    <dimen name="vertical_rv_image_size">100dp</dimen>
+    <dimen name="add_item_icon_size">84dp</dimen>
+    <dimen name="item_image_height">250dp</dimen>
+    <dimen name="member_list_item_card_width">250dp</dimen>
 </resources>

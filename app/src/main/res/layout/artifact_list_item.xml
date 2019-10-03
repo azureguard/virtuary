@@ -36,8 +36,8 @@
 
                 <ImageView
                     android:id="@+id/artifact_image"
-                    android:layout_width="@dimen/artifact_home_image_size"
-                    android:layout_height="@dimen/artifact_home_image_size"
+                    android:layout_width="@dimen/vertical_rv_image_size"
+                    android:layout_height="@dimen/vertical_rv_image_size"
                     android:contentDescription="@null"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

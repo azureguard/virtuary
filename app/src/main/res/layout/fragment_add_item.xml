@@ -21,7 +21,7 @@
             <ImageView
                 android:id="@+id/add_item_image"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/add_item_image_height"
+                android:layout_height="@dimen/item_image_height"
                 android:background="@drawable/black_bottom_border_line"
                 android:contentDescription="@null"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -30,8 +30,8 @@
 
             <ImageView
                 android:id="@+id/add_item_image_icon"
-                android:layout_width="@dimen/add_item_icon_width"
-                android:layout_height="@dimen/add_item_icon_height"
+                android:layout_width="@dimen/add_item_icon_size"
+                android:layout_height="@dimen/add_item_icon_size"
                 android:adjustViewBounds="true"
                 android:baselineAlignBottom="false"
                 android:contentDescription="@null"

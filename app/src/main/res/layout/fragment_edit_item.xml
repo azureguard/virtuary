@@ -20,7 +20,7 @@
             <ImageView
                 android:id="@+id/edit_item_image"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/add_item_image_height"
+                android:layout_height="@dimen/item_image_height"
                 android:background="@drawable/black_bottom_border_line"
                 android:contentDescription="@null"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -29,8 +29,8 @@
 
             <ImageView
                 android:id="@+id/edit_item_image_icon"
-                android:layout_width="@dimen/add_item_icon_width"
-                android:layout_height="@dimen/add_item_icon_height"
+                android:layout_width="@dimen/add_item_icon_size"
+                android:layout_height="@dimen/add_item_icon_size"
                 android:adjustViewBounds="true"
                 android:baselineAlignBottom="false"
                 android:contentDescription="@null"
@@ -45,12 +45,10 @@
                 android:id="@+id/edit_item_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/title"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edit_item_image" />
 
@@ -79,12 +77,10 @@
                 android:id="@+id/edit_item_location_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/current_location"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edit_item_title_layout" />
 
@@ -110,12 +106,10 @@
                 android:id="@+id/edit_item_related_to_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/related_to"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edit_item_location_edit" />
 
@@ -148,12 +142,10 @@
                 android:id="@+id/edit_item_story_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/story"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edit_item_related_to_list" />
 
@@ -179,6 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="32dp"
                 android:layout_marginBottom="16dp"
                 android:onClick="@{() -> editItemViewModel.onClick()}"
                 android:text="@string/confirm"
@@ -186,9 +179,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edit_item_story" />
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_story"
-                app:layout_constraintVertical_bias="0.13" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
