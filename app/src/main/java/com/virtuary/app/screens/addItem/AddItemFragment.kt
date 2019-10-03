@@ -2,7 +2,9 @@ package com.virtuary.app.screens.addItem
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -181,8 +183,16 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
             }
             binding.addItemImage.setImageURI(image)
             binding.addItemImageIcon.visibility = View.GONE
-            addItemViewModel.image.value =
-                MediaStore.Images.Media.getBitmap(context?.contentResolver, image)
+
+            addItemViewModel.image.value = if (Build.VERSION.SDK_INT < 28) {
+                MediaStore.Images.Media.getBitmap(
+                    context?.contentResolver,
+                    image
+                )
+            } else {
+                val source = ImageDecoder.createSource(context?.contentResolver!!, image!!)
+                ImageDecoder.decodeBitmap(source)
+            }
         }
     }
 
