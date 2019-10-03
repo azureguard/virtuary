@@ -66,8 +66,7 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> loginViewModel.onClick()}"
                     android:text="@string/login"
-                    android:textAllCaps="false"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+                    android:textAllCaps="false" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"

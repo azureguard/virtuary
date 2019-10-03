@@ -51,27 +51,30 @@
                     android:layout_marginStart="12dp"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:textSize="24sp"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/artifact_current_location"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/artifact_image"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@tools:sample/lorem" />
 
                 <TextView
                     android:id="@+id/artifact_current_location"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:drawableStart="@drawable/ic_room_black_24dp"
+                    android:drawableStart="@drawable/ic_room"
                     android:drawablePadding="4dp"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintBottom_toTopOf="@+id/related_to_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/artifact_image"
-                    app:layout_constraintTop_toBottomOf="@+id/artifact_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/artifact_title"
+                    tools:text="@tools:sample/cities" />
 
                 <TextView
                     android:id="@+id/related_to_text"
@@ -79,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:text="@string/related_to_text"
-                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/artifact_image"
                     app:layout_constraintTop_toBottomOf="@+id/artifact_current_location" />
@@ -91,9 +94,11 @@
                     android:layout_marginStart="8dp"
                     android:ellipsize="end"
                     android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintBaseline_toBaselineOf="@+id/related_to_text"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/related_to_text" />
+                    app:layout_constraintStart_toEndOf="@+id/related_to_text"
+                    tools:text="@tools:sample/first_names" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
