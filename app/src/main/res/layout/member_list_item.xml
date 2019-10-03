@@ -10,8 +10,7 @@
         android:id="@+id/member_item_card"
         android:layout_width="@dimen/member_list_item_card_width"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:theme="@style/Theme.MaterialComponents.DayNight">
+        android:layout_margin="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
