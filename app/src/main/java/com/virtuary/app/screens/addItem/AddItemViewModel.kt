@@ -1,5 +1,6 @@
 package com.virtuary.app.screens.addItem
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +16,7 @@ class AddItemViewModel : ViewModel() {
     val title = MutableLiveData<String>("")
     val location = MutableLiveData<String>("")
     val story = MutableLiveData<String>("")
+    val image = MutableLiveData<Bitmap>()
     private val repository: FirestoreRepository = FirestoreRepository()
 
     private val _selectionRelatedTo = MutableLiveData<MutableList<String>>()

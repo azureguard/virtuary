@@ -2,8 +2,11 @@ package com.virtuary.app.screens.addItem
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -24,7 +28,8 @@ import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentAddItemBinding
 import com.virtuary.app.firebase.Item
 import com.virtuary.app.util.hideKeyboard
-import kotlinx.android.synthetic.main.fragment_add_item.*
+import java.io.File
+import java.util.*
 
 class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
 
@@ -169,18 +174,24 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // result code is OK only when the user selects an image
         if (resultCode == Activity.RESULT_OK) {
+            var image: Uri? = null
             if (requestCode == REQUEST_SELECT_IMAGE_IN_ALBUM) {
-                // TODO: Do something with the selected image from gallery here
                 // returns the content URI for the selected Image
-                val selectedImage = data!!.data
-                add_item_image_icon.visibility = View.GONE
-                add_item_image.setImageURI(selectedImage)
+                image = data?.data
             } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                image = getImagePath()
+            }
+            binding.addItemImage.setImageURI(image)
+            binding.addItemImageIcon.visibility = View.GONE
 
-                // TODO: Do something with the captured image from camera here
-                val imageBitmap = data?.extras?.get("data") as Bitmap
-                binding.addItemImage.setImageBitmap(imageBitmap)
-                binding.addItemImageIcon.visibility = View.GONE
+            addItemViewModel.image.value = if (Build.VERSION.SDK_INT < 28) {
+                MediaStore.Images.Media.getBitmap(
+                    context?.contentResolver,
+                    image
+                )
+            } else {
+                val source = ImageDecoder.createSource(context?.contentResolver!!, image!!)
+                ImageDecoder.decodeBitmap(source)
             }
         }
     }
@@ -200,11 +211,33 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
 
     private fun takePicture() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, newImagePath())
             takePictureIntent.resolveActivity(activity!!.packageManager)?.also {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
             }
         }
     }
+
+    private var imageUri: Uri? = null
+
+    private fun getImagePath(): Uri? {
+        return imageUri ?: generate()
+    }
+
+    private fun newImagePath(): Uri? {
+        return generate()
+    }
+
+    private fun generate(): Uri? {
+        val storageDir = context?.getExternalFilesDir(Environment.DIRECTORY_DCIM)
+        val image = File(storageDir, UUID.randomUUID().toString() + ".jpg")
+        imageUri = FileProvider.getUriForFile(
+            context!!, context!!.applicationContext
+                .packageName + ".provider", image
+        )
+        return imageUri
+    }
+
 
     private fun showNoticeDialog() {
         // Create an instance of the dialog fragment and show it
