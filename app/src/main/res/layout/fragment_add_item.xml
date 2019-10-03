@@ -55,6 +55,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/add_item_title_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -67,14 +68,9 @@
                     android:id="@+id/add_item_title_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle_background"
                     android:inputType="textCapWords"
-                    android:padding="8dp"
                     android:singleLine="true"
-                    android:text="@={addItemViewModel.title}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/add_item_title_text" />
+                    android:text="@={addItemViewModel.title}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -82,39 +78,43 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/current_location"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/add_item_title_layout" />
 
 
-            <EditText
-                android:id="@+id/add_item_location_edit"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_item_location_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
-                android:background="@drawable/rectangle_background"
-                android:inputType="none|textPostalAddress"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:text="@={addItemViewModel.location}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_item_location_text" />
+                app:layout_constraintTop_toBottomOf="@id/add_item_location_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_item_location_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none|textPostalAddress|textCapWords"
+                    android:singleLine="true"
+                    android:text="@={addItemViewModel.location}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/add_item_related_to_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/related_to"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_item_location_edit" />
+                app:layout_constraintTop_toBottomOf="@id/add_item_location_layout" />
 
             <Spinner
                 android:id="@+id/add_item_related_to_spinner"
@@ -147,29 +147,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/story"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/add_item_related_to_list" />
 
-            <EditText
-                android:id="@+id/add_item_story"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_item_story_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
-                android:background="@drawable/rectangle_background"
-                android:importantForAutofill="no"
-                android:inputType="textMultiLine"
-                android:padding="8dp"
-                android:text="@={addItemViewModel.story}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_item_story_text" />
+                app:layout_constraintTop_toBottomOf="@id/add_item_story_text">
 
-            <Button
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_item_story"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:text="@={addItemViewModel.story}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/add_item_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -181,7 +185,7 @@
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/add_item_story" />
+                app:layout_constraintTop_toBottomOf="@id/add_item_story_layout" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
