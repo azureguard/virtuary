@@ -17,8 +17,8 @@
 
             <ImageView
                 android:id="@+id/virtuary_logo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="@dimen/standard_image_size"
+                android:layout_height="@dimen/standard_image_size"
                 android:layout_marginTop="32dp"
                 android:contentDescription="@string/virtuary_logo"
                 app:srcCompat="@mipmap/ic_launcher" />

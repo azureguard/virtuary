@@ -5,4 +5,6 @@
     <dimen name="add_item_icon_size">84dp</dimen>
     <dimen name="item_image_height">250dp</dimen>
     <dimen name="member_list_item_card_width">250dp</dimen>
+    <dimen name="drawer_title_height">172dp</dimen>
+    <dimen name="icon_size">32dp</dimen>
 </resources>

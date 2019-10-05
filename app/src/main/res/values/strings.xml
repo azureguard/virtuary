@@ -43,4 +43,6 @@
     <string name="add_item_dialog_add_picture_description">Take a new photo or select one from your existing photo library</string>
     <string name="add_item_dialog_camera">Camera</string>
     <string name="add_item_dialog_gallery">Gallery</string>
+    <string name="add_item">Add item</string>
+    <string name="member_details">Details</string>
 </resources>

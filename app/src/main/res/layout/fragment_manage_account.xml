@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/edit_account_drawable"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/profile_edit_general"
                 android:tint="?attr/colorOnSurface"
@@ -54,8 +54,8 @@
 
             <ImageView
                 android:id="@+id/change_password_drawable"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/profile_change_password"
                 android:tint="?attr/colorOnSurface"
@@ -82,8 +82,8 @@
 
             <ImageView
                 android:id="@+id/forgot_password_drawable"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/forgot_password"
                 android:tint="?attr/colorOnSurface"

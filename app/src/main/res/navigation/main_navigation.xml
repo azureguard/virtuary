@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/addItemFragment"
         android:name="com.virtuary.app.screens.addItem.AddItemFragment"
-        android:label="Add Item"
+        android:label="@string/add_item"
         tools:layout="@layout/fragment_add_item">
         <action
             android:id="@+id/action_addItemFragment_to_itemFragment"
@@ -89,7 +89,7 @@
     <fragment
         android:id="@+id/memberFragment"
         android:name="com.virtuary.app.screens.family.member.MemberFragment"
-        android:label="Details"
+        android:label="@string/member_details"
         tools:layout="@layout/fragment_family_member">
         <argument
             android:name="name"
@@ -112,7 +112,6 @@
     <fragment
         android:id="@+id/memberItemFragment"
         android:name="com.virtuary.app.screens.family.member.item.MemberItemFragment"
-        android:label="MemberItemFragment"
         tools:layout="@layout/fragment_family_member_item">
         <argument
             android:name="name"
@@ -231,7 +230,7 @@
         <fragment
             android:id="@+id/signupFragment"
             android:name="com.virtuary.app.screens.signUp.SignUpFragment"
-            android:label="Sign Up"
+            android:label="@string/sign_up"
             tools:layout="@layout/fragment_sign_up">
             <action
                 android:id="@+id/action_signupFragment_to_loginFragment"
@@ -244,7 +243,7 @@
         <fragment
             android:id="@+id/loginFragment"
             android:name="com.virtuary.app.screens.login.LoginFragment"
-            android:label="Login"
+            android:label="@string/login"
             tools:layout="@layout/fragment_login">
             <action
                 android:id="@+id/action_loginFragment_to_homeFragment"
