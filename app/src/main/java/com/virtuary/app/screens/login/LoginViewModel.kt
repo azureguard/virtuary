@@ -1,19 +1,20 @@
 package com.virtuary.app.screens.login
 
-import androidx.lifecycle.ViewModel
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.virtuary.app.R
 
 class LoginViewModel : ViewModel() {
     val email = ObservableField("")
     val password = ObservableField("")
     private val inProgress = MutableLiveData<Boolean>(false)
     private val isSuccess = MutableLiveData<Boolean>(false)
-    private val errorMessage = MutableLiveData<String>("")
+    private val errorMessage = MutableLiveData<Int>()
 
     fun getInProgress(): LiveData<Boolean> {
         return inProgress
@@ -23,7 +24,7 @@ class LoginViewModel : ViewModel() {
         return isSuccess
     }
 
-    fun getErrorMessage(): LiveData<String> {
+    fun getErrorMessage(): LiveData<Int> {
         return errorMessage
     }
 
@@ -41,7 +42,7 @@ class LoginViewModel : ViewModel() {
 
     fun onClick() {
         _invalidEmail.value =
-            email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get()!!).matches()
+            email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get() as CharSequence).matches()
         _invalidPassword.value = password.get() == null || password.get()!!.isEmpty()
         if (!(invalidEmail.value!! || invalidPassword.value!!)) {
             inProgress.value = true
@@ -51,10 +52,10 @@ class LoginViewModel : ViewModel() {
                     try {
                         throw it.exception!!
                     } catch (e: Exception) {
-                        when (e) {
-                            is FirebaseAuthInvalidUserException, is FirebaseAuthInvalidCredentialsException -> errorMessage.value =
-                                "Invalid email or password"
-                            else -> errorMessage.value = "Unable to reach server"
+                        errorMessage.value = when (e) {
+                            is FirebaseAuthInvalidUserException, is FirebaseAuthInvalidCredentialsException ->
+                                R.string.error_invalid_credentials
+                            else -> R.string.error_server_unreachable
                         }
                     }
                     inProgress.value = false

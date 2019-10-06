@@ -44,7 +44,7 @@ class MemberItemFragment : Fragment(), SearchView.OnQueryTextListener {
         )
 
         // Dynamically change the label on the action bar
-        (activity as MainActivity).setActionBarTitle("${args.name}'s items")
+        (activity as MainActivity).setActionBarTitle(args.name + getString(R.string.possessive_items))
 
         // get the member item view model
         // assign for databinding so the data in view model can be accessed

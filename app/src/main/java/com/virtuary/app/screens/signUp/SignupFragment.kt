@@ -23,11 +23,14 @@ class SignUpFragment : Fragment() {
 
     private lateinit var viewModel: SignUpViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         val binding: FragmentSignUpBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_sign_up, container, false)
+            inflater, R.layout.fragment_sign_up, container, false
+        )
 
         // Get the viewmodel
         viewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)
@@ -43,7 +46,7 @@ class SignUpFragment : Fragment() {
         // Sets up event listening to show error when the email is invalid
         viewModel.invalidEmail.observe(this, Observer { invalid ->
             if (invalid) {
-                binding.emailText.error = "Invalid Email"
+                binding.emailText.error = getString(R.string.error_invalid_email)
                 binding.emailText.isErrorEnabled = true
             } else {
                 binding.emailText.isErrorEnabled = false
@@ -57,8 +60,8 @@ class SignUpFragment : Fragment() {
 
         // Sets up event listening to show error when the password is invalid
         viewModel.invalidPassword.observe(this, Observer { invalid ->
-            if(invalid) {
-                binding.passwordText.error = "Password need to be of length 6 or more"
+            if (invalid) {
+                binding.passwordText.error = getString(R.string.error_password_short)
                 binding.passwordText.isErrorEnabled = true
             } else {
                 binding.passwordText.isErrorEnabled = false
@@ -71,8 +74,8 @@ class SignUpFragment : Fragment() {
         }
         // Sets up event listening to show error when the name is invalid
         viewModel.invalidName.observe(this, Observer { invalid ->
-            if(invalid) {
-                binding.nameText.error = "Please enter your name"
+            if (invalid) {
+                binding.nameText.error = getString(R.string.error_name_blank)
                 binding.nameText.isErrorEnabled = true
             } else {
                 binding.nameText.isErrorEnabled = false
@@ -118,12 +121,10 @@ class SignUpFragment : Fragment() {
             }
         })
 
-        viewModel.getErrorMessage().observe(this, Observer<String> { errorMessage ->
-            run {
-                if (errorMessage.isNotEmpty()) {
-                    binding.emailText.error = "Email already in use"
-                    binding.emailText.isErrorEnabled = true
-                }
+        viewModel.getErrorMessage().observe(this, Observer<Int> { errorMessage ->
+            if (errorMessage != R.string.error_server_unreachable || errorMessage != R.string.error_user_profile_not_set) {
+                binding.emailText.error = getString(R.string.error_email_in_use)
+                binding.emailText.isErrorEnabled = true
             }
         })
 

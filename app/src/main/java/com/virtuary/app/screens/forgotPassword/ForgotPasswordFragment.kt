@@ -39,7 +39,7 @@ class ForgotPasswordFragment : Fragment() {
             this,
             Observer { invalid ->
                 if (invalid) {
-                    binding.email.error = "Please enter a valid email"
+                    binding.email.error = getString(R.string.error_invalid_email)
                     binding.email.isErrorEnabled = true
                 } else {
                     binding.email.isErrorEnabled = false
@@ -53,12 +53,13 @@ class ForgotPasswordFragment : Fragment() {
             this,
             Observer<Boolean> { isSuccess ->
                 if (isSuccess) {
-                    Toast.makeText(activity, "Password reset email sent", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.note_password_reset_sent, Toast.LENGTH_LONG)
+                        .show()
                     findNavController().navigate(
                         ForgotPasswordFragmentDirections.actionForgotPasswordFragmentPop()
                     )
                 } else {
-                    binding.email.error = "There is no account associated with this email"
+                    binding.email.error = getString(R.string.error_email_not_found)
                     binding.email.isErrorEnabled = true
                 }
             })
