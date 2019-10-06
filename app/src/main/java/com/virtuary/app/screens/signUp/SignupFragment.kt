@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -52,9 +53,9 @@ class SignUpFragment : Fragment() {
                 binding.emailText.isErrorEnabled = false
             }
         })
-        binding.emailEdit.setOnFocusChangeListener { _, hasFocus ->
+        binding.emailEdit.doAfterTextChanged {
             run {
-                if (hasFocus) binding.emailText.isErrorEnabled = false
+                binding.emailText.isErrorEnabled = false
             }
         }
 
@@ -67,11 +68,25 @@ class SignUpFragment : Fragment() {
                 binding.passwordText.isErrorEnabled = false
             }
         })
-        binding.passwordEdit.setOnFocusChangeListener { _, hasFocus ->
+        binding.passwordEdit.doAfterTextChanged {
             run {
-                if (hasFocus) binding.passwordText.isErrorEnabled = false
+                binding.passwordText.isErrorEnabled = false
             }
         }
+
+        binding.passwordEdit.setOnKeyListener { v, keyCode, event ->
+            run {
+                if (keyCode == EditorInfo.IME_ACTION_DONE || keyCode == KeyEvent.KEYCODE_ENTER
+                    && event.action == KeyEvent.ACTION_UP
+                ) {
+                    v.clearFocus()
+                    viewModel.onClick()
+                    return@run true
+                }
+                return@run false
+            }
+        }
+
         // Sets up event listening to show error when the name is invalid
         viewModel.invalidName.observe(this, Observer { invalid ->
             if (invalid) {
@@ -81,22 +96,10 @@ class SignUpFragment : Fragment() {
                 binding.nameText.isErrorEnabled = false
             }
         })
-        binding.nameEdit.setOnFocusChangeListener { _, hasFocus ->
-            run {
-                if (hasFocus) binding.nameText.isErrorEnabled = false
-            }
-        }
 
-        binding.passwordEdit.setOnKeyListener { _, keyCode, event ->
+        binding.nameEdit.doAfterTextChanged {
             run {
-                if (event.keyCode == KeyEvent.KEYCODE_ENTER ||
-                    event.action == KeyEvent.ACTION_DOWN ||
-                    keyCode == EditorInfo.IME_ACTION_DONE
-                ) {
-                    hideKeyboard()
-                    viewModel.onClick()
-                }
-                return@run true
+                binding.nameText.isErrorEnabled = false
             }
         }
 
