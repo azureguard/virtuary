@@ -25,25 +25,11 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_addItemFragment"
-            app:destination="@id/addItemFragment"
+            app:destination="@id/addEditItemFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
-    <fragment
-        android:id="@+id/addItemFragment"
-        android:name="com.virtuary.app.screens.addItem.AddItemFragment"
-        android:label="@string/add_item"
-        tools:layout="@layout/fragment_add_item">
-        <action
-            android:id="@+id/action_addItemFragment_to_itemFragment"
-            app:destination="@id/itemFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/familyFragment"
@@ -190,7 +176,7 @@
         tools:layout="@layout/fragment_item">
         <action
             android:id="@+id/action_itemFragment_to_editItemFragment"
-            app:destination="@id/editItemFragment"
+            app:destination="@id/addEditItemFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -207,13 +193,29 @@
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <fragment
-        android:id="@+id/editItemFragment"
-        android:name="com.virtuary.app.screens.item.editItem.EditItemFragment"
-        android:label="@string/edit_item"
-        tools:layout="@layout/fragment_edit_item">
+        android:id="@+id/addEditItemFragment"
+        android:name="com.virtuary.app.screens.item.addEditItem.AddEditItemFragment"
+        tools:layout="@layout/fragment_add_edit_item">
         <argument
             android:name="item"
-            app:argType="com.virtuary.app.firebase.Item" />
+            app:argType="com.virtuary.app.firebase.Item"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_editItemFragment_to_itemFragment"
+            app:destination="@id/itemFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_editItemFragment_pop"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/addEditItemFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <action
         android:id="@+id/action_global_landingFragment"

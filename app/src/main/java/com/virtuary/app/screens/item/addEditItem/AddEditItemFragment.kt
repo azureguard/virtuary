@@ -1,4 +1,4 @@
-package com.virtuary.app.screens.addItem
+package com.virtuary.app.screens.item.addEditItem
 
 import android.app.Activity
 import android.content.Intent
@@ -21,21 +21,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.ktx.toObject
+import com.virtuary.app.MainActivity
 import com.virtuary.app.R
-import com.virtuary.app.databinding.FragmentAddItemBinding
+import com.virtuary.app.databinding.FragmentAddEditItemBinding
 import com.virtuary.app.firebase.Item
 import com.virtuary.app.util.hideKeyboard
 import java.io.File
 import java.util.*
 
-class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
+class AddEditItemFragment : Fragment(),
+    PhotoDialogFragment.PhotoDialogListener {
 
-    private lateinit var binding: FragmentAddItemBinding
+    // argument got from navigation action
+    private val args: AddEditItemFragmentArgs by navArgs()
 
-    private val addItemViewModel by viewModels<AddItemViewModel>()
+    internal lateinit var binding: FragmentAddEditItemBinding
+
+    internal val viewModel by viewModels<AddEditItemViewModel> { AddEditItemViewModelFactory(args.item) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,38 +49,38 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
         // inflate the layout
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_add_item, container, false
+            R.layout.fragment_add_edit_item, container, false
         )
 
         // assign for databinding so the data in view model can be accessed
-        binding.addItemViewModel = addItemViewModel
+        binding.editItemViewModel = viewModel
 
         // can observe LiveData updates
         binding.lifecycleOwner = this
 
         // sets up event listening to show error when the title is empty
-        addItemViewModel.emptyTitle.observe(this, Observer { invalid ->
+        viewModel.emptyTitle.observe(this, Observer { invalid ->
             if (invalid) {
-                binding.addItemTitleLayout.error = getString(R.string.error_title_blank)
-                binding.addItemTitleLayout.isErrorEnabled = true
+                binding.editItemTitleLayout.error = getString(R.string.error_title_blank)
+                binding.editItemTitleLayout.isErrorEnabled = true
             } else {
-                binding.addItemTitleLayout.isErrorEnabled = false
+                binding.editItemTitleLayout.isErrorEnabled = false
             }
         })
 
         // build the drop down add item menu
-        binding.addItemRelatedToSpinner.adapter = ArrayAdapter<String>(
+        binding.editItemRelatedToSpinner.adapter = ArrayAdapter<String>(
             activity!!,
             R.layout.support_simple_spinner_dropdown_item,
-            addItemViewModel.selectionRelatedTo.value!!
+            viewModel.selectionRelatedTo.value!!
         )
 
-        binding.addItemRelatedToSpinner.onItemSelectedListener =
+        binding.editItemRelatedToSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    if (addItemViewModel.onItemSelected(binding.addItemRelatedToSpinner.selectedItemPosition)) {
+                    if (viewModel.onItemSelected(binding.editItemRelatedToSpinner.selectedItemPosition)) {
                         // set selection to "-" if item selected to avoid confusion in manipulating array
-                        binding.addItemRelatedToSpinner.setSelection(0)
+                        binding.editItemRelatedToSpinner.setSelection(0)
                     }
                 }
 
@@ -85,10 +89,10 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
                 }
             }
 
-        addItemViewModel.addedRelatedTo.observe(this,
+        viewModel.addedRelatedTo.observe(this,
             Observer<MutableList<String>> { data ->
                 // make chip view for each item in the list
-                val chipGroup = binding.addItemRelatedToList
+                val chipGroup = binding.editItemRelatedToList
                 val chipInflater = LayoutInflater.from(chipGroup.context)
 
                 val children = data.map { chipName ->
@@ -101,7 +105,7 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
 
                     chip.setOnCloseIconClickListener {
                         chipGroup.removeView(chip as View)
-                        addItemViewModel.onRemoveClick(chipName)
+                        viewModel.onRemoveClick(chipName)
                     }
 
                     chip
@@ -117,42 +121,45 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
             }
         )
 
-        addItemViewModel.document.observe(this,
-            Observer<DocumentSnapshot> {
-                if (it != null) {
-                    hideKeyboard()
+        viewModel.document.observe(this, Observer<Item> {
+            if (it != null) {
+                hideKeyboard()
+                if (viewModel.isEdit.value!!) {
                     findNavController().navigate(
-                        AddItemFragmentDirections.actionAddItemFragmentToItemFragment(
-                            addItemViewModel.document.value?.toObject<Item>()!!
-                        )
+                        AddEditItemFragmentDirections.actionEditItemFragmentPop()
+                    )
+                } else {
+                    findNavController().navigate(
+                        AddEditItemFragmentDirections.actionEditItemFragmentToItemFragment(it)
                     )
                 }
-            })
+            }
+        })
 
         // Show dialog when the add photo is clicked
-        binding.addItemImageIcon.setOnClickListener {
-            showNoticeDialog()
+        binding.editItemImageIcon.setOnClickListener {
+            showPhotoDialog()
         }
 
-        binding.addItemImage.setOnClickListener {
-            if (binding.addItemImageIcon.visibility == View.GONE) {
-                showNoticeDialog()
+        binding.editItemImage.setOnClickListener {
+            if (binding.editItemImageIcon.visibility == View.GONE) {
+                showPhotoDialog()
             }
         }
 
-        addItemViewModel.inProgress.observe(this,
+        viewModel.inProgress.observe(this,
             Observer<Boolean> { inProgress ->
                 if (inProgress) {
                     hideKeyboard()
                     binding.progressBar.visibility = View.VISIBLE
-                    binding.addItemConfirm.isEnabled = false
+                    binding.editItemConfirm.isEnabled = false
                 } else {
                     binding.progressBar.visibility = View.GONE
-                    binding.addItemConfirm.isEnabled = true
+                    binding.editItemConfirm.isEnabled = true
                 }
             })
 
-        addItemViewModel.isError.observe(this,
+        viewModel.isError.observe(this,
             Observer<Boolean> { isError ->
                 if (isError) {
                     Toast.makeText(
@@ -162,6 +169,12 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
                     ).show()
                 }
             })
+
+        if (args.item == null) {
+            (activity as MainActivity).setActionBarTitle(getString(R.string.add_item))
+        } else {
+            (activity as MainActivity).setActionBarTitle(getString(R.string.edit_item))
+        }
 
         return binding.root
     }
@@ -174,7 +187,6 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
         selectImageInAlbum()
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // result code is OK only when the user selects an image
         if (resultCode == Activity.RESULT_OK) {
@@ -185,10 +197,10 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
             } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 image = getImagePath()
             }
-            binding.addItemImage.setImageURI(image)
-            binding.addItemImageIcon.visibility = View.GONE
+            binding.editItemImage.setImageURI(image)
+            binding.editItemImageIcon.visibility = View.GONE
 
-            addItemViewModel.image.value = if (Build.VERSION.SDK_INT < 28) {
+            viewModel.image.value = if (Build.VERSION.SDK_INT < 28) {
                 MediaStore.Images.Media.getBitmap(
                     context?.contentResolver,
                     image
@@ -217,7 +229,10 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, newImagePath())
             takePictureIntent.resolveActivity(activity!!.packageManager)?.also {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                startActivityForResult(
+                    takePictureIntent,
+                    REQUEST_IMAGE_CAPTURE
+                )
             }
         }
     }
@@ -242,15 +257,13 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
         return imageUri
     }
 
-
-    private fun showNoticeDialog() {
+    private fun showPhotoDialog() {
         // Create an instance of the dialog fragment and show it
         hideKeyboard()
         val dialog = PhotoDialogFragment()
         dialog.setTargetFragment(this, 0)
         dialog.show(fragmentManager!!, null)
     }
-
 
     // define static properties
     companion object {

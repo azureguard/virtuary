@@ -51,7 +51,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         }
 
         binding.addItemButton.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddItemFragment())
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddItemFragment(null))
         }
 
         // To indicate there's option button other than up or hamburger button in action bar
