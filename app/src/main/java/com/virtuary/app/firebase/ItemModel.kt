@@ -16,5 +16,5 @@ data class Item(
     var whenExist: Date? = null,
     var story: String? = null,
     var relations: List<String>? = null,
-    var pictures: List<String>? = null
+    var image: String? = null
 ) : Parcelable

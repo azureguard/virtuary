@@ -9,6 +9,7 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.ktx.toObject
 import com.virtuary.app.firebase.FirestoreRepository
 import com.virtuary.app.firebase.Item
+import com.virtuary.app.firebase.StorageRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -22,6 +23,7 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
     val story = MutableLiveData(item?.story ?: "")
     val image = MutableLiveData<Bitmap>()
     private val repository: FirestoreRepository = FirestoreRepository()
+    private val storageRepository: StorageRepository by lazy { StorageRepository() }
 
     private val _selectionRelatedTo = MutableLiveData<MutableList<String>>()
     val selectionRelatedTo: LiveData<MutableList<String>>
@@ -66,13 +68,15 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
             _isError.value = false
             _inProgress.value = true
             if (_item == null) {
-                val item = Item(
-                    name = title.value,
-                    currentLocation = location.value,
-                    story = story.value,
-                    relations = addedRelatedTo.value
-                )
                 viewModelScope.launch {
+                    val item = Item(
+                        name = title.value,
+                        currentLocation = location.value,
+                        story = story.value,
+                        relations = addedRelatedTo.value,
+                        image = uploadImage()
+                    )
+
                     try {
                         _document.value = withContext(Dispatchers.IO) {
                             repository.addItem(item).await().get().await().toObject<Item>()
@@ -87,6 +91,7 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
                 _item.story = story.value
                 _item.relations = addedRelatedTo.value
                 viewModelScope.launch {
+                    _item.image = uploadImage()
                     try {
                         withContext(Dispatchers.IO) { repository.editItem(_item) }
                         _document.value = _item
@@ -96,6 +101,16 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
                 }
             }
             _inProgress.value = false
+        }
+    }
+
+    private suspend fun uploadImage(): String? {
+        return if (image.value != null) {
+            withContext(Dispatchers.IO) {
+                storageRepository.uploadImage(image.value!!).await().storage.toString()
+            }
+        } else {
+            null
         }
     }
 
