@@ -23,6 +23,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
+import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentAddEditItemBinding
 import com.virtuary.app.firebase.Item
@@ -168,6 +169,12 @@ class AddEditItemFragment : Fragment(),
                     ).show()
                 }
             })
+
+        if (args.item == null) {
+            (activity as MainActivity).setActionBarTitle(getString(R.string.add_item))
+        } else {
+            (activity as MainActivity).setActionBarTitle(getString(R.string.edit_item))
+        }
 
         return binding.root
     }

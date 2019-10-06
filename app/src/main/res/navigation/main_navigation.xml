@@ -195,7 +195,6 @@
     <fragment
         android:id="@+id/addEditItemFragment"
         android:name="com.virtuary.app.screens.item.addEditItem.AddEditItemFragment"
-        android:label="@string/edit_item"
         tools:layout="@layout/fragment_add_edit_item">
         <argument
             android:name="item"
