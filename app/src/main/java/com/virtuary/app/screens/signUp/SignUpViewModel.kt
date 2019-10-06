@@ -1,11 +1,12 @@
 package com.virtuary.app.screens.signUp
 
-import androidx.lifecycle.ViewModel
 import androidx.databinding.ObservableField
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserProfileChangeRequest
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.virtuary.app.R
 
 class SignUpViewModel : ViewModel() {
     val name = ObservableField("")
@@ -13,7 +14,7 @@ class SignUpViewModel : ViewModel() {
     val password = ObservableField("")
     private val inProgress = MutableLiveData<Boolean>(false)
     private val isSuccess = MutableLiveData<Boolean>(false)
-    private val errorMessage = MutableLiveData<String>("")
+    private val errorMessage = MutableLiveData<Int>()
     private val fbAuth = FirebaseAuth.getInstance()
 
 
@@ -25,7 +26,7 @@ class SignUpViewModel : ViewModel() {
         return isSuccess
     }
 
-    fun getErrorMessage(): LiveData<String> {
+    fun getErrorMessage(): LiveData<Int> {
         return errorMessage
     }
 
@@ -46,7 +47,7 @@ class SignUpViewModel : ViewModel() {
 
     fun onClick() {
         _invalidEmail.value =
-            email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get()).matches()
+            email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get() as CharSequence).matches()
         _invalidPassword.value =
             password.get() == null || password.get()!!.isEmpty() || password.get()!!.length < 6
         _invalidName.value = name.get() == null || name.get()!!.isEmpty()
@@ -65,11 +66,11 @@ class SignUpViewModel : ViewModel() {
                         user?.updateProfile(profileUpdates)
                             ?.addOnCompleteListener {
                                 if (!isSuccess.value!!) {
-                                    errorMessage.value = "Unable to set user profile"
+                                    errorMessage.value = R.string.error_user_profile_not_set
                                 }
                             }
                     } else {
-                        errorMessage.value = "Error"
+                        errorMessage.value = R.string.error_server_unreachable
                     }
                     inProgress.value = false
                 }

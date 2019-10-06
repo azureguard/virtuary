@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/profile_picture"
-                android:layout_width="@dimen/edit_profile_image"
-                android:layout_height="@dimen/edit_profile_image"
+                android:layout_width="@dimen/standard_image_size"
+                android:layout_height="@dimen/standard_image_size"
                 android:layout_marginTop="32dp"
                 android:contentDescription="@string/profile_image_description"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -36,8 +36,8 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/profile_edit_image_description"
                 android:src="@drawable/ic_edit"
-                app:layout_constraintBottom_toBottomOf="@+id/profile_picture"
-                app:layout_constraintEnd_toEndOf="@+id/profile_picture" />
+                app:layout_constraintBottom_toBottomOf="@id/profile_picture"
+                app:layout_constraintEnd_toEndOf="@id/profile_picture" />
 
             <FrameLayout
                 android:id="@+id/frame_name"
@@ -72,10 +72,10 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/frame_name" />
+                app:layout_constraintTop_toTopOf="@id/frame_name" />
 
             <TextView
                 android:id="@+id/profile_name"
@@ -84,10 +84,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="@={editProfileViewModel.name}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_name_header" />
+                app:layout_constraintTop_toBottomOf="@id/profile_name_header"
+                tools:text="@tools:sample/full_names" />
 
             <TextView
                 android:id="@+id/profile_email_header"
@@ -95,11 +96,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/email"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/frame_email" />
+                app:layout_constraintTop_toTopOf="@id/frame_email" />
 
             <TextView
                 android:id="@+id/profile_email"
@@ -109,10 +111,12 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="@={editProfileViewModel.email}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profile_email_header" />
+                app:layout_constraintTop_toBottomOf="@id/profile_email_header"
+                tools:text="@tools:sample/lorem[3]" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

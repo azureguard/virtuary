@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -11,14 +12,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/family_member_image"
-            android:layout_width="@dimen/family_member_image_size"
-            android:layout_height="@dimen/family_member_image_size"
+            android:layout_width="@dimen/standard_image_size"
+            android:layout_height="@dimen/standard_image_size"
             android:layout_marginTop="32dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -28,20 +27,20 @@
         <TextView
             android:id="@+id/family_member_name"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/family_member_name_field"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:gravity="top"
-            android:maxWidth="@dimen/family_member_image_size"
+            android:maxWidth="@dimen/standard_image_size"
             android:maxLines="2"
             android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/family_member_image" />
+            app:layout_constraintTop_toBottomOf="@id/family_member_image"
+            tools:text="@tools:sample/full_names" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

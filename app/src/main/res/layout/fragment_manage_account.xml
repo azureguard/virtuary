@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".screens.manageAccount.ManageAccountFragment">
 
     <data>
 
@@ -24,11 +26,11 @@
 
             <ImageView
                 android:id="@+id/edit_account_drawable"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/profile_edit_general"
-                android:tint="@color/colorPrimaryDark"
+                android:tint="?attr/colorOnSurface"
                 app:srcCompat="@drawable/ic_edit" />
 
             <TextView
@@ -37,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="@string/profile_edit_general"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
         </TableRow>
 
@@ -52,11 +54,11 @@
 
             <ImageView
                 android:id="@+id/change_password_drawable"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/profile_change_password"
-                android:tint="@color/colorPrimaryDark"
+                android:tint="?attr/colorOnSurface"
                 app:srcCompat="@drawable/ic_lock" />
 
             <TextView
@@ -65,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="@string/profile_change_password"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
         </TableRow>
 
@@ -80,11 +82,11 @@
 
             <ImageView
                 android:id="@+id/forgot_password_drawable"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/forgot_password"
-                android:tint="@color/colorPrimaryDark"
+                android:tint="?attr/colorOnSurface"
                 app:srcCompat="@drawable/ic_help" />
 
             <TextView
@@ -93,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="@string/forgot_password"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
         </TableRow>
     </TableLayout>
 </layout>

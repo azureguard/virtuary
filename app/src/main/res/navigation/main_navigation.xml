@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.virtuary.app.screens.forgotPassword.ForgotPasswordFragment"
-        android:label="Forgot Password"
+        android:label="@string/forgot_password"
         tools:layout="@layout/fragment_forgot_password">
         <action
             android:id="@+id/action_forgotPasswordFragment_pop"
@@ -21,16 +21,20 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.virtuary.app.screens.home.HomeFragment"
-        android:label="Home"
+        android:label="@string/home"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_addItemFragment"
-            app:destination="@id/addItemFragment" />
+            app:destination="@id/addItemFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/addItemFragment"
         android:name="com.virtuary.app.screens.addItem.AddItemFragment"
-        android:label="Add Item"
+        android:label="@string/add_item"
         tools:layout="@layout/fragment_add_item">
         <action
             android:id="@+id/action_addItemFragment_to_itemFragment"
@@ -39,65 +43,91 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@+id/homeFragment" />
+            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/familyFragment"
         android:name="com.virtuary.app.screens.family.FamilyFragment"
-        android:label="Family"
+        android:label="@string/family"
         tools:layout="@layout/fragment_family">
         <action
             android:id="@+id/action_familyFragment_to_memberFragment"
-            app:destination="@id/memberFragment" />
+            app:destination="@id/memberFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <action
         android:id="@+id/action_global_homeFragment"
         app:destination="@id/homeFragment"
         app:enterAnim="@anim/nav_default_enter_anim"
-        app:popUpTo="@+id/main_navigation" />
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        app:popUpTo="@id/main_navigation" />
     <action
         android:id="@+id/action_global_familyFragment"
         app:destination="@id/familyFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim"
         app:popUpTo="@id/main_navigation" />
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.virtuary.app.screens.about.AboutFragment"
-        android:label="About"
+        android:label="@string/about"
         tools:layout="@layout/fragment_about" />
     <action
         android:id="@+id/action_global_aboutFragment"
-        app:destination="@id/aboutFragment" />
+        app:destination="@id/aboutFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <fragment
         android:id="@+id/memberFragment"
         android:name="com.virtuary.app.screens.family.member.MemberFragment"
-        android:label="Details"
+        android:label="@string/member_details"
         tools:layout="@layout/fragment_family_member">
         <argument
             android:name="name"
             app:argType="string" />
         <action
             android:id="@+id/action_memberFragment_to_memberItemFragment"
-            app:destination="@id/memberItemFragment" />
+            app:destination="@id/memberItemFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_memberFragment_to_itemFragment"
-            app:destination="@id/itemFragment" />
+            app:destination="@id/itemFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/memberItemFragment"
         android:name="com.virtuary.app.screens.family.member.item.MemberItemFragment"
-        android:label="MemberItemFragment"
         tools:layout="@layout/fragment_family_member_item">
         <argument
             android:name="name"
             app:argType="string" />
         <action
             android:id="@+id/action_memberFragment_to_itemFragment"
-            app:destination="@id/itemFragment" />
+            app:destination="@id/itemFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/manageAccount"
         android:name="com.virtuary.app.screens.manageAccount.ManageAccountFragment"
-        android:label="Manage Account"
+        android:label="@string/edit_profile"
         tools:layout="@layout/fragment_manage_account">
         <action
             android:id="@+id/action_manageAccount_to_changePassword"
@@ -115,7 +145,7 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_manageAccount_to_forgotPasswordFragment"
-            app:destination="@+id/forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -131,7 +161,7 @@
     <fragment
         android:id="@+id/changePassword"
         android:name="com.virtuary.app.screens.manageAccount.ChangePassword"
-        android:label="Change Password"
+        android:label="@string/profile_change_password"
         tools:layout="@layout/fragment_change_password">
         <action
             android:id="@+id/action_changePassword_to_manageAccount"
@@ -144,7 +174,7 @@
     <fragment
         android:id="@+id/editProfileDetails"
         android:name="com.virtuary.app.screens.manageAccount.EditProfileDetails"
-        android:label="Edit Profile"
+        android:label="@string/profile_edit_general"
         tools:layout="@layout/fragment_edit_profile_details">
         <action
             android:id="@+id/action_editProfileDetails_to_manageAccount"
@@ -160,18 +190,26 @@
         tools:layout="@layout/fragment_item">
         <action
             android:id="@+id/action_itemFragment_to_editItemFragment"
-            app:destination="@id/editItemFragment" />
+            app:destination="@id/editItemFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="item"
             app:argType="com.virtuary.app.firebase.Item" />
     </fragment>
     <action
         android:id="@+id/action_global_itemFragment"
-        app:destination="@id/itemFragment" />
+        app:destination="@id/itemFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <fragment
         android:id="@+id/editItemFragment"
         android:name="com.virtuary.app.screens.item.editItem.EditItemFragment"
-        android:label="Edit Item"
+        android:label="@string/edit_item"
         tools:layout="@layout/fragment_edit_item">
         <argument
             android:name="item"
@@ -179,33 +217,33 @@
     </fragment>
     <action
         android:id="@+id/action_global_landingFragment"
-        app:destination="@id/preAuth"
+        app:destination="@id/pre_auth"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim"
-        app:popUpTo="@id/landingFragment"
+        app:popUpTo="@id/homeFragment"
         app:popUpToInclusive="true" />
     <navigation
-        android:id="@+id/preAuth"
+        android:id="@+id/pre_auth"
         app:startDestination="@id/landingFragment">
         <fragment
             android:id="@+id/signupFragment"
             android:name="com.virtuary.app.screens.signUp.SignUpFragment"
-            android:label="Sign Up"
+            android:label="@string/sign_up"
             tools:layout="@layout/fragment_sign_up">
             <action
                 android:id="@+id/action_signupFragment_to_loginFragment"
                 app:destination="@id/loginFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
-                app:popUpTo="@+id/landingFragment"
+                app:popUpTo="@id/landingFragment"
                 app:popUpToInclusive="false" />
         </fragment>
         <fragment
             android:id="@+id/loginFragment"
             android:name="com.virtuary.app.screens.login.LoginFragment"
-            android:label="Login"
+            android:label="@string/login"
             tools:layout="@layout/fragment_login">
             <action
                 android:id="@+id/action_loginFragment_to_homeFragment"
@@ -214,7 +252,7 @@
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@+id/main_navigation" />
+                app:popUpTo="@id/main_navigation" />
             <action
                 android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
                 app:destination="@id/forgotPasswordFragment"
@@ -249,7 +287,7 @@
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@+id/landingFragment"
+                app:popUpTo="@id/landingFragment"
                 app:popUpToInclusive="true" />
         </fragment>
     </navigation>

@@ -1,9 +1,9 @@
 package com.virtuary.app.screens.addItem
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.virtuary.app.R
 
 class PhotoDialogFragment : DialogFragment() {
@@ -32,13 +32,11 @@ class PhotoDialogFragment : DialogFragment() {
         }
 
         return activity?.let {
-            //TODO: Change to material alert dialog
-            // for now it can't be implemented since it needs Theme.MaterialComponents to be implemented in app theme
-
             // Use the Builder class for convenient dialog construction
-            val builder = AlertDialog.Builder(it)
-            builder.setMessage(getString(R.string.add_item_dialog_take_picture_description))
-                .setTitle(R.string.add_item_dialog_take_picture)
+            val builder = MaterialAlertDialogBuilder(it)
+
+            builder.setMessage(getString(R.string.add_item_dialog_add_picture_description))
+                .setTitle(R.string.add_item_dialog_add_picture)
                 .setPositiveButton(
                     R.string.add_item_dialog_camera
                 ) { _, _ ->

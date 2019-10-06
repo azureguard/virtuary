@@ -46,7 +46,7 @@ class EditItemFragment : Fragment() {
         // sets up event listening to show error when the title is empty
         editItemViewModel.emptyTitle.observe(this, Observer { invalid ->
             if (invalid) {
-                binding.editItemTitleLayout.error = "Enter title"
+                binding.editItemTitleLayout.error = getString(R.string.error_title_blank)
                 binding.editItemTitleLayout.isErrorEnabled = true
             } else {
                 binding.editItemTitleLayout.isErrorEnabled = false
@@ -127,7 +127,7 @@ class EditItemFragment : Fragment() {
         // check if the Activity component is available to handle the intent
         if (intent.resolveActivity(context!!.packageManager) != null) {
             startActivityForResult(
-                Intent.createChooser(intent, "Select Picture"),
+                Intent.createChooser(intent, getString(R.string.select_picture)),
                 REQUEST_SELECT_IMAGE_IN_ALBUM
             )
         }

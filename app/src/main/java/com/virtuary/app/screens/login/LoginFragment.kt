@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -49,7 +50,7 @@ class LoginFragment : Fragment() {
         // Sets up event listening to show error when the email is invalid
         viewModel.invalidEmail.observe(this, Observer { invalid ->
             if (invalid) {
-                binding.emailEdit.error = "Invalid email address"
+                binding.emailEdit.error = getString(R.string.error_invalid_email)
                 binding.emailEdit.isErrorEnabled = true
                 binding.loginEmailEdit.requestFocus()
             } else {
@@ -65,7 +66,7 @@ class LoginFragment : Fragment() {
         // Sets up event listening to show error when the password is invalid
         viewModel.invalidPassword.observe(this, Observer { invalid ->
             if (invalid) {
-                binding.passwordEdit.error = "Password cannot be blank"
+                binding.passwordEdit.error = getString(R.string.error_password_blank)
                 binding.passwordEdit.isErrorEnabled = true
             } else {
                 binding.passwordEdit.isErrorEnabled = false
@@ -112,13 +113,12 @@ class LoginFragment : Fragment() {
             }
         })
 
-        viewModel.getErrorMessage().observe(this, Observer<String> { errorMessage ->
-            run {
-                if (errorMessage.isNotEmpty()) {
-                    binding.passwordEdit.error = "Email or password incorrect"
-                    binding.passwordEdit.isErrorEnabled = true
-//                    Snackbar.make(view!!, errorMessage, Snackbar.LENGTH_LONG).show()
-                }
+        viewModel.getErrorMessage().observe(this, Observer<Int> { errorMessage ->
+            if (errorMessage != R.string.error_server_unreachable) {
+                binding.passwordEdit.error = getString(errorMessage)
+                binding.passwordEdit.isErrorEnabled = true
+            } else {
+                Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
             }
         })
 

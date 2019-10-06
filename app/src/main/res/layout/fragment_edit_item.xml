@@ -20,7 +20,7 @@
             <ImageView
                 android:id="@+id/edit_item_image"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/add_item_image_height"
+                android:layout_height="@dimen/item_image_height"
                 android:background="@drawable/black_bottom_border_line"
                 android:contentDescription="@null"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -29,102 +29,91 @@
 
             <ImageView
                 android:id="@+id/edit_item_image_icon"
-                android:layout_width="@dimen/add_item_icon_width"
-                android:layout_height="@dimen/add_item_icon_height"
+                android:layout_width="@dimen/add_item_icon_size"
+                android:layout_height="@dimen/add_item_icon_size"
                 android:adjustViewBounds="true"
                 android:baselineAlignBottom="false"
                 android:contentDescription="@null"
                 android:outlineProvider="none"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_item_image"
+                app:layout_constraintBottom_toBottomOf="@id/edit_item_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
+                app:srcCompat="@drawable/ic_add_photo" />
 
             <TextView
                 android:id="@+id/edit_item_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/title"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_image" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_image" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edit_item_title_layout"
-                android:layout_width="match_parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                android:textColorHint="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_title_text">
+                app:layout_constraintTop_toBottomOf="@id/edit_item_title_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_item_title_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle_background"
-                    android:padding="8dp"
+                    android:inputType="textCapWords"
                     android:singleLine="true"
-                    android:text="@={editItemViewModel.title}"
-                    android:textSize="20sp" />
+                    android:text="@={editItemViewModel.title}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/edit_item_location_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/current_location"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_title_layout" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_title_layout" />
 
 
-            <EditText
-                android:id="@+id/edit_item_location_edit"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_item_location_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
-                android:background="@drawable/rectangle_background"
-                android:inputType="none"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:text="@={editItemViewModel.location}"
-                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_location_text" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_location_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_item_location_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none|textPostalAddress|textCapWords"
+                    android:singleLine="true"
+                    android:text="@={editItemViewModel.location}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/edit_item_related_to_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/related_to"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_location_edit" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_location_layout" />
 
             <Spinner
                 android:id="@+id/edit_item_related_to_spinner"
@@ -136,69 +125,65 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_related_to_text" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_related_to_text" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/edit_item_related_to_list"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
                 android:singleLine="false"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_related_to_spinner"
+                app:layout_constraintTop_toBottomOf="@id/edit_item_related_to_spinner"
                 app:singleSelection="false" />
 
             <TextView
                 android:id="@+id/edit_item_story_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/story"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_related_to_list" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_related_to_list" />
 
-            <EditText
-                android:id="@+id/edit_item_story"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_item_story_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
-                android:background="@drawable/rectangle_background"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:padding="8dp"
-                android:text="@={editItemViewModel.story}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_story_text" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_story_text">
 
-            <Button
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_item_story"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:text="@={editItemViewModel.story}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/edit_item_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="32dp"
                 android:layout_marginBottom="16dp"
-                android:background="@color/colorPrimary"
                 android:onClick="@{() -> editItemViewModel.onClick()}"
                 android:text="@string/confirm"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.91"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_item_story"
-                app:layout_constraintVertical_bias="0.13" />
+                app:layout_constraintTop_toBottomOf="@id/edit_item_story_layout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

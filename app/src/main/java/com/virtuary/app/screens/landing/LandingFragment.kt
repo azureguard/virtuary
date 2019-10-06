@@ -17,24 +17,27 @@ import com.virtuary.app.databinding.FragmentLandingBinding
  */
 class LandingFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         val binding: FragmentLandingBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_landing, container, false)
+            inflater, R.layout.fragment_landing, container, false
+        )
 
         // Hide activity bar in the first fragment
-        (activity as AppCompatActivity).supportActionBar!!.hide()
+        (activity as AppCompatActivity).supportActionBar?.hide()
 
         // Listener for button for navigation
         binding.signUpButton.setOnClickListener {
             findNavController().navigate(LandingFragmentDirections.actionLandingFragmentToSignupFragment())
-            (activity as AppCompatActivity).supportActionBar!!.show()
+            (activity as AppCompatActivity).supportActionBar?.show()
         }
 
         binding.logInButton.setOnClickListener {
             findNavController().navigate(LandingFragmentDirections.actionLandingFragmentToLoginFragment())
-            (activity as AppCompatActivity).supportActionBar!!.show()
+            (activity as AppCompatActivity).supportActionBar?.show()
         }
 
         return binding.root

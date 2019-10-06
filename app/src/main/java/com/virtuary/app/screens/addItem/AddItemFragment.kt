@@ -57,7 +57,7 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
         // sets up event listening to show error when the title is empty
         addItemViewModel.emptyTitle.observe(this, Observer { invalid ->
             if (invalid) {
-                binding.addItemTitleLayout.error = "Enter title"
+                binding.addItemTitleLayout.error = getString(R.string.error_title_blank)
                 binding.addItemTitleLayout.isErrorEnabled = true
             } else {
                 binding.addItemTitleLayout.isErrorEnabled = false
@@ -155,7 +155,11 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
         addItemViewModel.isError.observe(this,
             Observer<Boolean> { isError ->
                 if (isError) {
-                    Toast.makeText(activity, "Server error", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        activity,
+                        context?.getText(R.string.error_server_unreachable),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             })
 
@@ -203,7 +207,7 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
         // check if the Activity component is available to handle the intent
         if (intent.resolveActivity(context!!.packageManager) != null) {
             startActivityForResult(
-                Intent.createChooser(intent, "Select Picture"),
+                Intent.createChooser(intent, getString(R.string.select_picture)),
                 REQUEST_SELECT_IMAGE_IN_ALBUM
             )
         }
@@ -244,7 +248,7 @@ class AddItemFragment : Fragment(), PhotoDialogFragment.PhotoDialogListener {
         hideKeyboard()
         val dialog = PhotoDialogFragment()
         dialog.setTargetFragment(this, 0)
-        dialog.show(fragmentManager!!, "NoticeDialogFragment")
+        dialog.show(fragmentManager!!, null)
     }
 
 
