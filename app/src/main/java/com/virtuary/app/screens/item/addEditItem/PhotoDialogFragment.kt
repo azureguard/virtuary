@@ -1,4 +1,4 @@
-package com.virtuary.app.screens.addItem
+package com.virtuary.app.screens.item.addEditItem
 
 import android.app.Dialog
 import android.os.Bundle
