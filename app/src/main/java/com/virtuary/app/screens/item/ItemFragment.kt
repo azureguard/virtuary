@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,7 @@ class ItemFragment : Fragment() {
 
     // argument got from navigation action
     private val args: ItemFragmentArgs by navArgs()
+    internal val viewModel by viewModels<ItemViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,10 +39,7 @@ class ItemFragment : Fragment() {
         // set options menu
         setHasOptionsMenu(true)
 
-        // get the item view model
         // assign for databinding so the data in view model can be accessed
-        val viewModel: ItemViewModel = ViewModelProviders.of(this).get(ItemViewModel::class.java)
-
         binding.itemViewModel = viewModel
         viewModel.addRelatedTo(args.item.relations)
         // can observe LiveData updates
@@ -95,8 +94,8 @@ class ItemFragment : Fragment() {
                 )
             }
             R.id.nav_remove_item -> {
-                // TODO: change remove button behaviour
-                Log.i("RemoveItem", "Remove Item Menu Button clicked")
+                viewModel.deleteItem(args.item)
+                findNavController().navigate(ItemFragmentDirections.actionGlobalHomeFragment())
             }
         }
 
