@@ -83,6 +83,7 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
                         }
                     } catch (e: FirebaseException) {
                         _isError.value = true
+                        _inProgress.value = false
                     }
                 }
             } else {
@@ -97,10 +98,10 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
                         _document.value = _item
                     } catch (e: FirebaseException) {
                         _isError.value = true
+                        _inProgress.value = false
                     }
                 }
             }
-            _inProgress.value = false
         }
     }
 
