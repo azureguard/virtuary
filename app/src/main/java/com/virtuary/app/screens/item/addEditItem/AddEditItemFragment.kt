@@ -27,6 +27,7 @@ import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentAddEditItemBinding
 import com.virtuary.app.firebase.Item
+import com.virtuary.app.util.BaseViewModelFactory
 import com.virtuary.app.util.hideKeyboard
 import java.io.File
 import java.util.*
@@ -39,7 +40,13 @@ class AddEditItemFragment : Fragment(),
 
     internal lateinit var binding: FragmentAddEditItemBinding
 
-    internal val viewModel by viewModels<AddEditItemViewModel> { AddEditItemViewModelFactory(args.item) }
+    internal val viewModel: AddEditItemViewModel by viewModels {
+        BaseViewModelFactory {
+            AddEditItemViewModel(
+                args.item
+            )
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
