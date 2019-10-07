@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.storage.StorageReference
 import com.virtuary.app.firebase.FirestoreRepository
 import com.virtuary.app.firebase.Item
 import com.virtuary.app.firebase.StorageRepository
@@ -49,12 +50,17 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
     val document: LiveData<Item>
         get() = _document
 
+    private val _itemImage = MutableLiveData<StorageReference>()
+    val itemImage: LiveData<StorageReference>
+        get() = _itemImage
+
     init {
         _addedRelatedTo.value = item?.relations?.toMutableList() ?: mutableListOf()
         val allUsers = listOf("-", "None", "Daryl", "Michelle", "Maurice", "SK")
         _selectionRelatedTo.value =
             allUsers.filterNot { _addedRelatedTo.value?.contains(it) ?: false }.toMutableList()
         _isEdit.value = item != null
+        _itemImage.value = storageRepository.getImage(item?.image)
     }
 
     // check title input if it is empty

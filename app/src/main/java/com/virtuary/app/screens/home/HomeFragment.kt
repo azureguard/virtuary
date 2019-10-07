@@ -9,11 +9,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader
+import com.bumptech.glide.util.FixedPreloadSizeProvider
 import com.google.firebase.firestore.ktx.toObjects
 import com.virtuary.app.MainActivity
-import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentHomeBinding
 import com.virtuary.app.firebase.Item
 
@@ -25,13 +25,23 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private lateinit var searchView: SearchView
 
+    companion object {
+        const val IMAGE_SIZE = 200
+        const val MAX_PRELOAD = 10
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // inflate the layout
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            com.virtuary.app.R.layout.fragment_home,
+            container,
+            false
+        )
 
         // assign for databinding so the data in view model can be accessed
         binding.homeViewModel = homeViewModel
@@ -40,18 +50,29 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         val adapter = ItemAdapter(this)
         binding.rvItemList.adapter = adapter
 
+        val sizeProvider = FixedPreloadSizeProvider<Item>(IMAGE_SIZE, IMAGE_SIZE)
+        val preloader = RecyclerViewPreloader<Item>(
+            this, adapter,
+            sizeProvider, MAX_PRELOAD
+        )
+        binding.rvItemList.addOnScrollListener(preloader)
+
         homeViewModel.query.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            if (firebaseFirestoreException  != null ) {
-                Log.e("FIREBASE", "EXCEPT", firebaseFirestoreException)
+            if (firebaseFirestoreException != null) {
+                Log.e("FIRESTORE", firebaseFirestoreException.message ?: "Exception")
                 return@addSnapshotListener
             }
             adapter.submitList(
-                querySnapshot?.toObjects<Item>()
+                querySnapshot?.toObjects()
             )
         }
 
         binding.addItemButton.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddItemFragment(null))
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToAddItemFragment(
+                    null
+                )
+            )
         }
 
         // To indicate there's option button other than up or hamburger button in action bar
@@ -81,10 +102,10 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     // Function to inflate the action bar menu (including search)
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_search, menu)
-        val searchItem = menu.findItem(R.id.app_bar_search)
+        inflater.inflate(com.virtuary.app.R.menu.menu_search, menu)
+        val searchItem = menu.findItem(com.virtuary.app.R.id.app_bar_search)
         searchView = searchItem.actionView as SearchView
-        searchView.queryHint = getString(R.string.search_hint)
+        searchView.queryHint = getString(com.virtuary.app.R.string.search_hint)
         searchView.setOnQueryTextListener(this)
 
         // Make the search bar fill the entire action bar

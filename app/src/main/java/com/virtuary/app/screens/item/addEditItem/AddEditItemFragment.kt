@@ -28,6 +28,7 @@ import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentAddEditItemBinding
 import com.virtuary.app.firebase.Item
 import com.virtuary.app.util.BaseViewModelFactory
+import com.virtuary.app.util.GlideApp
 import com.virtuary.app.util.hideKeyboard
 import java.io.File
 import java.util.*
@@ -177,6 +178,15 @@ class AddEditItemFragment : Fragment(),
                 }
             })
 
+        viewModel.itemImage.observe(
+            this,
+            Observer {
+                if (it != null) {
+                    GlideApp.with(context!!).load(it).placeholder(R.drawable.ic_launcher_foreground).centerCrop().into(binding.editItemImage)
+                    binding.editItemImageIcon.visibility = View.GONE
+                }
+            })
+
         if (args.item == null) {
             (activity as MainActivity).setActionBarTitle(getString(R.string.add_item))
         } else {
@@ -204,7 +214,7 @@ class AddEditItemFragment : Fragment(),
             } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 image = getImagePath()
             }
-            binding.editItemImage.setImageURI(image)
+            GlideApp.with(context!!).load(image).centerCrop().into(binding.editItemImage)
             binding.editItemImageIcon.visibility = View.GONE
 
             viewModel.image.value = if (Build.VERSION.SDK_INT < 28) {

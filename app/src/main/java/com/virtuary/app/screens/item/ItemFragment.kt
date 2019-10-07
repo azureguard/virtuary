@@ -12,12 +12,14 @@ import com.google.android.material.chip.Chip
 import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentItemBinding
+import com.virtuary.app.util.BaseViewModelFactory
+import com.virtuary.app.util.GlideApp
 
 class ItemFragment : Fragment() {
 
     // argument got from navigation action
     private val args: ItemFragmentArgs by navArgs()
-    internal val viewModel by viewModels<ItemViewModel>()
+    internal val viewModel: ItemViewModel by viewModels { BaseViewModelFactory { ItemViewModel(args.item) } }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,6 +71,14 @@ class ItemFragment : Fragment() {
                 }
             }
         )
+
+        viewModel.itemImage.observe(
+            this,
+            Observer {
+                if (it != null) {
+                    GlideApp.with(context!!).load(it).centerCrop().into(binding.itemImage)
+                }
+            })
 
         // Set the action bar label to the clicked item name
         (activity as MainActivity).setActionBarTitle(args.item.name!!)
