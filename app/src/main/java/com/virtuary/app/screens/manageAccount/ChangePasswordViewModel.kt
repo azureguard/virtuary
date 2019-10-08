@@ -1,11 +1,11 @@
 package com.virtuary.app.screens.manageAccount
 
-import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ChangePasswordViewModel : ViewModel() {
-    val currentPassword = ObservableField("")
-    val newPassword = ObservableField("")
+    val currentPassword = MutableLiveData("")
+    val newPassword = MutableLiveData("")
 
     fun onClick() {
 

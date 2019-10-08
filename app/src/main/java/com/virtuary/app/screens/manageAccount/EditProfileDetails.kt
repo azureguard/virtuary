@@ -27,6 +27,8 @@ class EditProfileDetails : Fragment() {
         )
 
         binding.editProfileViewModel = viewModel
+        binding.lifecycleOwner = this
+
         binding.frameName.setOnClickListener {
             createDialog(context!!, resources.getString(R.string.name))
         }
@@ -46,9 +48,9 @@ class EditProfileDetails : Fragment() {
         val input = viewInflated.findViewById(R.id.input) as EditText
         when (title) {
             resources.getString(R.string.name) -> input.text =
-                SpannableStringBuilder(viewModel.name.get())
+                SpannableStringBuilder(viewModel.name.value)
             resources.getString(R.string.email) -> input.text =
-                SpannableStringBuilder(viewModel.email.get())
+                SpannableStringBuilder(viewModel.email.value)
         }
 
         // Create the alert dialog
@@ -59,8 +61,8 @@ class EditProfileDetails : Fragment() {
                 android.R.string.ok
             ) { dialog, _ ->
                 when (title) {
-                    resources.getString(R.string.name) -> viewModel.name.set(input.text.toString())
-                    resources.getString(R.string.email) -> viewModel.email.set(input.text.toString())
+                    resources.getString(R.string.name) -> viewModel.updateName(input.text.toString())
+                    resources.getString(R.string.email) -> viewModel.updateEmail(input.text.toString())
                 }
                 dialog.dismiss()
             }
