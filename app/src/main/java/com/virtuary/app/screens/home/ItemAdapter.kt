@@ -23,11 +23,7 @@ class ItemAdapter(
     ListAdapter<Item, ItemAdapter.ViewHolder>(ItemDiffCallBack()),
     ListPreloader.PreloadModelProvider<Item> {
     override fun getPreloadItems(position: Int): MutableList<Item> {
-        return try {
-            mutableListOf(getItem(position), getItem(position + 1))
-        } catch (e: Exception) {
-            mutableListOf()
-        }
+        return currentList.subList(position, position + 1)
     }
 
     override fun getPreloadRequestBuilder(item: Item): RequestBuilder<*>? {

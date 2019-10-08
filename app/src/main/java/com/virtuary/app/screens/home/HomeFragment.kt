@@ -16,6 +16,7 @@ import com.google.firebase.firestore.ktx.toObjects
 import com.virtuary.app.MainActivity
 import com.virtuary.app.databinding.FragmentHomeBinding
 import com.virtuary.app.firebase.Item
+import com.virtuary.app.util.GlideApp
 
 
 class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -52,7 +53,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
         val sizeProvider = FixedPreloadSizeProvider<Item>(IMAGE_SIZE, IMAGE_SIZE)
         val preloader = RecyclerViewPreloader<Item>(
-            this, adapter,
+            GlideApp.with(this), adapter,
             sizeProvider, MAX_PRELOAD
         )
         binding.rvItemList.addOnScrollListener(preloader)
