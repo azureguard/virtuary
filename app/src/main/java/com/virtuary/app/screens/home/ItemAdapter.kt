@@ -7,15 +7,35 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.ListPreloader
+import com.bumptech.glide.RequestBuilder
 import com.virtuary.app.MainNavigationDirections
 import com.virtuary.app.R
 import com.virtuary.app.databinding.ArtifactListItemBinding
 import com.virtuary.app.firebase.Item
+import com.virtuary.app.firebase.StorageRepository
+import com.virtuary.app.util.GlideApp
+
 
 class ItemAdapter(
     private val parentFragment: Fragment
 ) :
-    ListAdapter<Item, ItemAdapter.ViewHolder>(ItemDiffCallBack()) {
+    ListAdapter<Item, ItemAdapter.ViewHolder>(ItemDiffCallBack()),
+    ListPreloader.PreloadModelProvider<Item> {
+    override fun getPreloadItems(position: Int): MutableList<Item> {
+        return currentList.subList(position, position + 1)
+    }
+
+    override fun getPreloadRequestBuilder(item: Item): RequestBuilder<*>? {
+        val thumbnail = item.image?.split('/') as MutableList?
+        if (thumbnail != null) {
+            thumbnail.last()
+            thumbnail[thumbnail.lastIndex] = "thumb_" + thumbnail.last()
+        }
+        return GlideApp.with(parentFragment)
+            .load(StorageRepository().getImage(thumbnail?.joinToString(separator = "/")))
+            .centerCrop()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -36,9 +56,15 @@ class ItemAdapter(
             binding.artifactTitle.text = item.name
             binding.artifactRelatedTo.text = item.relations?.joinToString(separator = ", ")
             binding.artifactCurrentLocation.text = item.currentLocation
-
-            // TODO: change artifact image
-            binding.artifactImage.setImageResource(R.drawable.ic_launcher_background)
+            val thumbnail = item.image?.split('/') as MutableList?
+            if (thumbnail != null) {
+                thumbnail.last()
+                thumbnail[thumbnail.lastIndex] = "thumb_" + thumbnail.last()
+            }
+            GlideApp.with(parentFragment)
+                .load(StorageRepository().getImage(thumbnail?.joinToString(separator = "/")))
+                .placeholder(R.drawable.ic_launcher_foreground).centerCrop()
+                .into(binding.artifactImage)
         }
 
         companion object {

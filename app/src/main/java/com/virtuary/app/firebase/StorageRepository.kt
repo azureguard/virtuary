@@ -2,6 +2,7 @@ package com.virtuary.app.firebase
 
 import android.graphics.Bitmap
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.storageMetadata
@@ -24,5 +25,13 @@ class StorageRepository {
             contentType = "image/webp"
         }
         return uploadRef.putBytes(data, metadata)
+    }
+
+    fun getImage(imageRef: String?): StorageReference? {
+        return try {
+            storage.getReferenceFromUrl(imageRef!!)
+        } catch (e: Exception) {
+            null
+        }
     }
 }
