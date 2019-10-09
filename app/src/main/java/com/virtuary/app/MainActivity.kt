@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         ) {
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
-                GlideApp.with(drawerView).load(auth.currentUser).placeholder(R.drawable.ic_launcher_foreground).into(drawer_profile_picture)
+                GlideApp.with(drawerView).load(auth.currentUser).placeholder(R.drawable.ic_launcher_background).into(drawer_profile_picture)
                 drawer_user_name.text = auth.currentUser!!.displayName
             }
         }
