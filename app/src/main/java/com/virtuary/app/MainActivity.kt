@@ -3,6 +3,7 @@ package com.virtuary.app
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -14,6 +15,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.virtuary.app.util.hideKeyboard
+import com.virtuary.app.util.GlideApp
+import kotlinx.android.synthetic.main.drawer_header.*
 import kotlinx.android.synthetic.main.main_activity.*
 
 /**
@@ -39,15 +42,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Listener for drawer items
         nav_view.setNavigationItemSelectedListener(this)
 
-        // TODO: put the actual name and profile image to the drawer later
         // https://stackoverflow.com/questions/32806735/refresh-header-in-navigation-drawer/35952939#35952939
         drawerToggle = object : ActionBarDrawerToggle(
             this, drawer_layout, R.string.nav_app_bar_open_drawer_description, R.string.navigation_drawer_close
         ) {
-//            override fun onDrawerOpened(drawerView: View) {
-//                super.onDrawerOpened(drawerView)
-//                drawer_user_name.text = "Friedrich"
-//            }
+            override fun onDrawerOpened(drawerView: View) {
+                super.onDrawerOpened(drawerView)
+                GlideApp.with(drawerView).load(auth.currentUser).placeholder(R.drawable.ic_launcher_background).into(drawer_profile_picture)
+                drawer_user_name.text = auth.currentUser!!.displayName
+            }
         }
 
         if (auth.currentUser == null) {
