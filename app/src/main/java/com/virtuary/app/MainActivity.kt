@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Listener for drawer items
         nav_view.setNavigationItemSelectedListener(this)
 
-        // TODO: put the actual name and profile image to the drawer later
         // https://stackoverflow.com/questions/32806735/refresh-header-in-navigation-drawer/35952939#35952939
         drawerToggle = object : ActionBarDrawerToggle(
             this, drawer_layout, R.string.nav_app_bar_open_drawer_description, R.string.navigation_drawer_close
