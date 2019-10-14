@@ -53,6 +53,7 @@
     <string name="error_email_in_use">Email already in use</string>
     <string name="error_invalid_credentials">Invalid email or password</string>
     <string name="error_invalid_email">Please enter a valid email</string>
+    <string name="error_invalid_password">Invalid password</string>
     <string name="error_name_blank">Please enter your name</string>
     <string name="error_password_short">Password need to be of length 6 or more</string>
     <string name="error_password_blank">Password cannot be blank</string>

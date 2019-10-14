@@ -118,6 +118,18 @@
                 app:layout_constraintTop_toBottomOf="@id/profile_email_header"
                 tools:text="@tools:sample/lorem[3]" />
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="32dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/profile_picture"
+                app:layout_constraintEnd_toEndOf="@id/profile_picture"
+                app:layout_constraintStart_toStartOf="@id/profile_picture"
+                app:layout_constraintTop_toTopOf="@id/profile_picture" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

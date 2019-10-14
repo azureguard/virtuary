@@ -1,4 +1,4 @@
-package com.virtuary.app.screens.item.addEditItem
+package com.virtuary.app.util
 
 import android.app.Dialog
 import android.os.Bundle
@@ -49,7 +49,6 @@ class PhotoDialogFragment : DialogFragment() {
                 }
             // Create the AlertDialog object and return it
             builder.create()
-
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 }

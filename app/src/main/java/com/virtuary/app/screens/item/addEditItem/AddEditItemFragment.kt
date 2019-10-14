@@ -29,6 +29,7 @@ import com.virtuary.app.databinding.FragmentAddEditItemBinding
 import com.virtuary.app.firebase.Item
 import com.virtuary.app.util.BaseViewModelFactory
 import com.virtuary.app.util.GlideApp
+import com.virtuary.app.util.PhotoDialogFragment
 import com.virtuary.app.util.hideKeyboard
 import java.io.File
 import java.util.*
@@ -77,7 +78,7 @@ class AddEditItemFragment : Fragment(),
         })
 
         // build the drop down add item menu
-        binding.editItemRelatedToSpinner.adapter = ArrayAdapter<String>(
+        binding.editItemRelatedToSpinner.adapter = ArrayAdapter(
             activity!!,
             R.layout.support_simple_spinner_dropdown_item,
             viewModel.selectionRelatedTo.value!!
@@ -218,6 +219,7 @@ class AddEditItemFragment : Fragment(),
             binding.editItemImageIcon.visibility = View.GONE
 
             viewModel.image.value = if (Build.VERSION.SDK_INT < 28) {
+                @Suppress("DEPRECATION")
                 MediaStore.Images.Media.getBitmap(
                     context?.contentResolver,
                     image

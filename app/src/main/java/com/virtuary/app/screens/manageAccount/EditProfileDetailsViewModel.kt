@@ -2,10 +2,12 @@ package com.virtuary.app.screens.manageAccount
 
 import android.graphics.Bitmap
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.*
+import com.google.firebase.storage.StorageReference
 import com.virtuary.app.firebase.StorageRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +21,25 @@ class EditProfileDetailsViewModel : ViewModel() {
 
     val name = MutableLiveData(user?.displayName ?: "")
     val email = MutableLiveData(user?.email ?: "")
-    val image = MutableLiveData(storageRepository.getImage(user?.photoUrl as String?))
+    val image = MutableLiveData<Bitmap>()
+
+    private val _itemImage = MutableLiveData<StorageReference>()
+    val itemImage: LiveData<StorageReference> = _itemImage
+
+    private val _uploading = MutableLiveData<Boolean>()
+    val uploading: LiveData<Boolean> = _uploading
+
+    private val _authRequired = MutableLiveData<Boolean>()
+    val authRequired: LiveData<Boolean> = _authRequired
+
+    private val _authError = MutableLiveData<Boolean>()
+    val authError: LiveData<Boolean> = _authError
+
+    private val _lastEmail = MutableLiveData<String>()
+
+    init {
+        _itemImage.value = storageRepository.getImage(user?.photoUrl.toString())
+    }
 
     fun updateName(value: String) {
         val profileUpdates = UserProfileChangeRequest.Builder()
@@ -30,7 +50,7 @@ class EditProfileDetailsViewModel : ViewModel() {
                     try {
                         user?.updateProfile(profileUpdates)?.await()
                         return@withContext true
-                    } catch (e: FirebaseAuthInvalidUserException) {
+                    } catch (e: Exception) {
                         return@withContext false
                     }
                 }) {
@@ -38,26 +58,64 @@ class EditProfileDetailsViewModel : ViewModel() {
             } else {
                 TODO()
             }
-
         }
     }
 
-    fun updateImage(value: Bitmap) {
-        val profileUpdates = UserProfileChangeRequest.Builder()
-            .setPhotoUri(Uri.parse(""))
-            .build()
-        user?.updateProfile(profileUpdates)
+    fun updateImage() {
+        viewModelScope.launch {
+            _uploading.value = true
+            val path = if (image.value != null) {
+                withContext(Dispatchers.IO) {
+                    storageRepository.uploadProfileImage(image.value!!, user?.uid!!).await().storage.toString()
+                }
+            } else {
+                ""
+            }
+            val profileUpdates = UserProfileChangeRequest.Builder()
+                .setPhotoUri(Uri.parse(path))
+                .build()
+            user?.updateProfile(profileUpdates)
+            _uploading.value = false
+        }
     }
 
     fun updateEmail(value: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                user?.updateEmail(value)?.await()
-            } catch (e: Exception) {
-                when (e) {
-                    is FirebaseAuthUserCollisionException -> TODO()
-                    is FirebaseAuthRecentLoginRequiredException -> TODO()
+        viewModelScope.launch() {
+            if (
+                try {
+                    user?.updateEmail(value)?.await()
+                    true
+                } catch (e: Exception) {
+                    when (e) {
+                        is FirebaseAuthUserCollisionException -> _authError.value = true
+                        is FirebaseAuthRecentLoginRequiredException -> {
+                            _authRequired.value = true
+                            _lastEmail.value = value
+                        }
+                    }
+                    false
                 }
+            ) {
+                email.value = value
+            }
+        }
+    }
+
+    fun verifyPassword(
+        currentPassword: String,
+        callback: (result: Boolean) -> Unit
+    ) {
+        if (currentPassword.isEmpty()) {
+            callback(false)
+        }
+        val credential = EmailAuthProvider.getCredential(user?.email ?: "", currentPassword)
+        viewModelScope.launch {
+            try {
+                user?.reauthenticate(credential)?.await()
+                callback(true)
+                updateEmail(_lastEmail.value!!)
+            } catch (e: Exception) {
+                callback(false)
             }
         }
     }
