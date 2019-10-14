@@ -73,6 +73,9 @@ dependencies {
         transitive = false
     }
     kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+    //noinspection GradleDynamicVersion
+    implementation 'com.algolia:algoliasearch-android:3.+'
 }
 
 apply plugin: 'com.google.gms.google-services'

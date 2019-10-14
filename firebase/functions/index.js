@@ -7,6 +7,12 @@ const sharp = require("sharp");
 const THUMB_MAX_WIDTH = 200;
 const THUMB_MAX_HEIGHT = 200;
 
+const algoliaModule = require("./algolia");
+
+exports.onItemCreated = functions.firestore
+  .document("Item/{itemId}")
+  .onCreate(algoliaModule.onItemCreated);
+
 /**
  * When an image is uploaded in the Storage bucket We generate a thumbnail automatically using
  * Sharp.

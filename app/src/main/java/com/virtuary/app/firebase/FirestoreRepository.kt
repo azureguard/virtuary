@@ -6,6 +6,8 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.toObject
+import kotlinx.coroutines.tasks.await
 
 class FirestoreRepository {
     private val firestoreDB = FirebaseFirestore.getInstance()
@@ -34,6 +36,10 @@ class FirestoreRepository {
     // delete specific item
     fun deleteItem(item: Item): Task<Void> {
         return firestoreDB.collection("Item").document(item.documentId!!).delete()
+    }
+
+    suspend fun getAlgoliaConfig(): Map<String, Any> {
+        return firestoreDB.collection("config").document("algolia").get().await().data!!
     }
 
 }
