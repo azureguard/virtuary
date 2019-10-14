@@ -14,12 +14,11 @@ class PhotoDialogFragment : DialogFragment() {
     * implement this interface in order to receive event callbacks.
     * Each method passes the DialogFragment in case the host needs to query it. */
     interface PhotoDialogListener {
-        fun onDialogCameraClick(dialog: DialogFragment)
-        fun onDialogGalleryClick(dialog: DialogFragment)
+        fun onDialogCameraClick()
+        fun onDialogGalleryClick()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
         try {
             // Instantiate the PhotoDialogListener so we can send events to the host
             listener = targetFragment as PhotoDialogListener
@@ -40,12 +39,12 @@ class PhotoDialogFragment : DialogFragment() {
                 .setPositiveButton(
                     R.string.add_item_dialog_camera
                 ) { _, _ ->
-                    listener.onDialogCameraClick(this)
+                    listener.onDialogCameraClick()
                 }
                 .setNegativeButton(
                     R.string.add_item_dialog_gallery
                 ) { _, _ ->
-                    listener.onDialogGalleryClick(this)
+                    listener.onDialogGalleryClick()
                 }
             // Create the AlertDialog object and return it
             builder.create()

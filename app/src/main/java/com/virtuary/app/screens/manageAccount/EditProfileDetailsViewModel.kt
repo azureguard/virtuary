@@ -23,8 +23,8 @@ class EditProfileDetailsViewModel : ViewModel() {
     val email = MutableLiveData(user?.email ?: "")
     val image = MutableLiveData<Bitmap>()
 
-    private val _itemImage = MutableLiveData<StorageReference>()
-    val itemImage: LiveData<StorageReference> = _itemImage
+    private val _profileImage = MutableLiveData<StorageReference>()
+    val profileImage: LiveData<StorageReference> = _profileImage
 
     private val _uploading = MutableLiveData<Boolean>()
     val uploading: LiveData<Boolean> = _uploading
@@ -38,7 +38,7 @@ class EditProfileDetailsViewModel : ViewModel() {
     private val _lastEmail = MutableLiveData<String>()
 
     init {
-        _itemImage.value = storageRepository.getImage(user?.photoUrl.toString())
+        _profileImage.value = storageRepository.getImage(user?.photoUrl.toString())
     }
 
     fun updateName(value: String) {

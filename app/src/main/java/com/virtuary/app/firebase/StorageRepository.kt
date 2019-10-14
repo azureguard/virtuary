@@ -18,7 +18,7 @@ class StorageRepository {
     }
 
     fun uploadProfileImage(image: Bitmap, userId: String): UploadTask {
-        val uploadRef = storage.reference.child("$PROFILE_IMAGE_DIR$userId.webp")
+        val uploadRef = storage.reference.child(PROFILE_IMAGE_DIR + UUID.randomUUID() + ".webp")
         val byteArray = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.WEBP, 80, byteArray)
         val data = byteArray.toByteArray()
