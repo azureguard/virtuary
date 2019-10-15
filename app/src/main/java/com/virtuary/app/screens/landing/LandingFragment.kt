@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentLandingBinding
 
@@ -16,6 +17,7 @@ import com.virtuary.app.databinding.FragmentLandingBinding
  * Fragment for the starting screen of the app
  */
 class LandingFragment : Fragment() {
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +39,12 @@ class LandingFragment : Fragment() {
 
         binding.logInButton.setOnClickListener {
             findNavController().navigate(LandingFragmentDirections.actionLandingFragmentToLoginFragment())
+            (activity as AppCompatActivity).supportActionBar?.show()
+        }
+
+        auth = FirebaseAuth.getInstance()
+        if (auth.currentUser != null) {
+            findNavController().navigate(R.id.action_global_homeFragment)
             (activity as AppCompatActivity).supportActionBar?.show()
         }
 

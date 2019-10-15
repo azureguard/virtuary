@@ -61,10 +61,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
 
-        if (auth.currentUser == null) {
-            navController.navigate(R.id.action_global_landingFragment)
-        }
-
         drawer_layout.addDrawerListener(drawerToggle)
     }
 
