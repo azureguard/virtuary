@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_settings -> {
-                TODO() // Implement settings fragment and connect it here
+                navController.navigate(R.id.action_global_editPreferencesFragment)
             }
 
             R.id.logout -> {

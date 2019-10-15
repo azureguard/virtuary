@@ -293,4 +293,15 @@
                 app:popUpToInclusive="true" />
         </fragment>
     </navigation>
+    <fragment
+        android:id="@+id/editPreferencesFragment"
+        android:name="com.virtuary.app.screens.preferences.EditPreferencesFragment"
+        android:label="@string/settings" />
+    <action
+        android:id="@+id/action_global_editPreferencesFragment"
+        app:destination="@id/editPreferencesFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 </navigation>
