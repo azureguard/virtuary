@@ -66,7 +66,7 @@ class EditProfileDetailsViewModel : ViewModel() {
             _uploading.value = true
             val path = if (image.value != null) {
                 withContext(Dispatchers.IO) {
-                    storageRepository.uploadProfileImage(image.value!!, user?.uid!!).await().storage.toString()
+                    storageRepository.uploadProfileImage(image.value!!).await().storage.toString()
                 }
             } else {
                 ""

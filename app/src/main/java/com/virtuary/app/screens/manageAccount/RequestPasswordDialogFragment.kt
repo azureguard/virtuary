@@ -23,7 +23,7 @@ class RequestPasswordDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         try {
-            // Instantiate the PhotoDialogListener so we can send events to the host
+            // Instantiate the RequestPasswordDialogListener so we can send events to the host
             listener = targetFragment as RequestPasswordDialogListener
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception

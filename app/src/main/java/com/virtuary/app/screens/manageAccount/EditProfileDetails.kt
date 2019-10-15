@@ -53,7 +53,6 @@ class EditProfileDetails : Fragment(),
             createDialog(context!!, getString(R.string.name))
         }
         binding.frameEmail.setOnClickListener {
-            // showReAuthenticationDialog()
             createDialog(context!!, resources.getString(R.string.email))
         }
         binding.editProfileImage.setOnClickListener {
