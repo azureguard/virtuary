@@ -3,7 +3,8 @@ package com.virtuary.app
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -16,8 +17,6 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.virtuary.app.firebase.StorageRepository
 import com.virtuary.app.util.GlideApp
-import com.virtuary.app.util.hideKeyboard
-import kotlinx.android.synthetic.main.drawer_header.*
 import kotlinx.android.synthetic.main.main_activity.*
 
 /**
@@ -44,22 +43,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Listener for drawer items
         nav_view.setNavigationItemSelectedListener(this)
 
-        // https://stackoverflow.com/questions/32806735/refresh-header-in-navigation-drawer/35952939#35952939
-        drawerToggle = object : ActionBarDrawerToggle(
-            this,
-            drawer_layout,
-            R.string.nav_app_bar_open_drawer_description,
-            R.string.navigation_drawer_close
-        ) {
-            override fun onDrawerOpened(drawerView: View) {
-                super.onDrawerOpened(drawerView)
-                GlideApp.with(drawerView)
+        // Load drawer header data
+        val navView = findViewById<NavigationView>(R.id.nav_view)
+        val headerView = navView.getHeaderView(0)
+        val userName = headerView.findViewById<TextView>(R.id.drawer_user_name)
+        val userPicture = headerView.findViewById<ImageView>(R.id.drawer_profile_picture)
+        userName.text = auth.currentUser!!.displayName
+        GlideApp.with(drawerView)
                     .load(storageRepository.getImage(auth.currentUser?.photoUrl.toString()))
                     .fallback(R.drawable.ic_launcher_foreground).circleCrop()
                     .into(drawer_profile_picture)
-                drawer_user_name.text = auth.currentUser?.displayName
-            }
-        }
+
+        // https://stackoverflow.com/questions/32806735/refresh-header-in-navigation-drawer/35952939#35952939
+        drawerToggle = ActionBarDrawerToggle(
+            this, drawer_layout, R.string.nav_app_bar_open_drawer_description, R.string.navigation_drawer_close
+        )
 
         drawer_layout.addDrawerListener(drawerToggle)
     }
