@@ -1,9 +1,11 @@
 package com.virtuary.app.screens.manageAccount
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.InputType
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +22,7 @@ import com.virtuary.app.util.GlideApp
 import com.virtuary.app.util.PhotoDialogFragment
 import com.virtuary.app.util.SelectPhotoHelper
 import com.virtuary.app.util.hideKeyboard
+import kotlinx.android.synthetic.main.dialog_edit_profile.view.*
 
 class EditProfileDetails : Fragment(),
     PhotoDialogFragment.PhotoDialogListener,
@@ -47,7 +50,7 @@ class EditProfileDetails : Fragment(),
         binding.lifecycleOwner = this
 
         binding.frameName.setOnClickListener {
-            createDialog(context!!, resources.getString(R.string.name))
+            createDialog(context!!, getString(R.string.name))
         }
         binding.frameEmail.setOnClickListener {
             // showReAuthenticationDialog()
@@ -93,9 +96,9 @@ class EditProfileDetails : Fragment(),
         // Set up the input
         val input = viewInflated.findViewById(R.id.input) as EditText
         when (title) {
-            resources.getString(R.string.name) -> input.text =
+            getString(R.string.name) -> input.text =
                 SpannableStringBuilder(viewModel.name.value)
-            resources.getString(R.string.email) -> input.text =
+            getString(R.string.email) -> input.text =
                 SpannableStringBuilder(viewModel.email.value)
         }
 
@@ -103,20 +106,42 @@ class EditProfileDetails : Fragment(),
         builder.apply {
             setTitle(title)
             setView(viewInflated)
-            setPositiveButton(
-                android.R.string.ok
-            ) { dialog, _ ->
-                when (title) {
-                    resources.getString(R.string.name) -> viewModel.updateName(input.text.toString())
-                    resources.getString(R.string.email) -> viewModel.updateEmail(input.text.toString())
-                }
-                dialog.dismiss()
-            }
+            setPositiveButton(android.R.string.ok, null)
             setNegativeButton(
                 android.R.string.cancel
             ) { dialog, _ -> dialog.cancel() }
         }
-        builder.show()
+        val dialog = builder.create()
+        dialog.setOnShowListener {
+            val button = dialog.getButton(Dialog.BUTTON_POSITIVE)
+            when (title) {
+                getString(R.string.name) -> viewInflated.input.inputType =
+                    InputType.TYPE_TEXT_VARIATION_PERSON_NAME or InputType.TYPE_TEXT_FLAG_CAP_WORDS
+                getString(R.string.email) -> viewInflated.input.inputType =
+                    InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            }
+            button.setOnClickListener {
+                button.isEnabled = false
+                when (title) {
+                    getString(R.string.name) -> {
+                        viewModel.updateName(input.text.toString())
+                        dialog.dismiss()
+                    }
+                    getString(R.string.email) -> viewModel.updateEmail(
+                        input.text.toString()
+                    ) {
+                        if (it) {
+                            dialog.dismiss()
+                        } else {
+                            viewInflated.inputLayout.error =
+                                getString(R.string.error_invalid_email)
+                            button.isEnabled = true
+                        }
+                    }
+                }
+            }
+        }
+        dialog.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -148,7 +173,7 @@ class EditProfileDetails : Fragment(),
         // check if the Activity component is available to handle the intent
         if (intent.resolveActivity(context!!.packageManager) != null) {
             startActivityForResult(
-                Intent.createChooser(intent, context?.getString(R.string.select_picture)),
+                Intent.createChooser(intent, getString(R.string.select_picture)),
                 SelectPhotoHelper.REQUEST_SELECT_IMAGE_IN_ALBUM
             )
         }

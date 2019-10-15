@@ -79,24 +79,29 @@ class EditProfileDetailsViewModel : ViewModel() {
         }
     }
 
-    fun updateEmail(value: String) {
-        viewModelScope.launch() {
-            if (
-                try {
-                    user?.updateEmail(value)?.await()
-                    true
-                } catch (e: Exception) {
-                    when (e) {
-                        is FirebaseAuthUserCollisionException -> _authError.value = true
-                        is FirebaseAuthRecentLoginRequiredException -> {
-                            _authRequired.value = true
-                            _lastEmail.value = value
+    fun updateEmail(value: String, callback: ((result: Boolean) -> Unit)?) {
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
+            callback?.invoke(false)
+        } else {
+            viewModelScope.launch() {
+                if (
+                    try {
+                        user?.updateEmail(value)?.await()
+                        true
+                    } catch (e: Exception) {
+                        when (e) {
+                            is FirebaseAuthUserCollisionException -> _authError.value = true
+                            is FirebaseAuthRecentLoginRequiredException -> {
+                                _authRequired.value = true
+                                _lastEmail.value = value
+                            }
                         }
+                        false
                     }
-                    false
+                ) {
+                    email.value = value
                 }
-            ) {
-                email.value = value
+                callback?.invoke(true)
             }
         }
     }
@@ -113,7 +118,7 @@ class EditProfileDetailsViewModel : ViewModel() {
             try {
                 user?.reauthenticate(credential)?.await()
                 callback(true)
-                updateEmail(_lastEmail.value!!)
+                updateEmail(_lastEmail.value!!, null)
             } catch (e: Exception) {
                 callback(false)
             }
