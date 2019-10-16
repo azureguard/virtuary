@@ -17,6 +17,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.virtuary.app.firebase.StorageRepository
 import com.virtuary.app.util.GlideApp
+import com.virtuary.app.util.hideKeyboard
 import kotlinx.android.synthetic.main.main_activity.*
 
 /**
@@ -26,8 +27,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var navController: NavController
-    internal lateinit var auth: FirebaseAuth
-    internal val storageRepository = StorageRepository()
+    private lateinit var auth: FirebaseAuth
+    private val storageRepository = StorageRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +50,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val userName = headerView.findViewById<TextView>(R.id.drawer_user_name)
         val userPicture = headerView.findViewById<ImageView>(R.id.drawer_profile_picture)
         userName.text = auth.currentUser!!.displayName
-        GlideApp.with(drawerView)
+        GlideApp.with(applicationContext)
                     .load(storageRepository.getImage(auth.currentUser?.photoUrl.toString()))
                     .fallback(R.drawable.ic_launcher_foreground).circleCrop()
-                    .into(drawer_profile_picture)
+                    .into(userPicture)
 
         // https://stackoverflow.com/questions/32806735/refresh-header-in-navigation-drawer/35952939#35952939
         drawerToggle = ActionBarDrawerToggle(
