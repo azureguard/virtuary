@@ -35,7 +35,7 @@ class ChangePasswordViewModel : ViewModel() {
             verifyPassword { isVerified ->
                 _invalidCurrentPassword.value = !isVerified
                 if (isVerified) {
-                    viewModelScope.launch() {
+                    viewModelScope.launch {
                         try {
                             user?.updatePassword(newPassword.value!!)
                             _isSuccess.value = true

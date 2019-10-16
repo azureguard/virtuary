@@ -83,7 +83,7 @@ class EditProfileDetailsViewModel : ViewModel() {
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
             callback?.invoke(false)
         } else {
-            viewModelScope.launch() {
+            viewModelScope.launch {
                 if (
                     try {
                         user?.updateEmail(value)?.await()
