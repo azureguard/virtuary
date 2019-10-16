@@ -104,7 +104,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
-        drawerToggle.syncState()
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawerToggle.syncState()
+        }
+
         super.onPostCreate(savedInstanceState)
     }
 
