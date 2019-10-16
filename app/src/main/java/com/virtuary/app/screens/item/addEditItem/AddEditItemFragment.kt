@@ -1,12 +1,7 @@
 package com.virtuary.app.screens.item.addEditItem
 
-import android.app.Activity
 import android.content.Intent
-import android.graphics.ImageDecoder
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -27,11 +20,7 @@ import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentAddEditItemBinding
 import com.virtuary.app.firebase.Item
-import com.virtuary.app.util.BaseViewModelFactory
-import com.virtuary.app.util.GlideApp
-import com.virtuary.app.util.hideKeyboard
-import java.io.File
-import java.util.*
+import com.virtuary.app.util.*
 
 class AddEditItemFragment : Fragment(),
     PhotoDialogFragment.PhotoDialogListener {
@@ -40,6 +29,7 @@ class AddEditItemFragment : Fragment(),
     private val args: AddEditItemFragmentArgs by navArgs()
 
     internal lateinit var binding: FragmentAddEditItemBinding
+    private lateinit var selectPhotoHelper: SelectPhotoHelper
 
     internal val viewModel: AddEditItemViewModel by viewModels {
         BaseViewModelFactory {
@@ -60,6 +50,8 @@ class AddEditItemFragment : Fragment(),
             R.layout.fragment_add_edit_item, container, false
         )
 
+        selectPhotoHelper = SelectPhotoHelper(context, fragmentManager, this)
+
         // assign for databinding so the data in view model can be accessed
         binding.editItemViewModel = viewModel
 
@@ -77,7 +69,7 @@ class AddEditItemFragment : Fragment(),
         })
 
         // build the drop down add item menu
-        binding.editItemRelatedToSpinner.adapter = ArrayAdapter<String>(
+        binding.editItemRelatedToSpinner.adapter = ArrayAdapter(
             activity!!,
             R.layout.support_simple_spinner_dropdown_item,
             viewModel.selectionRelatedTo.value!!
@@ -146,12 +138,12 @@ class AddEditItemFragment : Fragment(),
 
         // Show dialog when the add photo is clicked
         binding.editItemImageIcon.setOnClickListener {
-            showPhotoDialog()
+            selectPhotoHelper.showPhotoDialog()
         }
 
         binding.editItemImage.setOnClickListener {
             if (binding.editItemImageIcon.visibility == View.GONE) {
-                showPhotoDialog()
+                selectPhotoHelper.showPhotoDialog()
             }
         }
 
@@ -182,7 +174,8 @@ class AddEditItemFragment : Fragment(),
             this,
             Observer {
                 if (it != null) {
-                    GlideApp.with(context!!).load(it).placeholder(R.drawable.ic_launcher_foreground).centerCrop().into(binding.editItemImage)
+                    GlideApp.with(context!!).load(it).placeholder(R.drawable.ic_launcher_foreground)
+                        .centerCrop().into(binding.editItemImage)
                     binding.editItemImageIcon.visibility = View.GONE
                 }
             })
@@ -196,95 +189,38 @@ class AddEditItemFragment : Fragment(),
         return binding.root
     }
 
-    override fun onDialogCameraClick(dialog: DialogFragment) {
-        takePicture()
-    }
-
-    override fun onDialogGalleryClick(dialog: DialogFragment) {
-        selectImageInAlbum()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // result code is OK only when the user selects an image
-        if (resultCode == Activity.RESULT_OK) {
-            var image: Uri? = null
-            if (requestCode == REQUEST_SELECT_IMAGE_IN_ALBUM) {
-                // returns the content URI for the selected Image
-                image = data?.data
-            } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                image = getImagePath()
-            }
+        val image = selectPhotoHelper.getResult(requestCode, resultCode, data)
+        if (image != null) {
             GlideApp.with(context!!).load(image).centerCrop().into(binding.editItemImage)
             binding.editItemImageIcon.visibility = View.GONE
+            viewModel.image.value = selectPhotoHelper.getBitmapFromUri(image)
+        }
+    }
 
-            viewModel.image.value = if (Build.VERSION.SDK_INT < 28) {
-                MediaStore.Images.Media.getBitmap(
-                    context?.contentResolver,
-                    image
+    override fun onDialogCameraClick() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, selectPhotoHelper.newImagePath())
+            takePictureIntent.resolveActivity(activity!!.packageManager)?.also {
+                startActivityForResult(
+                    takePictureIntent,
+                    SelectPhotoHelper.REQUEST_IMAGE_CAPTURE
                 )
-            } else {
-                val source = ImageDecoder.createSource(context?.contentResolver!!, image!!)
-                ImageDecoder.decodeBitmap(source)
             }
         }
     }
 
-    private fun selectImageInAlbum() {
+    override fun onDialogGalleryClick() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
 
         // check if the Activity component is available to handle the intent
         if (intent.resolveActivity(context!!.packageManager) != null) {
             startActivityForResult(
-                Intent.createChooser(intent, getString(R.string.select_picture)),
-                REQUEST_SELECT_IMAGE_IN_ALBUM
+                Intent.createChooser(intent, context?.getString(R.string.select_picture)),
+                SelectPhotoHelper.REQUEST_SELECT_IMAGE_IN_ALBUM
             )
         }
-    }
-
-    private fun takePicture() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, newImagePath())
-            takePictureIntent.resolveActivity(activity!!.packageManager)?.also {
-                startActivityForResult(
-                    takePictureIntent,
-                    REQUEST_IMAGE_CAPTURE
-                )
-            }
-        }
-    }
-
-    private var imageUri: Uri? = null
-
-    private fun getImagePath(): Uri? {
-        return imageUri ?: generate()
-    }
-
-    private fun newImagePath(): Uri? {
-        return generate()
-    }
-
-    private fun generate(): Uri? {
-        val storageDir = context?.getExternalFilesDir(Environment.DIRECTORY_DCIM)
-        val image = File(storageDir, UUID.randomUUID().toString() + ".jpg")
-        imageUri = FileProvider.getUriForFile(
-            context!!, context!!.applicationContext
-                .packageName + ".provider", image
-        )
-        return imageUri
-    }
-
-    private fun showPhotoDialog() {
-        // Create an instance of the dialog fragment and show it
-        hideKeyboard()
-        val dialog = PhotoDialogFragment()
-        dialog.setTargetFragment(this, 0)
-        dialog.show(fragmentManager!!, null)
-    }
-
-    // define static properties
-    companion object {
-        private const val REQUEST_IMAGE_CAPTURE = 0
-        private const val REQUEST_SELECT_IMAGE_IN_ALBUM = 1
     }
 }

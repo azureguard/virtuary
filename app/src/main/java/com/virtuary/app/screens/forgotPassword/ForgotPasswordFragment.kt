@@ -1,9 +1,11 @@
 package com.virtuary.app.screens.forgotPassword
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -13,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentForgotPasswordBinding
 import com.virtuary.app.util.hideKeyboard
-
 
 /**
  * Fragment for the Forgot Password screen of the app
@@ -45,8 +46,20 @@ class ForgotPasswordFragment : Fragment() {
                     binding.email.isErrorEnabled = false
                 }
             })
+
         binding.emailEdit.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) binding.email.isErrorEnabled = false
+        }
+
+        binding.emailEdit.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == EditorInfo.IME_ACTION_DONE || keyCode == KeyEvent.KEYCODE_ENTER
+                && event.action == KeyEvent.ACTION_UP
+            ) {
+                v.clearFocus()
+                viewModel.onClick()
+                return@setOnKeyListener true
+            }
+            return@setOnKeyListener false
         }
 
         viewModel.isSuccess.observe(

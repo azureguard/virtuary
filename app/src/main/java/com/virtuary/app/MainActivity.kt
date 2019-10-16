@@ -14,8 +14,9 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.virtuary.app.util.hideKeyboard
+import com.virtuary.app.firebase.StorageRepository
 import com.virtuary.app.util.GlideApp
+import com.virtuary.app.util.hideKeyboard
 import kotlinx.android.synthetic.main.drawer_header.*
 import kotlinx.android.synthetic.main.main_activity.*
 
@@ -25,8 +26,9 @@ import kotlinx.android.synthetic.main.main_activity.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var drawerToggle: ActionBarDrawerToggle
-    private lateinit var auth: FirebaseAuth
     private lateinit var navController: NavController
+    internal lateinit var auth: FirebaseAuth
+    internal val storageRepository = StorageRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,12 +46,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // https://stackoverflow.com/questions/32806735/refresh-header-in-navigation-drawer/35952939#35952939
         drawerToggle = object : ActionBarDrawerToggle(
-            this, drawer_layout, R.string.nav_app_bar_open_drawer_description, R.string.navigation_drawer_close
+            this,
+            drawer_layout,
+            R.string.nav_app_bar_open_drawer_description,
+            R.string.navigation_drawer_close
         ) {
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
-                GlideApp.with(drawerView).load(auth.currentUser).placeholder(R.drawable.ic_launcher_background).into(drawer_profile_picture)
-                drawer_user_name.text = auth.currentUser!!.displayName
+                GlideApp.with(drawerView)
+                    .load(storageRepository.getImage(auth.currentUser?.photoUrl.toString()))
+                    .fallback(R.drawable.ic_launcher_foreground).circleCrop()
+                    .into(drawer_profile_picture)
+                drawer_user_name.text = auth.currentUser?.displayName
             }
         }
 
