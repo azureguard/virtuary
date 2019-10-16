@@ -9,7 +9,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="32dp"
+            android:paddingBottom="32dp">
 
             <ImageView
                 android:id="@+id/app_logo"
@@ -20,7 +22,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                app:srcCompat="@mipmap/ic_virtuary_light_foreground" />
 
             <TextView
                 android:id="@+id/app_name"
