@@ -117,7 +117,7 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
                 storageRepository.uploadImage(image.value!!).await().storage.toString()
             }
         } else {
-            null
+            _item?.image
         }
     }
 
