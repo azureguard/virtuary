@@ -6,12 +6,12 @@
         app:entryValues="@array/languageData"
         app:icon="@drawable/ic_translate"
         app:key="language"
-        app:title="Language" />
+        app:title="@string/pref_language" />
     <ListPreference
         app:defaultValue="-1"
         app:entries="@array/themeEntries"
         app:entryValues="@array/themeValues"
         app:icon="@drawable/ic_brightness"
         app:key="theme"
-        app:title="Dark Mode" />
+        app:title="@string/pref_theme" />
 </PreferenceScreen>
