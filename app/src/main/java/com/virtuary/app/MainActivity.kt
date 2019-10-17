@@ -1,5 +1,6 @@
 package com.virtuary.app
 
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
@@ -7,12 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.preference.PreferenceManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.virtuary.app.firebase.StorageRepository
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var navController: NavController
+    private lateinit var preferences: SharedPreferences
     internal lateinit var auth: FirebaseAuth
     internal val storageRepository = StorageRepository()
 
@@ -34,6 +38,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         auth = FirebaseAuth.getInstance()
+        preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        delegate.localNightMode = preferences.getString("theme", "")?.toIntOrNull()
+            ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 
         navController = findNavController(R.id.nav_host_fragment)
         // Specify set of top level root page to show burger menu
@@ -109,6 +116,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         drawerToggle.onConfigurationChanged(newConfig)
+    }
+
+    private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
+        SharedPreferences.OnSharedPreferenceChangeListener()
+        { sharedPreferences, key ->
+            when (key) {
+                "theme" -> delegate.localNightMode =
+                    sharedPreferences.getString(key, "-1")!!.toInt()
+            }
+
+        }
+
+    override fun onResume() {
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+        super.onResume()
+    }
+
+    override fun onPause() {
+        preferences.unregisterOnSharedPreferenceChangeListener(listener)
+        super.onPause()
     }
 
     // Function to set the label in the action bar
