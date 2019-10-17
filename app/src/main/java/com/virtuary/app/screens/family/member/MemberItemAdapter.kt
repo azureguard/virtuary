@@ -37,7 +37,7 @@ class MemberItemAdapter(
         holder.tvArtifactTitle.text = artifactsTitle[position]
 
         // TODO: change artifact image
-        holder.ivArtifactImg.setImageResource(R.drawable.ic_launcher_background)
+        holder.ivArtifactImg.setImageResource(R.drawable.ic_no_image)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -24,11 +24,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_image_height"
                 android:adjustViewBounds="false"
-                android:src="@drawable/ic_launcher_background"
                 android:contentDescription="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_no_image" />
 
             <TextView
                 android:id="@+id/item_title_text"

@@ -1,6 +1,5 @@
 package com.virtuary.app.screens.landing
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,12 +29,6 @@ class LandingFragment : Fragment() {
         val binding: FragmentLandingBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_landing, container, false
         )
-
-        val nightModeFlags =
-            context!!.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        when (nightModeFlags) {
-            Configuration.UI_MODE_NIGHT_YES -> binding.virtuaryLogo.setImageResource(R.drawable.ic_virtuary_dark_01)
-        }
 
         // Hide activity bar in the first fragment
         (activity as AppCompatActivity).supportActionBar?.hide()

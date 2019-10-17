@@ -63,8 +63,7 @@ class ItemAdapter(
             }
             GlideApp.with(parentFragment)
                 .load(StorageRepository().getImage(thumbnail?.joinToString(separator = "/")))
-                .placeholder(R.drawable.ic_launcher_foreground).centerCrop()
-                .into(binding.artifactImage)
+                .placeholder(R.drawable.ic_no_image).centerCrop().into(binding.artifactImage)
         }
 
         companion object {

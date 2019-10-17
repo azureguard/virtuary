@@ -15,14 +15,14 @@
 
             <ImageView
                 android:id="@+id/app_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/standard_image_size"
+                android:layout_height="@dimen/standard_image_size"
                 android:layout_marginTop="32dp"
                 android:contentDescription="@string/app_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/ic_virtuary_light_foreground" />
+                app:srcCompat="@drawable/ic_virtuary" />
 
             <TextView
                 android:id="@+id/app_name"

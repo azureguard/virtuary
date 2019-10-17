@@ -76,7 +76,8 @@ class ItemFragment : Fragment() {
             this,
             Observer {
                 if (it != null) {
-                    GlideApp.with(context!!).load(it).centerCrop().into(binding.itemImage)
+                    GlideApp.with(context!!).load(it).fallback(R.drawable.ic_no_image).centerCrop()
+                        .into(binding.itemImage)
                 }
             })
 
