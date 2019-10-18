@@ -1,7 +1,11 @@
 package com.virtuary.app
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
@@ -21,7 +25,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.virtuary.app.firebase.StorageRepository
 import com.virtuary.app.util.GlideApp
 import com.virtuary.app.util.hideKeyboard
+import com.virtuary.app.util.wrap
+import kotlinx.android.synthetic.main.drawer_header.*
 import kotlinx.android.synthetic.main.main_activity.*
+import java.util.*
 
 /**
  * Creates an Activity that hosts all of the fragments in the app
@@ -34,13 +41,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     internal lateinit var auth: FirebaseAuth
     internal val storageRepository = StorageRepository()
 
+    companion object {
+        var defaultSysLocale: Locale = Locale("en")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+
+        defaultSysLocale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Resources.getSystem().configuration.locales[0]
+        } else {
+            @Suppress("DEPRECATION")
+            Resources.getSystem().configuration.locale
+        }
         auth = FirebaseAuth.getInstance()
         preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        delegate.localNightMode = preferences.getString("theme", "")?.toIntOrNull()
-            ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 
         navController = findNavController(R.id.nav_host_fragment)
         // Specify set of top level root page to show burger menu
@@ -95,7 +111,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Sync the animation and the icon of the up or hamburger button
         drawerToggle.syncState()
 
-        // TODO: May have better Implementation, but for now this works fine
         // Close drawer manually since super.onOptionsItemSelected doesn't close drawer when it's opened
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawerToggle.onOptionsItemSelected(item)
@@ -116,6 +131,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         drawerToggle.onConfigurationChanged(newConfig)
+        defaultSysLocale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            newConfig.locales[0]
+        } else {
+            @Suppress("DEPRECATION")
+            newConfig.locale
+        }
+        val currentNightMode = newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        val themePref = preferences.getString("theme", "")?.toIntOrNull()
+            ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        if (themePref == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+            if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
+                delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+            } else {
+                delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+            }
+        }
+        this.recreate()
     }
 
     private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
@@ -123,10 +155,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         { sharedPreferences, key ->
             when (key) {
                 "theme" -> delegate.localNightMode =
-                    sharedPreferences.getString(key, "-1")!!.toInt()
+                    sharedPreferences.getString(key, "")?.toIntOrNull() ?: -1
             }
-
+            this.recreate()
         }
+
+    override fun attachBaseContext(newBase: Context?) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(newBase)
+        val newLanguage = sharedPreferences.getString("language", "sys")!!
+        val theme = sharedPreferences.getString("theme", "-1")?.toIntOrNull() ?: -1
+        val configLocale = if (newLanguage == "sys") {
+            defaultSysLocale
+        } else {
+            Locale(newLanguage)
+        }
+
+        super.attachBaseContext(ContextWrapper(newBase).wrap(configLocale.language, theme))
+    }
 
     override fun onResume() {
         preferences.registerOnSharedPreferenceChangeListener(listener)
