@@ -26,7 +26,6 @@ import com.virtuary.app.firebase.StorageRepository
 import com.virtuary.app.util.GlideApp
 import com.virtuary.app.util.hideKeyboard
 import com.virtuary.app.util.wrap
-import kotlinx.android.synthetic.main.drawer_header.*
 import kotlinx.android.synthetic.main.main_activity.*
 import java.util.*
 
@@ -74,13 +73,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val userPicture = headerView.findViewById<ImageView>(R.id.drawer_profile_picture)
         userName.text = auth.currentUser!!.displayName
         GlideApp.with(applicationContext)
-                    .load(storageRepository.getImage(auth.currentUser?.photoUrl.toString()))
-                    .fallback(R.drawable.ic_launcher_foreground).circleCrop()
-                    .into(userPicture)
+            .load(storageRepository.getImage(auth.currentUser?.photoUrl.toString()))
+            .fallback(R.drawable.ic_launcher_foreground).circleCrop()
+            .into(userPicture)
 
         // https://stackoverflow.com/questions/32806735/refresh-header-in-navigation-drawer/35952939#35952939
         drawerToggle = ActionBarDrawerToggle(
-            this, drawer_layout, R.string.nav_app_bar_open_drawer_description, R.string.navigation_drawer_close
+            this,
+            drawer_layout,
+            R.string.nav_app_bar_open_drawer_description,
+            R.string.navigation_drawer_close
         )
 
         drawer_layout.addDrawerListener(drawerToggle)
