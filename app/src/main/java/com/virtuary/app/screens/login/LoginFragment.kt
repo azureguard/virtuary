@@ -108,7 +108,7 @@ class LoginFragment : Fragment() {
         viewModel.getIsSuccess().observe(this, Observer<Boolean> { isSuccess ->
             run {
                 if (isSuccess) {
-                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                    findNavController().navigate(LoginFragmentDirections.actionGlobalHomeFragment())
                 }
             }
         })
