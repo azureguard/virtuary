@@ -27,7 +27,7 @@ class FamilyAdapter(
             binding.familyMemberName.text = item.name
 
             // TODO: change artifact image
-            binding.familyMemberImage.setImageResource(R.drawable.ic_launcher_background)
+            binding.familyMemberImage.setImageResource(R.drawable.ic_no_image)
         }
 
         companion object {

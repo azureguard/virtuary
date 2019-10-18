@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentLandingBinding
 
-
 /**
  * Fragment for the starting screen of the app
  */
