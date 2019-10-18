@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var navController: NavController
-    private lateinit var auth: FirebaseAuth
-    private val storageRepository = StorageRepository()
+    internal lateinit var auth: FirebaseAuth
+    internal val storageRepository = StorageRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
