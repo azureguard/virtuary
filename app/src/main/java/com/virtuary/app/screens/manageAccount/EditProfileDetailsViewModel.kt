@@ -23,6 +23,9 @@ class EditProfileDetailsViewModel : ViewModel() {
     val email = MutableLiveData(user?.email ?: "")
     val image = MutableLiveData<Bitmap>()
 
+    private val _path = MutableLiveData<String>("")
+    val path : LiveData<String> = _path
+
     private val _profileImage = MutableLiveData<StorageReference>()
     val profileImage: LiveData<StorageReference> = _profileImage
 
@@ -64,7 +67,7 @@ class EditProfileDetailsViewModel : ViewModel() {
     fun updateImage() {
         viewModelScope.launch {
             _uploading.value = true
-            val path = if (image.value != null) {
+            _path.value = if (image.value != null) {
                 withContext(Dispatchers.IO) {
                     storageRepository.uploadProfileImage(image.value!!).await().storage.toString()
                 }
@@ -72,7 +75,7 @@ class EditProfileDetailsViewModel : ViewModel() {
                 ""
             }
             val profileUpdates = UserProfileChangeRequest.Builder()
-                .setPhotoUri(Uri.parse(path))
+                .setPhotoUri(Uri.parse(_path.value))
                 .build()
             user?.updateProfile(profileUpdates)
             _uploading.value = false

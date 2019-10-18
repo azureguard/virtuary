@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentEditProfileDetailsBinding
 import com.virtuary.app.util.GlideApp
@@ -28,6 +32,7 @@ class EditProfileDetails : Fragment(),
     PhotoDialogFragment.PhotoDialogListener,
     RequestPasswordDialogFragment.RequestPasswordDialogListener {
     private val viewModel by viewModels<EditProfileDetailsViewModel>()
+    private lateinit var mainActivityViewModel: MainActivityViewModel
 
     internal lateinit var binding: FragmentEditProfileDetailsBinding
     private lateinit var selectPhotoHelper: SelectPhotoHelper
@@ -44,6 +49,7 @@ class EditProfileDetails : Fragment(),
             false
         )
 
+        mainActivityViewModel = ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
         selectPhotoHelper = SelectPhotoHelper(context, fragmentManager, this)
 
         binding.editProfileViewModel = viewModel
@@ -76,6 +82,10 @@ class EditProfileDetails : Fragment(),
                 binding.progressBar.visibility = View.GONE
                 binding.editProfileImage.isEnabled = true
             }
+        })
+
+        viewModel.path.observe(this, Observer {
+            mainActivityViewModel.imageUploaded.value = it
         })
 
         viewModel.authRequired.observe(this, Observer {
@@ -123,7 +133,9 @@ class EditProfileDetails : Fragment(),
                 button.isEnabled = false
                 when (title) {
                     getString(R.string.name) -> {
-                        viewModel.updateName(input.text.toString())
+                        val name = input.text.toString()
+                        mainActivityViewModel.name.value = name
+                        viewModel.updateName(name)
                         dialog.dismiss()
                     }
                     getString(R.string.email) -> viewModel.updateEmail(
