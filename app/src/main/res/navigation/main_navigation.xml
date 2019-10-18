@@ -210,11 +210,12 @@
             app:popUpTo="@id/homeFragment" />
         <action
             android:id="@+id/action_editItemFragment_pop"
+            app:destination="@id/itemFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/addEditItemFragment"
+            app:popUpTo="@id/itemFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <action

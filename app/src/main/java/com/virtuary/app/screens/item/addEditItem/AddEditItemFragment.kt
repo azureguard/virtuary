@@ -126,7 +126,7 @@ class AddEditItemFragment : Fragment(),
                 hideKeyboard()
                 if (viewModel.isEdit.value!!) {
                     findNavController().navigate(
-                        AddEditItemFragmentDirections.actionEditItemFragmentPop()
+                        AddEditItemFragmentDirections.actionEditItemFragmentPop(it)
                     )
                 } else {
                     findNavController().navigate(
