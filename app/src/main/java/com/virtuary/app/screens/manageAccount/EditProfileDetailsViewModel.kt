@@ -24,7 +24,7 @@ class EditProfileDetailsViewModel : ViewModel() {
     val image = MutableLiveData<Bitmap>()
 
     private val _path = MutableLiveData<String>("")
-    val path : LiveData<String> = _path
+    val path: LiveData<String> = _path
 
     private val _profileImage = MutableLiveData<StorageReference>()
     val profileImage: LiveData<StorageReference> = _profileImage

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.text.SpannableStringBuilder
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.virtuary.app.MainActivityViewModel
@@ -49,7 +47,8 @@ class EditProfileDetails : Fragment(),
             false
         )
 
-        mainActivityViewModel = ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
+        mainActivityViewModel =
+            ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
         selectPhotoHelper = SelectPhotoHelper(context, fragmentManager, this)
 
         binding.editProfileViewModel = viewModel
