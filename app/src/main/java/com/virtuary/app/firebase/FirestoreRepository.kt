@@ -13,6 +13,20 @@ class FirestoreRepository {
     private val firestoreDB = FirebaseFirestore.getInstance()
     val user = FirebaseAuth.getInstance().currentUser
 
+    // add user to firebase
+    fun addUser(user: User, userId: String): Task<Void> {
+        return firestoreDB.collection("User").document(userId).set(user)
+    }
+
+    // update the user image in firebase
+    fun updateUserImage(userId: String, userImage: String): Task<Void> {
+        return firestoreDB.collection("User").document(userId).update("image", userImage)
+    }
+
+    // update the user name in firebase
+    fun updateUserName(userId: String, userName: String): Task<Void> {
+        return firestoreDB.collection("User").document(userId).update("name", userName)
+    }
 
     // add item to firebase
     fun addItem(item: Item): Task<DocumentReference> {
