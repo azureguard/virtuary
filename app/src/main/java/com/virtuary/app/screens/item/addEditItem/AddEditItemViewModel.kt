@@ -5,18 +5,33 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.algolia.search.client.ClientSearch
+import com.algolia.search.client.Index
+import com.algolia.search.model.APIKey
+import com.algolia.search.model.ApplicationID
+import com.algolia.search.model.IndexName
+import com.algolia.search.model.ObjectID
 import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.StorageReference
 import com.virtuary.app.firebase.FirestoreRepository
 import com.virtuary.app.firebase.Item
+import com.virtuary.app.firebase.ItemSerializable
 import com.virtuary.app.firebase.StorageRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AddEditItemViewModel(item: Item?) : ViewModel() {
+    companion object {
+        const val API_KEY = "api_key"
+        const val APP_ID = "application_id"
+        const val INDEX_NAME = "index_name"
+    }
+
     private val _item: Item? = item
 
     val title = MutableLiveData(item?.name ?: "")
@@ -25,6 +40,8 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
     val image = MutableLiveData<Bitmap>()
     private val repository: FirestoreRepository = FirestoreRepository()
     private val storageRepository: StorageRepository by lazy { StorageRepository() }
+
+    private lateinit var algoliaConfig: Map<String, Any>
 
     private val _selectionRelatedTo = MutableLiveData<MutableList<String>>()
     val selectionRelatedTo: LiveData<MutableList<String>>
@@ -61,6 +78,9 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
             allUsers.filterNot { _addedRelatedTo.value?.contains(it) ?: false }.toMutableList()
         _isEdit.value = item != null
         _itemImage.value = storageRepository.getImage(item?.image)
+        viewModelScope.launch {
+            algoliaConfig = repository.getAlgoliaConfig()
+        }
     }
 
     // check title input if it is empty
@@ -71,6 +91,11 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
     fun onClick() {
         _emptyTitle.value = title.value?.isEmpty() ?: true
         if (!emptyTitle.value!!) {
+            val appID = ApplicationID(algoliaConfig[APP_ID] as String)
+            val apiKey = APIKey(algoliaConfig[API_KEY] as String)
+            val client = ClientSearch(appID, apiKey)
+            val indexName = IndexName(algoliaConfig[INDEX_NAME] as String)
+            val index = client.initIndex(indexName)
             _isError.value = false
             _inProgress.value = true
             if (_item == null) {
@@ -87,6 +112,7 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
                         _document.value = withContext(Dispatchers.IO) {
                             repository.addItem(item).await().get().await().toObject<Item>()
                         }
+                        addToIndex(index)
                     } catch (e: FirebaseException) {
                         _isError.value = true
                         _inProgress.value = false
@@ -100,14 +126,35 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
                 viewModelScope.launch {
                     _item.image = uploadImage()
                     try {
-                        withContext(Dispatchers.IO) { repository.editItem(_item) }
+                        withContext(Dispatchers.IO) {
+                            repository.editItem(_item)
+                        }
                         _document.value = _item
+                        addToIndex(index)
                     } catch (e: FirebaseException) {
                         _isError.value = true
                         _inProgress.value = false
                     }
                 }
             }
+        }
+    }
+
+    private suspend fun addToIndex(index: Index) {
+        val serializableItem = ItemSerializable(
+            documentId = _document.value!!.documentId,
+            name = _document.value!!.name,
+            originalLocation = _document.value!!.originalLocation,
+            currentLocation = _document.value!!.currentLocation,
+            story = _document.value!!.story,
+            relations = _document.value!!.relations,
+            image = _document.value!!.image
+        )
+        withContext(Dispatchers.IO) {
+            index.saveObject(
+                ItemSerializable.serializer(),
+                serializableItem
+            )
         }
     }
 

@@ -2,13 +2,13 @@ package com.virtuary.app.screens.home
 
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader
 import com.bumptech.glide.util.FixedPreloadSizeProvider
@@ -60,13 +60,20 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
         homeViewModel.query.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             if (firebaseFirestoreException != null) {
-                Log.e("FIRESTORE", firebaseFirestoreException.message ?: "Exception")
                 return@addSnapshotListener
             }
             adapter.submitList(
                 querySnapshot?.toObjects()
             )
         }
+
+        homeViewModel.searchResult.observe(this, Observer {
+            if (it != null) {
+                if (it.isNotEmpty()) {
+                    adapter.submitList(it)
+                }
+            }
+        })
 
         binding.addItemButton.setOnClickListener {
             findNavController().navigate(
@@ -129,11 +136,17 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
     // Called when the action bar search text has been submitted using button or others
     override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            homeViewModel.searchItem(query)
+        }
         return true
     }
 
     // Called when the action bar search text has changed.
     override fun onQueryTextChange(query: String?): Boolean {
+        if (query != null) {
+            homeViewModel.searchItem(query)
+        }
         return true
     }
 }

@@ -1,6 +1,5 @@
 package com.virtuary.app.util
 
-import com.algolia.search.saas.Client
 import com.virtuary.app.firebase.FirestoreRepository
 
 
@@ -12,8 +11,8 @@ class AlgoliaSearch {
     }
 
     suspend fun config() {
-        val algoliaConfig = FirestoreRepository().getAlgoliaConfig()
-        var client = Client(algoliaConfig[APP_ID] as String, algoliaConfig[API_KEY] as String)
-        var index = client.getIndex(algoliaConfig[INDEX_NAME] as String)
+//        val algoliaConfig = FirestoreRepository().getAlgoliaConfig()
+//        var client = Client(algoliaConfig[APP_ID] as String, algoliaConfig[API_KEY] as String)
+//        var index = client.getIndex(algoliaConfig[INDEX_NAME] as String)
     }
 }
