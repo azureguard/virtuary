@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/pre_auth">
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.virtuary.app.screens.forgotPassword.ForgotPasswordFragment"
