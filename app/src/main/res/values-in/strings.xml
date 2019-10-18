@@ -4,7 +4,7 @@
     <string name="about">Tentang Kami</string>
     <string name="add_item">Tambahkan Barang</string>
     <string name="add_item_dialog_add_picture">Mengunggah Gambar</string>
-    <string name="add_item_dialog_add_picture_description">Mengambil foto dari kamera atau menunggah foto dari galeri foto</string>
+    <string name="add_item_dialog_add_picture_description">Mengambil foto dari kamera atau menunggah foto dari galeri</string>
     <string name="add_item_dialog_camera">Kamera</string>
     <string name="add_item_dialog_gallery">Galeri</string>
     <string name="confirm">Konfirmasi</string>
