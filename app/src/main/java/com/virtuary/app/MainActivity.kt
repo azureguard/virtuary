@@ -71,11 +71,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val headerView = navView.getHeaderView(0)
         val userName = headerView.findViewById<TextView>(R.id.drawer_user_name)
         val userPicture = headerView.findViewById<ImageView>(R.id.drawer_profile_picture)
-        userName.text = auth.currentUser?.displayName
-        GlideApp.with(applicationContext)
-            .load(storageRepository.getImage(auth.currentUser?.photoUrl.toString()))
-            .fallback(R.drawable.ic_launcher_foreground).circleCrop()
-            .into(userPicture)
+        setDrawerData(userName, userPicture)
+
+        auth.addAuthStateListener {
+            if (it.currentUser != null)
+                setDrawerData(userName, userPicture)
+
+        }
 
         // https://stackoverflow.com/questions/32806735/refresh-header-in-navigation-drawer/35952939#35952939
         drawerToggle = ActionBarDrawerToggle(
@@ -86,6 +88,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
 
         drawer_layout.addDrawerListener(drawerToggle)
+    }
+
+    private fun setDrawerData(
+        userName: TextView,
+        userPicture: ImageView
+    ) {
+        userName.text = auth.currentUser?.displayName
+        GlideApp.with(applicationContext)
+            .load(storageRepository.getImage(auth.currentUser?.photoUrl.toString()))
+            .fallback(R.drawable.ic_launcher_foreground).circleCrop()
+            .into(userPicture)
     }
 
     override fun onSupportNavigateUp(): Boolean {
