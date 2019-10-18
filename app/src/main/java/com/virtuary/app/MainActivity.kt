@@ -7,6 +7,7 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -79,10 +80,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         auth.addAuthStateListener {
             if (it.currentUser != null)
                 setDrawerData(userName, userPicture)
-
         }
 
-        mainActivityViewModel.name.value = auth.currentUser?.displayName
+        if (auth.currentUser?.displayName != null) {
+            mainActivityViewModel.name.value = auth.currentUser?.displayName
+        }
 
         mainActivityViewModel.name.observe(this, Observer {
             userName.text = it
@@ -112,10 +114,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         userPicture: ImageView
     ) {
         userName.text = auth.currentUser?.displayName
-        GlideApp.with(applicationContext)
-            .load(storageRepository.getImage(auth.currentUser?.photoUrl.toString()))
-            .fallback(R.drawable.ic_launcher_foreground).circleCrop()
-            .into(userPicture)
+        if(auth.currentUser?.photoUrl == null){
+            userPicture.setImageDrawable(getDrawable(R.drawable.ic_no_image))
+        } else {
+            GlideApp.with(applicationContext)
+                .load(storageRepository.getImage(auth.currentUser?.photoUrl.toString()))
+                .circleCrop()
+                .into(userPicture)
+        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
