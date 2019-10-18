@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val headerView = navView.getHeaderView(0)
         val userName = headerView.findViewById<TextView>(R.id.drawer_user_name)
         val userPicture = headerView.findViewById<ImageView>(R.id.drawer_profile_picture)
-        userName.text = auth.currentUser!!.displayName
+        userName.text = auth.currentUser?.displayName
         GlideApp.with(applicationContext)
             .load(storageRepository.getImage(auth.currentUser?.photoUrl.toString()))
             .fallback(R.drawable.ic_launcher_foreground).circleCrop()
