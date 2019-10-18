@@ -59,4 +59,7 @@
     <string name="title">Nama:</string>
     <string name="virtuary_description">Platform Catatan Artefak</string>
     <string name="virtuary_logo">Logo Virtuary</string>
+    <string name="error_invalid_password">Password tidak valid</string>
+    <string name="pref_language">Bahasa</string>
+    <string name="pref_theme">Tema gelap</string>
 </resources>
