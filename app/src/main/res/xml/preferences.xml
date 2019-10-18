@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        app:defaultValue="sys"
+        app:entries="@array/language"
+        app:entryValues="@array/languageData"
+        app:icon="@drawable/ic_translate"
+        app:key="language"
+        app:title="@string/pref_language" />
+    <ListPreference
+        app:defaultValue="-1"
+        app:entries="@array/themeEntries"
+        app:entryValues="@array/themeValues"
+        app:icon="@drawable/ic_brightness"
+        app:key="theme"
+        app:title="@string/pref_theme" />
+</PreferenceScreen>

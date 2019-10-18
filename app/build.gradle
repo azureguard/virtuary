@@ -41,6 +41,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.databinding:databinding-compiler:$gradle_version"
+    implementation 'androidx.preference:preference:1.1.0'
 
     implementation 'com.google.android.material:material:1.1.0-alpha10'
     implementation 'androidx.cardview:cardview:1.0.0'

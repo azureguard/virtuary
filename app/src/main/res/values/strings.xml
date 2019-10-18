@@ -59,4 +59,6 @@
     <string name="error_password_blank">Password cannot be blank</string>
     <string name="error_server_unreachable">Unable to reach server</string>
     <string name="error_user_profile_not_set">Unable to set user profile</string>
+    <string name="pref_language">Language</string>
+    <string name="pref_theme">Dark Mode</string>
 </resources>
