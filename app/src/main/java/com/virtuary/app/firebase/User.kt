@@ -7,5 +7,5 @@ data class User(
     var name: String? = null,
     var image: String? = null,
     var alias: Map<String, String>? = null,
-    var item: List<Item>? = null
+    var item: Map<String, Item>? = null
 )
