@@ -6,12 +6,20 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.tasks.await
 
 class FirestoreRepository {
     private val firestoreDB = FirebaseFirestore.getInstance()
     val user = FirebaseAuth.getInstance().currentUser
+
+    // get all user from firebase
+    fun getAllUsers(): Task<QuerySnapshot> {
+        return firestoreDB.collection("User").get()
+    }
+
+    fun queryAllUsers(): Query {
+        return firestoreDB.collection("User").orderBy("name")
+    }
 
     // add user to firebase
     fun addUser(user: User, userId: String): Task<Void> {
@@ -43,7 +51,7 @@ class FirestoreRepository {
         return firestoreDB.collection("Item").get()
     }
 
-    fun queryAllItems() : Query {
+    fun queryAllItems(): Query {
         return firestoreDB.collection("Item").orderBy("timestamp", Query.Direction.DESCENDING)
     }
 
