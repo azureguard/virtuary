@@ -12,6 +12,7 @@ import com.algolia.search.model.IndexName
 import com.google.firebase.firestore.Query
 import com.virtuary.app.firebase.FirestoreRepository
 import com.virtuary.app.firebase.Item
+import com.virtuary.app.firebase.ItemSerializable
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
@@ -27,7 +28,6 @@ class HomeViewModel : ViewModel() {
     private val _searchResult = MutableLiveData<List<Item>>()
     val searchResult: LiveData<List<Item>> = _searchResult
 
-
     fun searchItem(queryString: String) {
         viewModelScope.launch {
             val algoliaConfig = FirestoreRepository().getAlgoliaConfig()
@@ -40,8 +40,18 @@ class HomeViewModel : ViewModel() {
             val query = com.algolia.search.model.search.Query(query = queryString)
             val result = index.search(query)
 
-            _searchResult.value = result.hits.deserialize(Item.serializer())
+            val resultList = result.hits.deserialize(ItemSerializable.serializer())
+            _searchResult.value = resultList.map {
+                Item(
+                    documentId = it.objectID.toString(),
+                    name = it.name,
+                    originalLocation = it.originalLocation,
+                    currentLocation = it.currentLocation,
+                    story = it.story,
+                    relations = it.relations,
+                    image = it.image
+                )
+            }
         }
     }
-
 }

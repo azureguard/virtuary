@@ -141,13 +141,13 @@ class AddEditItemViewModel(item: Item?, userDB: HashMap<String, User>) : ViewMod
 
     private suspend fun addToIndex(index: Index) {
         val serializableItem = ItemSerializable(
-            documentId = _document.value!!.documentId,
             name = _document.value!!.name,
             originalLocation = _document.value!!.originalLocation,
             currentLocation = _document.value!!.currentLocation,
             story = _document.value!!.story,
             relations = _document.value!!.relations,
-            image = _document.value!!.image
+            image = _document.value!!.image,
+            objectID = ObjectID(_document.value!!.documentId!!)
         )
         withContext(Dispatchers.IO) {
             index.saveObject(
