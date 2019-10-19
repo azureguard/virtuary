@@ -104,7 +104,7 @@ class ItemFragment : Fragment() {
             }
             R.id.nav_remove_item -> {
                 viewModel.deleteItem(args.item)
-                findNavController().navigate(ItemFragmentDirections.actionGlobalHomeFragment())
+                findNavController().popBackStack()
             }
         }
 
