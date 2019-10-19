@@ -84,7 +84,9 @@ class EditProfileDetails : Fragment(),
         })
 
         viewModel.path.observe(this, Observer {
-            mainActivityViewModel.imageUploaded.value = it
+            if (it.isNotEmpty()) {
+                mainActivityViewModel.imageUploaded.value = it
+            }
         })
 
         viewModel.authRequired.observe(this, Observer {
