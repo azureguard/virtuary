@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -31,7 +30,7 @@ class SelectPhotoHelper(
     }
 
     private fun generate(): Uri? {
-        val storageDir = context?.getExternalFilesDir(Environment.DIRECTORY_DCIM)
+        val storageDir = context?.externalCacheDir
         val image = File(storageDir, UUID.randomUUID().toString() + ".jpg")
         imageUri = FileProvider.getUriForFile(
             context!!, (context.applicationContext
