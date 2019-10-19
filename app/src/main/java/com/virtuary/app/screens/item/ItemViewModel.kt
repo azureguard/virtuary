@@ -39,7 +39,7 @@ class ItemViewModel(item: Item) : ViewModel() {
 
     fun deleteItem(item: Item) {
         _deleteTriggered.value = true
-        viewModelScope.launch() {
+        viewModelScope.launch {
             val index = AlgoliaClient.getIndex("item")
             index.deleteObject(ObjectID(item.documentId!!))
             repository.deleteItem(item).await()

@@ -18,12 +18,6 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 class AddEditItemViewModel(item: Item?, userDB: HashMap<String, User>) : ViewModel() {
-    companion object {
-        const val API_KEY = "api_key"
-        const val APP_ID = "application_id"
-        const val INDEX_NAME = "index_name"
-    }
-
     private val _item: Item? = item
 
     val title = MutableLiveData(item?.name ?: "")
@@ -43,15 +37,15 @@ class AddEditItemViewModel(item: Item?, userDB: HashMap<String, User>) : ViewMod
     val addedRelatedTo: LiveData<MutableList<String>>
         get() = _addedRelatedTo
 
-    private val _inProgress = MutableLiveData<Boolean>(false)
+    private val _inProgress = MutableLiveData(false)
     val inProgress: LiveData<Boolean>
         get() = _inProgress
 
-    private val _isError = MutableLiveData<Boolean>(false)
+    private val _isError = MutableLiveData(false)
     val isError: LiveData<Boolean>
         get() = _isError
 
-    private val _isEdit = MutableLiveData<Boolean>(false)
+    private val _isEdit = MutableLiveData(false)
     val isEdit: LiveData<Boolean>
         get() = _isEdit
 
