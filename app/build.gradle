@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'kotlinx-serialization'
 
 android {
     compileSdkVersion 29
@@ -27,6 +28,10 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
     }
 }
 
@@ -73,6 +78,9 @@ dependencies {
         transitive = false
     }
     kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+    implementation 'com.algolia:algoliasearch-client-kotlin-jvm:1.1.4'
+    implementation 'io.ktor:ktor-client-android:1.2.4'
 }
 
 apply plugin: 'com.google.gms.google-services'
