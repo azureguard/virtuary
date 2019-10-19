@@ -15,7 +15,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentEditProfileDetailsBinding
 import com.virtuary.app.util.GlideApp
@@ -28,6 +30,7 @@ class EditProfileDetails : Fragment(),
     PhotoDialogFragment.PhotoDialogListener,
     RequestPasswordDialogFragment.RequestPasswordDialogListener {
     private val viewModel by viewModels<EditProfileDetailsViewModel>()
+    private lateinit var mainActivityViewModel: MainActivityViewModel
 
     internal lateinit var binding: FragmentEditProfileDetailsBinding
     private lateinit var selectPhotoHelper: SelectPhotoHelper
@@ -44,6 +47,8 @@ class EditProfileDetails : Fragment(),
             false
         )
 
+        mainActivityViewModel =
+            ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
         selectPhotoHelper = SelectPhotoHelper(context, fragmentManager, this)
 
         binding.editProfileViewModel = viewModel
@@ -75,6 +80,12 @@ class EditProfileDetails : Fragment(),
             } else {
                 binding.progressBar.visibility = View.GONE
                 binding.editProfileImage.isEnabled = true
+            }
+        })
+
+        viewModel.path.observe(this, Observer {
+            if (it.isNotEmpty()) {
+                mainActivityViewModel.imageUploaded.value = it
             }
         })
 
@@ -123,7 +134,9 @@ class EditProfileDetails : Fragment(),
                 button.isEnabled = false
                 when (title) {
                     getString(R.string.name) -> {
-                        viewModel.updateName(input.text.toString())
+                        val name = input.text.toString()
+                        mainActivityViewModel.name.value = name
+                        viewModel.updateName(name)
                         dialog.dismiss()
                     }
                     getString(R.string.email) -> viewModel.updateEmail(

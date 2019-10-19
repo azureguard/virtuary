@@ -10,10 +10,12 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var navController: NavController
     private lateinit var preferences: SharedPreferences
+    private val mainActivityViewModel by viewModels<MainActivityViewModel>()
     internal lateinit var auth: FirebaseAuth
     internal val storageRepository = StorageRepository()
 
@@ -76,8 +79,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         auth.addAuthStateListener {
             if (it.currentUser != null)
                 setDrawerData(userName, userPicture)
-
         }
+
+        if (auth.currentUser?.displayName != null) {
+            mainActivityViewModel.name.value = auth.currentUser?.displayName
+        }
+
+        mainActivityViewModel.name.observe(this, Observer {
+            userName.text = it
+        })
+
+        mainActivityViewModel.imageUploaded.observe(this, Observer {
+            if (it != null) {
+                GlideApp.with(applicationContext)
+                    .load(storageRepository.getImage(it))
+                    .circleCrop().into(userPicture)
+            }
+        })
 
         // https://stackoverflow.com/questions/32806735/refresh-header-in-navigation-drawer/35952939#35952939
         drawerToggle = ActionBarDrawerToggle(
@@ -95,10 +113,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         userPicture: ImageView
     ) {
         userName.text = auth.currentUser?.displayName
-        GlideApp.with(applicationContext)
-            .load(storageRepository.getImage(auth.currentUser?.photoUrl.toString()))
-            .fallback(R.drawable.ic_launcher_foreground).circleCrop()
-            .into(userPicture)
+        if (auth.currentUser?.photoUrl == null) {
+            userPicture.setImageDrawable(getDrawable(R.drawable.ic_no_image))
+        } else {
+            GlideApp.with(applicationContext)
+                .load(storageRepository.getImage(auth.currentUser?.photoUrl.toString()))
+                .circleCrop()
+                .into(userPicture)
+        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

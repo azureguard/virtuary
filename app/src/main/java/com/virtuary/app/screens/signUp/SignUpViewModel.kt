@@ -45,6 +45,9 @@ class SignUpViewModel : ViewModel() {
     val invalidName: LiveData<Boolean>
         get() = _invalidName
 
+    private val _userName = MutableLiveData<String>()
+    val userName: LiveData<String> = _userName
+
     fun onClick() {
         _invalidEmail.value =
             email.get() == null || !android.util.Patterns.EMAIL_ADDRESS.matcher(email.get() as CharSequence).matches()
@@ -69,6 +72,10 @@ class SignUpViewModel : ViewModel() {
                                     errorMessage.value = R.string.error_user_profile_not_set
                                 }
                             }
+
+                        // Update user live data to be observed and passed to main activity
+                        _userName.value = name.get()
+
                     } else {
                         errorMessage.value = R.string.error_server_unreachable
                     }

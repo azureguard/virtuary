@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentSignUpBinding
 import com.virtuary.app.util.hideKeyboard
@@ -23,6 +24,7 @@ import com.virtuary.app.util.hideKeyboard
 class SignUpFragment : Fragment() {
 
     private lateinit var viewModel: SignUpViewModel
+    private lateinit var mainActivityViewModel: MainActivityViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +37,10 @@ class SignUpFragment : Fragment() {
 
         // Get the viewmodel
         viewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)
+
+        // Get the main activity view model
+        mainActivityViewModel =
+            ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
 
         // Set the viewmodel for databinding - this allows the bound layout access to all of the
         // data in the VieWModel
@@ -129,6 +135,11 @@ class SignUpFragment : Fragment() {
                 binding.emailText.error = getString(R.string.error_email_in_use)
                 binding.emailText.isErrorEnabled = true
             }
+        })
+
+        // Report userName to main activity for drawer details
+        viewModel.userName.observe(this, Observer {
+            mainActivityViewModel.name.value = it
         })
 
 
