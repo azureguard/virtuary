@@ -62,4 +62,5 @@
     <string name="error_invalid_password">Password tidak valid</string>
     <string name="pref_language">Bahasa</string>
     <string name="pref_theme">Tema gelap</string>
+    <string name="about_content">Virtuary adalah aplikasi daftar artefak untuk mengorganisir barang-barang yang mempunyai sejarah penting di keluarga anda. Virtuary dibuat oleh 4 mahasiswa yang ditugaskan untuk membuat aplikasi yang ditujukan untuk klien yang mereka pilih. Pada Juli 2019, Aplikasi ini mulai dibuat.</string>
 </resources>
