@@ -26,7 +26,7 @@ class MemberItemAdapter(
 
     class ViewHolder private constructor(val binding: MemberListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item : Item, parentFragment: Fragment, relatedItemOnClick: (item: Item) -> Unit) {
+        fun bind(item: Item, parentFragment: Fragment, relatedItemOnClick: (item: Item) -> Unit) {
             binding.artifactTitle.text = item.name
 
             GlideApp.with(parentFragment)

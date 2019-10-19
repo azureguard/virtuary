@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyMemberBinding
 import com.virtuary.app.firebase.Item
+import com.virtuary.app.firebase.StorageRepository
+import com.virtuary.app.util.GlideApp
 
 
 /**
@@ -36,14 +36,22 @@ class MemberFragment : Fragment() {
         // Set the name by the argument passed from navigation
         binding.memberName.text = args.user.name
 
+        GlideApp.with(this)
+            .load(StorageRepository().getImage(args.user.image))
+            .placeholder(R.drawable.ic_no_image)
+            .centerCrop()
+            .into(binding.memberPicture)
+
         val userItems = args.user.item
 
         if (userItems == null || userItems.keys.isEmpty()) {
             binding.noItemText.visibility = View.VISIBLE
             binding.rvMemberItemList.visibility = View.GONE
+            binding.showAllButton.visibility = View.GONE
         } else {
             binding.noItemText.visibility = View.GONE
             binding.rvMemberItemList.visibility = View.VISIBLE
+            binding.showAllButton.visibility = View.VISIBLE
         }
 
         val userItem = mutableListOf<Item>()
