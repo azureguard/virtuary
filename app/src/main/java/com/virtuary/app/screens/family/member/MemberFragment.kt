@@ -33,6 +33,9 @@ class MemberFragment : Fragment() {
             inflater, R.layout.fragment_family_member, container, false
         )
 
+        // To enable the option menu for set alias
+        setHasOptionsMenu(true)
+
         // Set the name by the argument passed from navigation
         binding.memberName.text = args.user.name
 
@@ -85,7 +88,12 @@ class MemberFragment : Fragment() {
         return binding.root
     }
 
-    private fun relatedItemOnClick(item: Item) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_app_bar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun relatedItemOnClick(item : Item){
         findNavController().navigate(
             MemberFragmentDirections.actionGlobalItemFragment(
                 item
