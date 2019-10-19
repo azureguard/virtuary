@@ -1,20 +1,25 @@
 package com.virtuary.app.screens.family.member
 
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.text.InputType
+import android.view.*
+import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyMemberBinding
+import com.virtuary.app.firebase.FirestoreRepository
 import com.virtuary.app.firebase.Item
+import kotlinx.android.synthetic.main.dialog_edit_profile.view.*
 import com.virtuary.app.firebase.StorageRepository
 import com.virtuary.app.util.GlideApp
-
 
 /**
  * Fragment for the family member details
@@ -23,6 +28,8 @@ class MemberFragment : Fragment() {
 
     // argument got from navigation action
     private val args: MemberFragmentArgs by navArgs()
+    internal lateinit var auth: FirebaseAuth
+    private val repository: FirestoreRepository = FirestoreRepository()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +39,7 @@ class MemberFragment : Fragment() {
         val binding: FragmentFamilyMemberBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_family_member, container, false
         )
+        auth = FirebaseAuth.getInstance()
 
         // To enable the option menu for set alias
         setHasOptionsMenu(true)
@@ -93,11 +101,53 @@ class MemberFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun relatedItemOnClick(item : Item){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.set_alias -> {
+                createDialog(context!!, getString(R.string.set_alias))
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun relatedItemOnClick(item: Item) {
         findNavController().navigate(
             MemberFragmentDirections.actionGlobalItemFragment(
                 item
             )
         )
+    }
+
+    private fun createDialog(context: Context, title: String) {
+        val builder = MaterialAlertDialogBuilder(context)
+        val viewInflated = LayoutInflater.from(context)
+            .inflate(R.layout.dialog_edit_profile, view as ViewGroup?, false)
+
+        // Set up the input
+        val input = viewInflated.findViewById(R.id.input) as EditText
+
+        // Create the alert dialog
+        builder.apply {
+            setTitle(title)
+            setView(viewInflated)
+            setPositiveButton(android.R.string.ok, null)
+            setNegativeButton(
+                android.R.string.cancel
+            ) { dialog, _ -> dialog.cancel() }
+        }
+        val dialog = builder.create()
+        dialog.setOnShowListener {
+            val button = dialog.getButton(Dialog.BUTTON_POSITIVE)
+            viewInflated.input.inputType =
+                InputType.TYPE_TEXT_VARIATION_PERSON_NAME or InputType.TYPE_TEXT_FLAG_CAP_WORDS
+
+            button.setOnClickListener {
+                button.isEnabled = false
+                val alias = input.text.toString()
+                repository.updateUserAlias(args.user.documentId!!,auth.currentUser!!.uid, alias)
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
     }
 }

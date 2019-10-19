@@ -31,6 +31,13 @@ class FirestoreRepository {
         return firestoreDB.collection("User").document(userId).update("name", userName)
     }
 
+    // update the user alias in firebase
+    fun updateUserAlias(userId: String, currUserId: String, alias: String): Task<Void>{
+        return firestoreDB.collection("User").document(userId).update(mapOf(
+            "alias.${currUserId}" to alias
+        ))
+    }
+
     // add item to firebase
     fun addItem(item: Item): Task<DocumentReference> {
         return firestoreDB.collection("Item").add(item)
