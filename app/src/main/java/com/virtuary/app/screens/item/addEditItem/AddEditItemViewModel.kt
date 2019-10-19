@@ -10,22 +10,16 @@ import com.algolia.search.client.Index
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.IndexName
-import com.algolia.search.model.ObjectID
 import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.StorageReference
-import com.virtuary.app.firebase.FirestoreRepository
-import com.virtuary.app.firebase.Item
-import com.virtuary.app.firebase.ItemSerializable
-import com.virtuary.app.firebase.StorageRepository
+import com.virtuary.app.firebase.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import java.util.*
-import kotlin.collections.ArrayList
 
-class AddEditItemViewModel(item: Item?) : ViewModel() {
+class AddEditItemViewModel(item: Item?, userDB: HashMap<String, User>) : ViewModel() {
     companion object {
         const val API_KEY = "api_key"
         const val APP_ID = "application_id"
@@ -73,7 +67,12 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
 
     init {
         _addedRelatedTo.value = item?.relations?.toMutableList() ?: mutableListOf()
-        val allUsers = listOf("-", "None", "Daryl", "Michelle", "Maurice", "SK")
+        val allUsers = mutableListOf("Please select here")
+
+        for (userId in userDB.keys) {
+            allUsers.add(userId)
+        }
+
         _selectionRelatedTo.value =
             allUsers.filterNot { _addedRelatedTo.value?.contains(it) ?: false }.toMutableList()
         _isEdit.value = item != null
@@ -170,9 +169,12 @@ class AddEditItemViewModel(item: Item?) : ViewModel() {
 
     // related to item selected
     fun onItemSelected(itemIndex: Int): Boolean {
-        if (_selectionRelatedTo.value!![itemIndex] != "None" && _selectionRelatedTo.value!![itemIndex] != "-") {
+        if (_selectionRelatedTo.value!![itemIndex] != "Please select here") {
             addRelatedTo(_selectionRelatedTo.value!![itemIndex])
             _selectionRelatedTo.value!!.removeAt(itemIndex)
+            val tempSelectionRelatedTo = mutableListOf<String>()
+            tempSelectionRelatedTo.addAll(_selectionRelatedTo.value!!)
+            _selectionRelatedTo.value = tempSelectionRelatedTo
 
             return true
         }

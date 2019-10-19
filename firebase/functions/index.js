@@ -59,3 +59,76 @@ exports.generateThumbnail = functions.storage.object().onFinalize(object => {
     thumbnailUploadStream.on("finish", resolve).on("error", reject)
   );
 });
+
+exports.updateItemAssociatedWithUser = functions.firestore
+  .document("Item/{documentId}")
+  .onWrite(async (change, context) => {
+    const docId = context.params.documentId;
+    // If data is null, item deleted
+    const currentData = change.after.exists ? change.after.data() : null;
+    const oldData = change.before.exists ? change.before.data() : null;
+    const promiseArray = [];
+    let oldRelatedUsersId = [];
+
+    // Get old related to for updated items
+    if (oldData !== null) {
+      oldRelatedUsersId = oldData.relations;
+    }
+
+    // If item deleted
+    if (currentData === null) {
+      promiseArray.push(
+        oldRelatedUsersId.map(val => {
+          const user = admin
+            .firestore()
+            .collection("User")
+            .doc(val);
+          return user.get().then(document => {
+            const currentUser = document.data();
+            delete currentUser.item[docId];
+            return user.set(currentUser);
+          });
+        })
+      );
+      return Promise.all(promiseArray);
+    }
+
+    // Get new related to
+    const relatedUsersId = currentData.relations;
+
+    // Get removed users related to
+    const removedRelations = oldRelatedUsersId.filter(
+      val => !relatedUsersId.includes(val)
+    );
+
+    promiseArray.push(
+      relatedUsersId.map(val => {
+        const user = admin
+          .firestore()
+          .collection("User")
+          .doc(val);
+        return user.get().then(document => {
+          const currentUser = document.data();
+          if (currentUser.item === null) { currentUser.item = {}; }
+          currentUser.item[docId] = currentData;
+          return user.set(currentUser);
+        });
+      })
+    );
+
+    promiseArray.push(
+      removedRelations.map(val => {
+        const user = admin
+          .firestore()
+          .collection("User")
+          .doc(val);
+        return user.get().then(document => {
+          const currentUser = document.data();
+          delete currentUser.item[docId];
+          return user.set(currentUser);
+        });
+      })
+    );
+
+    return Promise.all(promiseArray);
+  });

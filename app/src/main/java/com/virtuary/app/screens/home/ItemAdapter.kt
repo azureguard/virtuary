@@ -3,19 +3,20 @@ package com.virtuary.app.screens.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.ListPreloader
 import com.bumptech.glide.RequestBuilder
+import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.MainNavigationDirections
 import com.virtuary.app.R
 import com.virtuary.app.databinding.ArtifactListItemBinding
 import com.virtuary.app.firebase.Item
 import com.virtuary.app.firebase.StorageRepository
 import com.virtuary.app.util.GlideApp
-
 
 class ItemAdapter(
     private val parentFragment: Fragment
@@ -49,12 +50,26 @@ class ItemAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Item, parentFragment: Fragment) {
+            val mainActivityViewModel =
+                ViewModelProviders.of(parentFragment.activity!!).get(
+                    MainActivityViewModel::class.java
+                )
+
             binding.artifactCard.setOnClickListener {
                 parentFragment.findNavController()
                     .navigate(MainNavigationDirections.actionGlobalItemFragment(item))
             }
             binding.artifactTitle.text = item.name
-            binding.artifactRelatedTo.text = item.relations?.joinToString(separator = ", ")
+
+            val nameString = mutableListOf<String>()
+            if (item.relations != null) {
+                for (userId in item.relations!!) {
+                    if (mainActivityViewModel.userDB.containsKey(userId)) {
+                        nameString.add(mainActivityViewModel.userDB[userId]?.name!!)
+                    }
+                }
+            }
+            binding.artifactRelatedTo.text = nameString.joinToString(separator = ", ")
             binding.artifactCurrentLocation.text = item.currentLocation
             val thumbnail = item.image?.split('/') as MutableList?
             if (thumbnail != null) {

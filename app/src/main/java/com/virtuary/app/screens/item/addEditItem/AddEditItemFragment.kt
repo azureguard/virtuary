@@ -11,12 +11,13 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
 import com.virtuary.app.MainActivity
+import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentAddEditItemBinding
 import com.virtuary.app.firebase.Item
@@ -30,14 +31,8 @@ class AddEditItemFragment : Fragment(),
 
     internal lateinit var binding: FragmentAddEditItemBinding
     private lateinit var selectPhotoHelper: SelectPhotoHelper
-
-    internal val viewModel: AddEditItemViewModel by viewModels {
-        BaseViewModelFactory {
-            AddEditItemViewModel(
-                args.item
-            )
-        }
-    }
+    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private lateinit var viewModel: AddEditItemViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +44,15 @@ class AddEditItemFragment : Fragment(),
             inflater,
             R.layout.fragment_add_edit_item, container, false
         )
+
+        mainActivityViewModel =
+            ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
+
+        viewModel = BaseViewModelFactory {
+            AddEditItemViewModel(
+                args.item, mainActivityViewModel.userDB
+            )
+        }.create(AddEditItemViewModel::class.java)
 
         selectPhotoHelper = SelectPhotoHelper(context, fragmentManager, this)
 
@@ -69,17 +73,25 @@ class AddEditItemFragment : Fragment(),
         })
 
         // build the drop down add item menu
-        binding.editItemRelatedToSpinner.adapter = ArrayAdapter(
-            activity!!,
-            R.layout.support_simple_spinner_dropdown_item,
-            viewModel.selectionRelatedTo.value!!
-        )
+        viewModel.selectionRelatedTo.observe(this, Observer {
+            binding.editItemRelatedToSpinner.adapter = ArrayAdapter(
+                activity!!,
+                R.layout.support_simple_spinner_dropdown_item,
+                it.map { id ->
+                    if (id != "Please select here") {
+                        mainActivityViewModel.userDB[id]!!.name
+                    } else {
+                        id
+                    }
+                }
+            )
+        })
 
         binding.editItemRelatedToSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     if (viewModel.onItemSelected(binding.editItemRelatedToSpinner.selectedItemPosition)) {
-                        // set selection to "-" if item selected to avoid confusion in manipulating array
+                        // set selection to "Please select here" if item selected to avoid confusion in manipulating array
                         binding.editItemRelatedToSpinner.setSelection(0)
                     }
                 }
@@ -98,7 +110,11 @@ class AddEditItemFragment : Fragment(),
                 val children = data.map { chipName ->
                     val chip =
                         chipInflater.inflate(R.layout.related_to_list, chipGroup, false) as Chip
-                    chip.text = chipName
+                    if (chipName != "Please select here") {
+                        chip.text = mainActivityViewModel.userDB[chipName]!!.name
+                    } else {
+                        chip.text = chipName
+                    }
                     chip.isCloseIconVisible = true
                     chip.isClickable = false
                     chip.isCheckable = false
