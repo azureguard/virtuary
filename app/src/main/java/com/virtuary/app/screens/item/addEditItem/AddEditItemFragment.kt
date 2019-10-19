@@ -3,7 +3,6 @@ package com.virtuary.app.screens.item.addEditItem
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,7 +77,7 @@ class AddEditItemFragment : Fragment(),
             binding.editItemRelatedToSpinner.adapter = ArrayAdapter(
                 activity!!,
                 R.layout.support_simple_spinner_dropdown_item,
-                it.map {id ->
+                it.map { id ->
                     if (id != "Please select here") {
                         mainActivityViewModel.userDB[id]!!.name
                     } else {

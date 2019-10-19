@@ -10,7 +10,6 @@ import com.algolia.search.client.Index
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.IndexName
-import com.algolia.search.model.ObjectID
 import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.StorageReference

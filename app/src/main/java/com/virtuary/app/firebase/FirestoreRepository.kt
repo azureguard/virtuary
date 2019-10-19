@@ -12,11 +12,6 @@ class FirestoreRepository {
     private val firestoreDB = FirebaseFirestore.getInstance()
     val user = FirebaseAuth.getInstance().currentUser
 
-    // get all user from firebase
-    fun getAllUsers(): Task<QuerySnapshot> {
-        return firestoreDB.collection("User").get()
-    }
-
     fun queryAllUsers(): Query {
         return firestoreDB.collection("User").orderBy("name")
     }

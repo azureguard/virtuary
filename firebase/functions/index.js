@@ -109,6 +109,7 @@ exports.updateItemAssociatedWithUser = functions.firestore
           .doc(val);
         return user.get().then(document => {
           const currentUser = document.data();
+          if (currentUser.item === null) { currentUser.item = {}; }
           currentUser.item[docId] = currentData;
           return user.set(currentUser);
         });

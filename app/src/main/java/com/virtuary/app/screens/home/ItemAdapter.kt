@@ -18,7 +18,6 @@ import com.virtuary.app.firebase.Item
 import com.virtuary.app.firebase.StorageRepository
 import com.virtuary.app.util.GlideApp
 
-
 class ItemAdapter(
     private val parentFragment: Fragment
 ) :
@@ -61,7 +60,6 @@ class ItemAdapter(
                     .navigate(MainNavigationDirections.actionGlobalItemFragment(item))
             }
             binding.artifactTitle.text = item.name
-
 
             val nameString = mutableListOf<String>()
             if (item.relations != null) {
