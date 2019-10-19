@@ -7,13 +7,12 @@ import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.virtuary.app.MainActivity
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyMemberItemBinding
+import com.virtuary.app.firebase.Item
 import com.virtuary.app.screens.home.ItemAdapter
 
 /**
@@ -25,8 +24,6 @@ class MemberItemFragment : Fragment(), SearchView.OnQueryTextListener {
     private val args: MemberItemFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentFamilyMemberItemBinding
-
-    private lateinit var memberItemViewModel: MemberItemViewModel
 
     private lateinit var searchView: SearchView
 
@@ -44,25 +41,29 @@ class MemberItemFragment : Fragment(), SearchView.OnQueryTextListener {
         )
 
         // Dynamically change the label on the action bar
-        (activity as MainActivity).setActionBarTitle(String.format(getString(R.string.possessive_items), args.name))
-
-        // get the member item view model
-        // assign for databinding so the data in view model can be accessed
-        memberItemViewModel = ViewModelProviders.of(this).get(MemberItemViewModel::class.java)
-        binding.memberItemViewModel = memberItemViewModel
+        (activity as MainActivity).setActionBarTitle(
+            String.format(
+                getString(R.string.possessive_items),
+                args.user.name
+            )
+        )
 
         // assign adapter so all item list behave the same way
         val adapter = ItemAdapter(this)
         binding.rvItemList.adapter = adapter
 
-        memberItemViewModel.artifacts.observe(this, Observer {
-            it?.let {
-                // check difference between the new list against the old one
-                // run all the needed changes on the recycler view
-                // will detect any items that were added, removed, changed, updated the items shown by recycler view
-                adapter.submitList(it)
+        val userItemMap = args.user.item
+        val userItems = mutableListOf<Item>()
+        if (userItemMap != null) {
+            for (item in userItemMap.values) {
+                userItems.add(item)
             }
-        })
+        }
+
+        // check difference between the new list against the old one
+        // run all the needed changes on the recycler view
+        // will detect any items that were added, removed, changed, updated the items shown by recycler view
+        adapter.submitList(userItems)
 
         // To indicate there's option button other than up or hamburger button in action bar
         setHasOptionsMenu(true)

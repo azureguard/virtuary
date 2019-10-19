@@ -7,19 +7,21 @@ import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.firestore.ktx.toObjects
 import com.virtuary.app.MainActivity
+import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyBinding
+import com.virtuary.app.firebase.User
 
 class FamilyFragment : Fragment(), SearchView.OnQueryTextListener {
 
-    private lateinit var familyViewModel: FamilyViewModel
-
     private lateinit var searchView: SearchView
+
+    private lateinit var mainActivityViewModel: MainActivityViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,9 +31,8 @@ class FamilyFragment : Fragment(), SearchView.OnQueryTextListener {
         val binding: FragmentFamilyBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_family, container, false)
 
-        // create family view model
-        familyViewModel = ViewModelProviders.of(this).get(FamilyViewModel::class.java)
-        binding.familyViewModel = familyViewModel
+        mainActivityViewModel =
+            ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
 
         // implement grid layout
         binding.rvFamilyList.layoutManager = GridLayoutManager(activity, 2)
@@ -39,17 +40,20 @@ class FamilyFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.rvFamilyList.adapter?.setHasStableIds(true)
 
         // assign family list adapter
-        val adapter = FamilyAdapter(::memberOnClick)
+        val adapter = FamilyAdapter(::memberOnClick, this)
         binding.rvFamilyList.adapter = adapter
 
-        familyViewModel.users.observe(this, Observer {
-            it?.let {
-                // check difference between the new list against the old one
-                // run all the needed changes on the recycler view
-                // will detect any items that were added, removed, changed, updated the items shown by recycler view
-                adapter.submitList(it)
+        mainActivityViewModel.query.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            if (firebaseFirestoreException != null) {
+                return@addSnapshotListener
             }
-        })
+            // check difference between the new list against the old one
+            // run all the needed changes on the recycler view
+            // will detect any items that were added, removed, changed, updated the items shown by recycler view
+            adapter.submitList(
+                querySnapshot?.toObjects()
+            )
+        }
 
         // To indicate there's option button other than up or hamburger button in action bar
         setHasOptionsMenu(true)
@@ -112,11 +116,10 @@ class FamilyFragment : Fragment(), SearchView.OnQueryTextListener {
         return true
     }
 
-    // TODO: Change implementation to pass id to re fetch or using other implementation
-    private fun memberOnClick(name: String) {
+    private fun memberOnClick(user: User) {
         findNavController().navigate(
             FamilyFragmentDirections.actionFamilyFragmentToMemberFragment(
-                name
+                user
             )
         )
     }

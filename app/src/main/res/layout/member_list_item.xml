@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/member_item_card"
-        android:layout_width="@dimen/member_list_item_card_width"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp">
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/member_item_card"
+            android:layout_width="@dimen/member_list_item_card_width"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
 
-            <ImageView
-                android:id="@+id/artifact_image"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/standard_image_size"
-                android:layout_marginBottom="8dp"
-                android:contentDescription="@string/related_items"
-                android:scaleType="centerCrop"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/artifact_title"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                tools:text="@tools:sample/lorem[3]" />
-        </LinearLayout>
+                android:orientation="vertical">
 
-    </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:id="@+id/artifact_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/standard_image_size"
+                    android:layout_marginBottom="8dp"
+                    android:contentDescription="@string/related_items"
+                    android:scaleType="centerCrop"
+                    tools:srcCompat="@tools:sample/avatars" />
 
-</LinearLayout>
+                <TextView
+                    android:id="@+id/artifact_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="16dp"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    tools:text="@tools:sample/lorem[3]" />
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</layout>

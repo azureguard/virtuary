@@ -11,7 +11,7 @@ class MainActivityViewModel : ViewModel() {
     val imageUploaded = MutableLiveData<String>()
     var userDB = HashMap<String, User>()
     private val repository: FirestoreRepository = FirestoreRepository()
-    private var query: Query = repository.queryAllUsers()
+    var query: Query = repository.queryAllUsers()
 
     init {
         query.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
