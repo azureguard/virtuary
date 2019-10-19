@@ -4,9 +4,13 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.virtuary.app.R
+import com.virtuary.app.firebase.FirestoreRepository
+import com.virtuary.app.firebase.User
+import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
     val name = ObservableField("")
@@ -16,7 +20,8 @@ class SignUpViewModel : ViewModel() {
     private val isSuccess = MutableLiveData<Boolean>(false)
     private val errorMessage = MutableLiveData<Int>()
     private val fbAuth = FirebaseAuth.getInstance()
-
+    private val repository: FirestoreRepository = FirestoreRepository()
+    private val currUser = User()
 
     fun getInProgress(): LiveData<Boolean> {
         return inProgress
@@ -76,6 +81,13 @@ class SignUpViewModel : ViewModel() {
                         // Update user live data to be observed and passed to main activity
                         _userName.value = name.get()
 
+
+                        currUser.name = name.get()
+                        if (user != null) {
+                            viewModelScope.launch {
+                                repository.addUser(currUser, user.uid)
+                            }
+                        }
                     } else {
                         errorMessage.value = R.string.error_server_unreachable
                     }
