@@ -3,14 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="memberItemViewModel"
-            type="com.virtuary.app.screens.family.member.item.MemberItemViewModel" />
-    </data>
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_item_list"
         android:layout_width="match_parent"

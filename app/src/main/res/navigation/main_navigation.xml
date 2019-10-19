@@ -78,8 +78,8 @@
         android:label="@string/member_details"
         tools:layout="@layout/fragment_family_member">
         <argument
-            android:name="name"
-            app:argType="string" />
+            android:name="user"
+            app:argType="com.virtuary.app.firebase.User" />
         <action
             android:id="@+id/action_memberFragment_to_memberItemFragment"
             app:destination="@id/memberItemFragment"
@@ -93,8 +93,15 @@
         android:name="com.virtuary.app.screens.family.member.item.MemberItemFragment"
         tools:layout="@layout/fragment_family_member_item">
         <argument
-            android:name="name"
-            app:argType="string" />
+            android:name="user"
+            app:argType="com.virtuary.app.firebase.User" />
+        <action
+            android:id="@+id/action_memberFragment_to_itemFragment"
+            app:destination="@id/itemFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/manageAccount"

@@ -1,47 +1,63 @@
 package com.virtuary.app.screens.family.member
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.virtuary.app.R
+import com.virtuary.app.databinding.MemberListItemBinding
 import com.virtuary.app.firebase.Item
-import kotlinx.android.synthetic.main.member_list_item.view.*
+import com.virtuary.app.firebase.StorageRepository
+import com.virtuary.app.util.GlideApp
 
 class MemberItemAdapter(
-    private val artifactsTitle: List<String>,
-    private val relatedItemOnClick: (item: Item) -> Unit
-) :
-    RecyclerView.Adapter<MemberItemAdapter.ViewHolder>() {
-
-    // Restrict to show only maximum of 5 items
-    override fun getItemCount(): Int {
-        return if (artifactsTitle.size > 5) 5 else artifactsTitle.size
-    }
+    private val relatedItemOnClick: (item: Item) -> Unit, private val parentFragment: Fragment
+) : ListAdapter<Item, MemberItemAdapter.ViewHolder>(ItemDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.member_list_item, parent, false)
-
-        // TODO: implement query by family member to pass items related
-        view.member_item_card.setOnClickListener {
-            relatedItemOnClick(Item(name = "A"))
-        }
-
-        return ViewHolder(view)
+        return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvArtifactTitle.text = artifactsTitle[position]
-
-        // TODO: change artifact image
-        holder.ivArtifactImg.setImageResource(R.drawable.ic_no_image)
+        holder.bind(getItem(position), parentFragment, relatedItemOnClick)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var tvArtifactTitle: TextView = view.artifact_title
-        var ivArtifactImg: ImageView = view.artifact_image
+    class ViewHolder private constructor(val binding: MemberListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item : Item, parentFragment: Fragment, relatedItemOnClick: (item: Item) -> Unit) {
+            binding.artifactTitle.text = item.name
+
+            GlideApp.with(parentFragment)
+                .load(StorageRepository().getImage(item.image))
+                .placeholder(R.drawable.ic_no_image)
+                .centerCrop()
+                .into(binding.artifactImage)
+
+            binding.memberItemCard.setOnClickListener {
+                relatedItemOnClick(item)
+            }
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = MemberListItemBinding.inflate(layoutInflater, parent, false)
+
+                return ViewHolder(binding)
+            }
+        }
     }
+}
+
+class ItemDiffCallBack : DiffUtil.ItemCallback<Item>() {
+    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+        return oldItem.documentId == newItem.documentId
+    }
+
+    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+        return oldItem == newItem
+    }
+
 }

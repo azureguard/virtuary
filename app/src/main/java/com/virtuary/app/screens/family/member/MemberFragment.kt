@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyMemberBinding
 import com.virtuary.app.firebase.Item
@@ -20,8 +20,6 @@ import com.virtuary.app.firebase.Item
  * Fragment for the family member details
  */
 class MemberFragment : Fragment() {
-
-    private lateinit var memberViewModel: MemberViewModel
 
     // argument got from navigation action
     private val args: MemberFragmentArgs by navArgs()
@@ -36,37 +34,42 @@ class MemberFragment : Fragment() {
         )
 
         // Set the name by the argument passed from navigation
-        binding.memberName.text = args.name
+        binding.memberName.text = args.user.name
 
-        // get the home view model
-        // assign for databinding so the data in view model can be accessed
-        memberViewModel = ViewModelProviders.of(this).get(MemberViewModel::class.java)
-        binding.memberViewModel = memberViewModel
+        val userItems = args.user.item
 
-        // Conditional rendering depending on the item number that the specific member have
-        memberViewModel.itemSize.observe(this, Observer { size ->
-            if (size <= 0) {
-                binding.noItemText.visibility = View.VISIBLE
-                binding.rvMemberItemList.visibility = View.GONE
-            } else {
-                binding.noItemText.visibility = View.GONE
-                binding.rvMemberItemList.visibility = View.VISIBLE
+        if (userItems == null || userItems.keys.isEmpty()) {
+            binding.noItemText.visibility = View.VISIBLE
+            binding.rvMemberItemList.visibility = View.GONE
+        } else {
+            binding.noItemText.visibility = View.GONE
+            binding.rvMemberItemList.visibility = View.VISIBLE
+        }
+
+        val userItem = mutableListOf<Item>()
+        var itemCount = 0
+        if (userItems != null) {
+            for (item in userItems.values) {
+                itemCount++
+                userItem.add(item)
+                if (itemCount == 5) {
+                    break
+                }
             }
-        })
+        }
 
         // assign adapter so all item list behave the same way
-        binding.rvMemberItemList.adapter = MemberItemAdapter(
-            memberViewModel.artifactsTitle, ::relatedItemOnClick
-        )
+        val adapter = MemberItemAdapter(::relatedItemOnClick, this)
+        binding.rvMemberItemList.adapter = adapter
+        adapter.submitList(userItem)
+
         binding.rvMemberItemList.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
         binding.showAllButton.setOnClickListener {
-            // TODO : for now pass name to the next fragment,
-            //  It may be changed to pass ID or add ID for other argument (need to change the argument in main_navigation.xml)
             findNavController().navigate(
                 MemberFragmentDirections.actionMemberFragmentToMemberItemFragment(
-                    args.name
+                    args.user
                 )
             )
         }
@@ -74,7 +77,7 @@ class MemberFragment : Fragment() {
         return binding.root
     }
 
-    private fun relatedItemOnClick(item : Item){
+    private fun relatedItemOnClick(item: Item) {
         findNavController().navigate(
             MemberFragmentDirections.actionGlobalItemFragment(
                 item
