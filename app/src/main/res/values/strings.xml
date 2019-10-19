@@ -61,4 +61,5 @@
     <string name="error_user_profile_not_set">Unable to set user profile</string>
     <string name="pref_language">Language</string>
     <string name="pref_theme">Dark Mode</string>
+    <string name="about_content" >Virtuary is a family artifact organization app that aims to allow a family to keep track of items that are of significance to their history. Virtuary was made by a group of 4 university students who were tasked with creating an application for a client of our choosing. Thus, work began on this app in July 2019.</string>
 </resources>
