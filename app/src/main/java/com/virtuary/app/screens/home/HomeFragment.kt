@@ -131,9 +131,6 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    //TODO: Using one of this function, connect it to the viewModel to do search
-    // two of the function need to be here, just change one of the function implementation
-
     // Called when the action bar search text has been submitted using button or others
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null) {
