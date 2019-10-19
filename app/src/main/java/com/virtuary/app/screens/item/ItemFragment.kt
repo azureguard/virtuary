@@ -61,7 +61,16 @@ class ItemFragment : Fragment() {
                     val chip =
                         chipInflater.inflate(R.layout.related_to_list, chipGroup, false) as Chip
                     if (mainActivityViewModel.userDB.containsKey(chipName)) {
-                        chip.text = mainActivityViewModel.userDB[chipName]!!.name
+                        if (mainActivityViewModel.userDB[chipName]?.alias?.containsKey(
+                                mainActivityViewModel.currentUser
+                            ) == true
+                        ) {
+                            val alias =
+                                mainActivityViewModel.userDB[chipName]?.alias!![mainActivityViewModel.currentUser]
+                            chip.text = alias
+                        } else {
+                            chip.text = mainActivityViewModel.userDB[chipName]!!.name
+                        }
                     } else {
                         chip.text = chipName
                     }

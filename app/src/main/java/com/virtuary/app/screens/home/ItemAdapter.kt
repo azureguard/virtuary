@@ -65,7 +65,16 @@ class ItemAdapter(
             if (item.relations != null) {
                 for (userId in item.relations!!) {
                     if (mainActivityViewModel.userDB.containsKey(userId)) {
-                        nameString.add(mainActivityViewModel.userDB[userId]?.name!!)
+                        if (mainActivityViewModel.userDB[userId]?.alias?.containsKey(
+                                mainActivityViewModel.currentUser
+                            ) == true
+                        ) {
+                            val alias =
+                                mainActivityViewModel.userDB[userId]?.alias!![mainActivityViewModel.currentUser]
+                            nameString.add(alias!!)
+                        } else {
+                            nameString.add(mainActivityViewModel.userDB[userId]?.name!!)
+                        }
                     }
                 }
             }
