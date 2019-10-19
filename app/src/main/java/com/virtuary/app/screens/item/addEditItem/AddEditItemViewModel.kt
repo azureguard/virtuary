@@ -5,15 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.algolia.search.client.ClientSearch
 import com.algolia.search.client.Index
-import com.algolia.search.model.APIKey
-import com.algolia.search.model.ApplicationID
-import com.algolia.search.model.IndexName
+import com.algolia.search.model.ObjectID
 import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.StorageReference
 import com.virtuary.app.firebase.*
+import com.virtuary.app.util.AlgoliaClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -35,7 +33,7 @@ class AddEditItemViewModel(item: Item?, userDB: HashMap<String, User>) : ViewMod
     private val repository: FirestoreRepository = FirestoreRepository()
     private val storageRepository: StorageRepository by lazy { StorageRepository() }
 
-    private lateinit var algoliaConfig: Map<String, Any>
+    private lateinit var algoliaIndex: Index
 
     private val _selectionRelatedTo = MutableLiveData<MutableList<String>>()
     val selectionRelatedTo: LiveData<MutableList<String>>
@@ -78,7 +76,7 @@ class AddEditItemViewModel(item: Item?, userDB: HashMap<String, User>) : ViewMod
         _isEdit.value = item != null
         _itemImage.value = storageRepository.getImage(item?.image)
         viewModelScope.launch {
-            algoliaConfig = repository.getAlgoliaConfig()
+            algoliaIndex = AlgoliaClient.getIndex("item")
         }
     }
 
@@ -90,11 +88,6 @@ class AddEditItemViewModel(item: Item?, userDB: HashMap<String, User>) : ViewMod
     fun onClick() {
         _emptyTitle.value = title.value?.isEmpty() ?: true
         if (!emptyTitle.value!!) {
-            val appID = ApplicationID(algoliaConfig[APP_ID] as String)
-            val apiKey = APIKey(algoliaConfig[API_KEY] as String)
-            val client = ClientSearch(appID, apiKey)
-            val indexName = IndexName(algoliaConfig[INDEX_NAME] as String)
-            val index = client.initIndex(indexName)
             _isError.value = false
             _inProgress.value = true
             if (_item == null) {
@@ -111,7 +104,7 @@ class AddEditItemViewModel(item: Item?, userDB: HashMap<String, User>) : ViewMod
                         _document.value = withContext(Dispatchers.IO) {
                             repository.addItem(item).await().get().await().toObject<Item>()
                         }
-                        addToIndex(index)
+                        addToIndex(algoliaIndex)
                     } catch (e: FirebaseException) {
                         _isError.value = true
                         _inProgress.value = false
@@ -129,7 +122,7 @@ class AddEditItemViewModel(item: Item?, userDB: HashMap<String, User>) : ViewMod
                             repository.editItem(_item)
                         }
                         _document.value = _item
-                        addToIndex(index)
+                        addToIndex(algoliaIndex)
                     } catch (e: FirebaseException) {
                         _isError.value = true
                         _inProgress.value = false
@@ -175,7 +168,6 @@ class AddEditItemViewModel(item: Item?, userDB: HashMap<String, User>) : ViewMod
             val tempSelectionRelatedTo = mutableListOf<String>()
             tempSelectionRelatedTo.addAll(_selectionRelatedTo.value!!)
             _selectionRelatedTo.value = tempSelectionRelatedTo
-
             return true
         }
 
@@ -191,7 +183,6 @@ class AddEditItemViewModel(item: Item?, userDB: HashMap<String, User>) : ViewMod
     private fun addRelatedTo(item: String) {
         _addedRelatedTo.add(item)
     }
-
 }
 
 // extension function
