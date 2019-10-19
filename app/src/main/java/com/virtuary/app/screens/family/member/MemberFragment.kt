@@ -4,22 +4,26 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.text.InputType
+import android.text.SpannableStringBuilder
 import android.view.*
 import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.FirebaseAuth
+import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyMemberBinding
 import com.virtuary.app.firebase.FirestoreRepository
 import com.virtuary.app.firebase.Item
-import kotlinx.android.synthetic.main.dialog_edit_profile.view.*
 import com.virtuary.app.firebase.StorageRepository
 import com.virtuary.app.util.GlideApp
+import kotlinx.android.synthetic.main.dialog_edit_profile.view.*
 
 /**
  * Fragment for the family member details
@@ -28,8 +32,9 @@ class MemberFragment : Fragment() {
 
     // argument got from navigation action
     private val args: MemberFragmentArgs by navArgs()
-    internal lateinit var auth: FirebaseAuth
     private val repository: FirestoreRepository = FirestoreRepository()
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
+    private val viewModel by viewModels<MemberViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,13 +44,19 @@ class MemberFragment : Fragment() {
         val binding: FragmentFamilyMemberBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_family_member, container, false
         )
-        auth = FirebaseAuth.getInstance()
 
         // To enable the option menu for set alias
         setHasOptionsMenu(true)
 
         // Set the name by the argument passed from navigation
-        binding.memberName.text = args.user.name
+        if (args.user.alias != null && args.user.alias!!.containsKey(mainActivityViewModel.currentUser)) {
+            val name = args.user.alias!![mainActivityViewModel.currentUser]
+            binding.memberName.text = name
+            viewModel.name.value = name
+        } else {
+            binding.memberName.text = args.user.name
+            viewModel.name.value = args.user.name
+        }
 
         GlideApp.with(this)
             .load(StorageRepository().getImage(args.user.image))
@@ -93,6 +104,10 @@ class MemberFragment : Fragment() {
             )
         }
 
+        viewModel.name.observe(this, Observer {
+            binding.memberName.text = it
+        })
+
         return binding.root
     }
 
@@ -125,6 +140,7 @@ class MemberFragment : Fragment() {
 
         // Set up the input
         val input = viewInflated.findViewById(R.id.input) as EditText
+        input.text = SpannableStringBuilder(viewModel.name.value)
 
         // Create the alert dialog
         builder.apply {
@@ -144,7 +160,12 @@ class MemberFragment : Fragment() {
             button.setOnClickListener {
                 button.isEnabled = false
                 val alias = input.text.toString()
-                repository.updateUserAlias(args.user.documentId!!,auth.currentUser!!.uid, alias)
+                repository.updateUserAlias(
+                    args.user.documentId!!,
+                    mainActivityViewModel.currentUser,
+                    alias
+                )
+                viewModel.name.value = alias
                 dialog.dismiss()
             }
         }

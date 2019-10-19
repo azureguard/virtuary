@@ -7,9 +7,11 @@ import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.virtuary.app.MainActivity
+import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.R
 import com.virtuary.app.databinding.FragmentFamilyMemberItemBinding
 import com.virtuary.app.firebase.Item
@@ -27,6 +29,8 @@ class MemberItemFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private lateinit var searchView: SearchView
 
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,11 +44,17 @@ class MemberItemFragment : Fragment(), SearchView.OnQueryTextListener {
             false
         )
 
+        var userName = args.user.name
+
+        if (args.user.alias != null && args.user.alias!!.containsKey(mainActivityViewModel.currentUser)) {
+            userName = args.user.alias!![mainActivityViewModel.currentUser]
+        }
+
         // Dynamically change the label on the action bar
         (activity as MainActivity).setActionBarTitle(
             String.format(
                 getString(R.string.possessive_items),
-                args.user.name
+                userName
             )
         )
 
