@@ -7,6 +7,7 @@ import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,8 +21,7 @@ import com.virtuary.app.firebase.User
 class FamilyFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private lateinit var searchView: SearchView
-
-    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,16 +31,13 @@ class FamilyFragment : Fragment(), SearchView.OnQueryTextListener {
         val binding: FragmentFamilyBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_family, container, false)
 
-        mainActivityViewModel =
-            ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
-
         // implement grid layout
         binding.rvFamilyList.layoutManager = GridLayoutManager(activity, 2)
 
         binding.rvFamilyList.adapter?.setHasStableIds(true)
 
         // assign family list adapter
-        val adapter = FamilyAdapter(::memberOnClick, this)
+        val adapter = FamilyAdapter(::memberOnClick, this, mainActivityViewModel.currentUser)
         binding.rvFamilyList.adapter = adapter
 
         mainActivityViewModel.query.addSnapshotListener { querySnapshot, firebaseFirestoreException ->

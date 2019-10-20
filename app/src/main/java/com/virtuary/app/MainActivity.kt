@@ -77,8 +77,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setDrawerData(userName, userPicture)
 
         auth.addAuthStateListener {
-            if (it.currentUser != null)
+            if (it.currentUser != null) {
                 setDrawerData(userName, userPicture)
+                mainActivityViewModel.currentUser = it.currentUser!!.uid
+            }
         }
 
         if (auth.currentUser?.displayName != null) {
@@ -147,7 +149,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // Some required methods to make the action bar runs smoothly
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Sync the animation and the icon of the up or hamburger button
-        drawerToggle.syncState()
+        if(item.itemId == android.R.id.home) {
+            drawerToggle.syncState()
+        }
 
         // Close drawer manually since super.onOptionsItemSelected doesn't close drawer when it's opened
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {

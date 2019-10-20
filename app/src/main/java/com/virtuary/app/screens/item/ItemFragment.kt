@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -22,7 +23,7 @@ class ItemFragment : Fragment() {
     // argument got from navigation action
     private val args: ItemFragmentArgs by navArgs()
     internal val viewModel: ItemViewModel by viewModels { BaseViewModelFactory { ItemViewModel(args.item) } }
-    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,9 +35,6 @@ class ItemFragment : Fragment() {
             inflater,
             R.layout.fragment_item, container, false
         )
-
-        mainActivityViewModel =
-            ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
 
         binding.itemTitle.text = args.item.name
         binding.itemCurrentLocation.text = args.item.currentLocation
@@ -61,7 +59,16 @@ class ItemFragment : Fragment() {
                     val chip =
                         chipInflater.inflate(R.layout.related_to_list, chipGroup, false) as Chip
                     if (mainActivityViewModel.userDB.containsKey(chipName)) {
-                        chip.text = mainActivityViewModel.userDB[chipName]!!.name
+                        if (mainActivityViewModel.userDB[chipName]?.alias?.containsKey(
+                                mainActivityViewModel.currentUser
+                            ) == true
+                        ) {
+                            val alias =
+                                mainActivityViewModel.userDB[chipName]?.alias!![mainActivityViewModel.currentUser]
+                            chip.text = alias
+                        } else {
+                            chip.text = mainActivityViewModel.userDB[chipName]!!.name
+                        }
                     } else {
                         chip.text = chipName
                     }

@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -31,7 +32,7 @@ class AddEditItemFragment : Fragment(),
 
     internal lateinit var binding: FragmentAddEditItemBinding
     private lateinit var selectPhotoHelper: SelectPhotoHelper
-    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
     private lateinit var viewModel: AddEditItemViewModel
 
     override fun onCreateView(
@@ -44,9 +45,6 @@ class AddEditItemFragment : Fragment(),
             inflater,
             R.layout.fragment_add_edit_item, container, false
         )
-
-        mainActivityViewModel =
-            ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
 
         viewModel = BaseViewModelFactory {
             AddEditItemViewModel(
@@ -79,7 +77,16 @@ class AddEditItemFragment : Fragment(),
                 R.layout.support_simple_spinner_dropdown_item,
                 it.map { id ->
                     if (id != "Please select here") {
-                        mainActivityViewModel.userDB[id]!!.name
+                        if (mainActivityViewModel.userDB[id]?.alias?.containsKey(
+                                mainActivityViewModel.currentUser
+                            ) == true
+                        ) {
+                            val alias =
+                                mainActivityViewModel.userDB[id]?.alias!![mainActivityViewModel.currentUser]
+                            alias
+                        } else {
+                            mainActivityViewModel.userDB[id]!!.name
+                        }
                     } else {
                         id
                     }
@@ -111,7 +118,16 @@ class AddEditItemFragment : Fragment(),
                     val chip =
                         chipInflater.inflate(R.layout.related_to_list, chipGroup, false) as Chip
                     if (chipName != "Please select here") {
-                        chip.text = mainActivityViewModel.userDB[chipName]!!.name
+                        if (mainActivityViewModel.userDB[chipName]?.alias?.containsKey(
+                                mainActivityViewModel.currentUser
+                            ) == true
+                        ) {
+                            val alias =
+                                mainActivityViewModel.userDB[chipName]?.alias!![mainActivityViewModel.currentUser]
+                            chip.text = alias
+                        } else {
+                            chip.text = mainActivityViewModel.userDB[chipName]!!.name
+                        }
                     } else {
                         chip.text = chipName
                     }

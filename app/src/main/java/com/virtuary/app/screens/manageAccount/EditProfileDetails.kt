@@ -13,9 +13,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.R
@@ -24,13 +24,13 @@ import com.virtuary.app.util.GlideApp
 import com.virtuary.app.util.PhotoDialogFragment
 import com.virtuary.app.util.SelectPhotoHelper
 import com.virtuary.app.util.hideKeyboard
-import kotlinx.android.synthetic.main.dialog_edit_profile.view.*
+import kotlinx.android.synthetic.main.dialog_standard.view.*
 
 class EditProfileDetails : Fragment(),
     PhotoDialogFragment.PhotoDialogListener,
     RequestPasswordDialogFragment.RequestPasswordDialogListener {
     private val viewModel by viewModels<EditProfileDetailsViewModel>()
-    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
 
     internal lateinit var binding: FragmentEditProfileDetailsBinding
     private lateinit var selectPhotoHelper: SelectPhotoHelper
@@ -46,9 +46,6 @@ class EditProfileDetails : Fragment(),
             container,
             false
         )
-
-        mainActivityViewModel =
-            ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
         selectPhotoHelper = SelectPhotoHelper(context, fragmentManager, this)
 
         binding.editProfileViewModel = viewModel
@@ -101,7 +98,7 @@ class EditProfileDetails : Fragment(),
     private fun createDialog(context: Context, title: String) {
         val builder = MaterialAlertDialogBuilder(context)
         val viewInflated = LayoutInflater.from(context)
-            .inflate(R.layout.dialog_edit_profile, view as ViewGroup?, false)
+            .inflate(R.layout.dialog_standard, view as ViewGroup?, false)
 
         // Set up the input
         val input = viewInflated.findViewById(R.id.input) as EditText

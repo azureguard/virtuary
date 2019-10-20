@@ -7,6 +7,7 @@ import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -14,6 +15,7 @@ import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader
 import com.bumptech.glide.util.FixedPreloadSizeProvider
 import com.google.firebase.firestore.ktx.toObjects
 import com.virtuary.app.MainActivity
+import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.databinding.FragmentHomeBinding
 import com.virtuary.app.firebase.Item
 import com.virtuary.app.util.GlideApp
@@ -23,7 +25,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var binding: FragmentHomeBinding
 
     private val homeViewModel by viewModels<HomeViewModel>()
-
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
     private lateinit var searchView: SearchView
 
     companion object {
@@ -48,7 +50,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.homeViewModel = homeViewModel
 
         // assign adapter so all item list behave the same way
-        val adapter = ItemAdapter(this)
+        val adapter = ItemAdapter(this, mainActivityViewModel)
         binding.rvItemList.adapter = adapter
 
         val sizeProvider = FixedPreloadSizeProvider<Item>(IMAGE_SIZE, IMAGE_SIZE)

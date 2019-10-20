@@ -2,10 +2,7 @@ package com.virtuary.app.firebase
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
 
 class FirestoreRepository {
@@ -29,6 +26,24 @@ class FirestoreRepository {
     // update the user name in firebase
     fun updateUserName(userId: String, userName: String): Task<Void> {
         return firestoreDB.collection("User").document(userId).update("name", userName)
+    }
+
+    // update the user alias in firebase
+    fun updateUserAlias(userId: String, currUserId: String, alias: String): Task<Void> {
+        return firestoreDB.collection("User").document(userId).update(
+            mapOf(
+                "alias.${currUserId}" to alias
+            )
+        )
+    }
+
+    // remove one of the user alias of a User in firebase
+    fun removeUserAlias(userId: String, currUserId: String): Task<Void> {
+        return firestoreDB.collection("User").document(userId).update(
+            mapOf(
+                "alias.${currUserId}" to FieldValue.delete()
+            )
+        )
     }
 
     // add item to firebase

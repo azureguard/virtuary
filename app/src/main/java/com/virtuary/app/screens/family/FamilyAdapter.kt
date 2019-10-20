@@ -13,7 +13,9 @@ import com.virtuary.app.firebase.User
 import com.virtuary.app.util.GlideApp
 
 class FamilyAdapter(
-    private val memberOnClick: (user: User) -> Unit, private val parentFragment: Fragment
+    private val memberOnClick: (user: User) -> Unit,
+    private val parentFragment: Fragment,
+    private val currUserId: String
 ) : ListAdapter<User, FamilyAdapter.ViewHolder>(UserDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,14 +23,22 @@ class FamilyAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), parentFragment, memberOnClick)
+        holder.bind(getItem(position), parentFragment, memberOnClick, currUserId)
     }
 
     class ViewHolder private constructor(val binding: FamilyItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(user: User, parentFragment: Fragment, memberOnClick: (user: User) -> Unit) {
-            binding.familyMemberName.text = user.name
+        fun bind(user: User, parentFragment: Fragment, memberOnClick: (user: User) -> Unit, currUserId: String) {
+            if(user.alias != null){
+                if(user.alias!!.containsKey(currUserId)){
+                    binding.familyMemberName.text = user.alias!![currUserId]
+                } else {
+                    binding.familyMemberName.text = user.name
+                }
+            } else {
+                binding.familyMemberName.text = user.name
+            }
 
             GlideApp.with(parentFragment)
                 .load(StorageRepository().getImage(user.image))

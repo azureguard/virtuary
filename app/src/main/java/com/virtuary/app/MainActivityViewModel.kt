@@ -10,6 +10,7 @@ class MainActivityViewModel : ViewModel() {
     val name = MutableLiveData("")
     val imageUploaded = MutableLiveData<String>()
     var userDB = HashMap<String, User>()
+    var currentUser = ""
     private val repository: FirestoreRepository = FirestoreRepository()
     var query: Query = repository.queryAllUsers()
 
