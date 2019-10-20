@@ -206,7 +206,7 @@ class AddEditItemFragment : Fragment(),
             this,
             Observer {
                 if (it != null) {
-                    GlideApp.with(context!!).load(it).placeholder(R.drawable.ic_launcher_foreground)
+                    GlideApp.with(context!!).load(it).placeholder(R.drawable.ic_no_image)
                         .centerCrop().into(binding.editItemImage)
                     binding.editItemImageIcon.visibility = View.GONE
                 }

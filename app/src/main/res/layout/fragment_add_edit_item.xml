@@ -22,7 +22,6 @@
                 android:id="@+id/edit_item_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_image_height"
-                android:background="@drawable/black_bottom_border_line"
                 android:contentDescription="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
