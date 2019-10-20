@@ -98,6 +98,24 @@ class ItemFragment : Fragment() {
                 }
             })
 
+        viewModel.deleting.observe(this,
+            Observer {
+                if (it) {
+                    binding.deletionOverlay.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.VISIBLE
+                } else {
+                    binding.deletionOverlay.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
+                }
+            })
+
+        viewModel.deleteDone.observe(this,
+            Observer {
+                if (it) {
+                    findNavController().popBackStack()
+                }
+            })
+
         // Set the action bar label to the clicked item name
         (activity as MainActivity).setActionBarTitle(args.item.name!!)
 
@@ -121,7 +139,6 @@ class ItemFragment : Fragment() {
             }
             R.id.nav_remove_item -> {
                 viewModel.deleteItem(args.item)
-                findNavController().popBackStack()
             }
         }
 

@@ -28,7 +28,7 @@ class AddEditItemFragment : Fragment(),
     PhotoDialogFragment.PhotoDialogListener {
 
     // argument got from navigation action
-    private val args: AddEditItemFragmentArgs by navArgs()
+    internal val args: AddEditItemFragmentArgs by navArgs()
 
     internal lateinit var binding: FragmentAddEditItemBinding
     private lateinit var selectPhotoHelper: SelectPhotoHelper

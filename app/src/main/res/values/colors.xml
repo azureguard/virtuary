@@ -6,4 +6,5 @@
     <color name="colorSecondaryVariant">#c37e46</color>
     <color name="colorOnPrimary">#ffffff</color>
     <color name="colorOnSecondary">#000000</color>
+    <color name="overlay">#33000000</color>
 </resources>
