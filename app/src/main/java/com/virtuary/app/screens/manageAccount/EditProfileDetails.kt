@@ -13,9 +13,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.R
@@ -30,7 +30,7 @@ class EditProfileDetails : Fragment(),
     PhotoDialogFragment.PhotoDialogListener,
     RequestPasswordDialogFragment.RequestPasswordDialogListener {
     private val viewModel by viewModels<EditProfileDetailsViewModel>()
-    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
 
     internal lateinit var binding: FragmentEditProfileDetailsBinding
     private lateinit var selectPhotoHelper: SelectPhotoHelper
@@ -46,9 +46,6 @@ class EditProfileDetails : Fragment(),
             container,
             false
         )
-
-        mainActivityViewModel =
-            ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
         selectPhotoHelper = SelectPhotoHelper(context, fragmentManager, this)
 
         binding.editProfileViewModel = viewModel

@@ -59,7 +59,7 @@ class MemberItemFragment : Fragment(), SearchView.OnQueryTextListener {
         )
 
         // assign adapter so all item list behave the same way
-        val adapter = ItemAdapter(this)
+        val adapter = ItemAdapter(this, mainActivityViewModel)
         binding.rvItemList.adapter = adapter
 
         val userItemMap = args.user.item

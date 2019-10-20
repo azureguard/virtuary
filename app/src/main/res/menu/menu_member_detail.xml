@@ -5,4 +5,8 @@
             android:id="@+id/set_alias"
             android:title="@string/set_alias"
             app:showAsAction="never" />
+    <item
+        android:id="@+id/remove_alias"
+        android:title="@string/remove_alias"
+        app:showAsAction="never" />
 </menu>

@@ -112,7 +112,7 @@ class MemberFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_app_bar, menu)
+        inflater.inflate(R.menu.menu_member_detail, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -120,6 +120,10 @@ class MemberFragment : Fragment() {
         when (item.itemId) {
             R.id.set_alias -> {
                 createDialog(context!!, getString(R.string.set_alias))
+            }
+
+            R.id.remove_alias -> {
+                removeAlias()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -170,5 +174,16 @@ class MemberFragment : Fragment() {
             }
         }
         dialog.show()
+    }
+
+    private fun removeAlias() {
+        // check whether the alias existed or not before removing from db
+        if (mainActivityViewModel.userDB[args.user.documentId]?.alias?.containsKey(
+                mainActivityViewModel.currentUser
+            ) == true
+        ) {
+            repository.removeUserAlias(args.user.documentId!!, mainActivityViewModel.currentUser)
+            viewModel.name.value = args.user.name
+        }
     }
 }

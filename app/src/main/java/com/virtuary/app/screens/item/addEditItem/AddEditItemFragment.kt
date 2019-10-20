@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -31,7 +32,7 @@ class AddEditItemFragment : Fragment(),
 
     internal lateinit var binding: FragmentAddEditItemBinding
     private lateinit var selectPhotoHelper: SelectPhotoHelper
-    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private val mainActivityViewModel by activityViewModels<MainActivityViewModel>()
     private lateinit var viewModel: AddEditItemViewModel
 
     override fun onCreateView(
@@ -44,9 +45,6 @@ class AddEditItemFragment : Fragment(),
             inflater,
             R.layout.fragment_add_edit_item, container, false
         )
-
-        mainActivityViewModel =
-            ViewModelProviders.of(activity!!).get(MainActivityViewModel::class.java)
 
         viewModel = BaseViewModelFactory {
             AddEditItemViewModel(

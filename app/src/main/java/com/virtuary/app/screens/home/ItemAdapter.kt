@@ -3,7 +3,6 @@ package com.virtuary.app.screens.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -19,7 +18,8 @@ import com.virtuary.app.firebase.StorageRepository
 import com.virtuary.app.util.GlideApp
 
 class ItemAdapter(
-    private val parentFragment: Fragment
+    private val parentFragment: Fragment,
+    private val mainActivityViewModel: MainActivityViewModel
 ) :
     ListAdapter<Item, ItemAdapter.ViewHolder>(ItemDiffCallBack()),
     ListPreloader.PreloadModelProvider<Item> {
@@ -43,18 +43,17 @@ class ItemAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), parentFragment)
+        holder.bind(getItem(position), parentFragment, mainActivityViewModel)
     }
 
     class ViewHolder private constructor(val binding: ArtifactListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Item, parentFragment: Fragment) {
-            val mainActivityViewModel =
-                ViewModelProviders.of(parentFragment.activity!!).get(
-                    MainActivityViewModel::class.java
-                )
-
+        fun bind(
+            item: Item,
+            parentFragment: Fragment,
+            mainActivityViewModel: MainActivityViewModel
+        ) {
             binding.artifactCard.setOnClickListener {
                 parentFragment.findNavController()
                     .navigate(MainNavigationDirections.actionGlobalItemFragment(item))
