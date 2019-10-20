@@ -8,6 +8,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -15,6 +16,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -100,14 +102,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
 
         // https://stackoverflow.com/questions/32806735/refresh-header-in-navigation-drawer/35952939#35952939
-        drawerToggle = ActionBarDrawerToggle(
+        drawerToggle = object : ActionBarDrawerToggle(
             this,
             drawer_layout,
             R.string.nav_app_bar_open_drawer_description,
             R.string.navigation_drawer_close
-        )
+        ) {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                syncState()
+                super.onDrawerSlide(drawerView, slideOffset)
+            }
+        }
 
         drawer_layout.addDrawerListener(drawerToggle)
+        lockDrawer()
     }
 
     private fun setDrawerData(
@@ -242,21 +250,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_about -> {
+                lockDrawer()
                 navController.navigate(R.id.action_global_aboutFragment)
             }
 
             R.id.nav_edit_profile -> {
+                lockDrawer()
                 navController.navigate(R.id.action_global_manageAccount)
             }
 
             R.id.nav_settings -> {
+                lockDrawer()
                 navController.navigate(R.id.action_global_editPreferencesFragment)
             }
 
             R.id.logout -> {
                 auth.signOut()
+                lockDrawer()
                 navController.navigate(R.id.action_global_landingFragment)
             }
         }
+    }
+
+    fun unlockDrawer() {
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
+
+    fun lockDrawer() {
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 }

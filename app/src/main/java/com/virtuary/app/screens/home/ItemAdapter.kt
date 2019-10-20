@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.ListPreloader
 import com.bumptech.glide.RequestBuilder
+import com.virtuary.app.MainActivity
 import com.virtuary.app.MainActivityViewModel
 import com.virtuary.app.MainNavigationDirections
 import com.virtuary.app.R
@@ -55,6 +56,7 @@ class ItemAdapter(
             mainActivityViewModel: MainActivityViewModel
         ) {
             binding.artifactCard.setOnClickListener {
+                (parentFragment.activity as MainActivity).lockDrawer()
                 parentFragment.findNavController()
                     .navigate(MainNavigationDirections.actionGlobalItemFragment(item))
             }

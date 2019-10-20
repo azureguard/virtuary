@@ -74,6 +74,8 @@ class FamilyFragment : Fragment(), SearchView.OnQueryTextListener {
             callback
         )
 
+        (activity as MainActivity).unlockDrawer()
+
         return binding.root
     }
 
@@ -114,6 +116,7 @@ class FamilyFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun memberOnClick(user: User) {
+        (activity as MainActivity).lockDrawer()
         findNavController().navigate(
             FamilyFragmentDirections.actionFamilyFragmentToMemberFragment(
                 user
