@@ -23,7 +23,7 @@ import com.virtuary.app.firebase.FirestoreRepository
 import com.virtuary.app.firebase.Item
 import com.virtuary.app.firebase.StorageRepository
 import com.virtuary.app.util.GlideApp
-import kotlinx.android.synthetic.main.dialog_edit_profile.view.*
+import kotlinx.android.synthetic.main.dialog_standard.view.*
 
 /**
  * Fragment for the family member details
@@ -49,7 +49,7 @@ class MemberFragment : Fragment() {
         setHasOptionsMenu(true)
 
         // Set the name by the argument passed from navigation
-        if (args.user.alias != null && args.user.alias!!.containsKey(mainActivityViewModel.currentUser)) {
+        if (args.user.alias?.containsKey(mainActivityViewModel.currentUser) == true) {
             val name = args.user.alias!![mainActivityViewModel.currentUser]
             binding.memberName.text = name
             viewModel.name.value = name
@@ -140,7 +140,7 @@ class MemberFragment : Fragment() {
     private fun createDialog(context: Context, title: String) {
         val builder = MaterialAlertDialogBuilder(context)
         val viewInflated = LayoutInflater.from(context)
-            .inflate(R.layout.dialog_edit_profile, view as ViewGroup?, false)
+            .inflate(R.layout.dialog_standard, view as ViewGroup?, false)
 
         // Set up the input
         val input = viewInflated.findViewById(R.id.input) as EditText

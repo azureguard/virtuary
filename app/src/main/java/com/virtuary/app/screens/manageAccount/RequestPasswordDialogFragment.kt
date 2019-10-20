@@ -35,7 +35,7 @@ class RequestPasswordDialogFragment : DialogFragment() {
         return activity?.let {
             val builder = MaterialAlertDialogBuilder(it)
             val viewInflated = LayoutInflater.from(context)
-                .inflate(R.layout.dialog_edit_profile, view as ViewGroup?, false)
+                .inflate(R.layout.dialog_standard, view as ViewGroup?, false)
             val input = viewInflated.findViewById(R.id.input) as EditText
             val inputLayout = viewInflated.findViewById(R.id.inputLayout) as TextInputLayout
             inputLayout.hint = getString(R.string.profile_current_password)

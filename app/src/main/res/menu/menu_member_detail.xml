@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-            android:id="@+id/set_alias"
-            android:title="@string/set_alias"
-            app:showAsAction="never" />
+        android:id="@+id/set_alias"
+        android:title="@string/set_alias"
+        app:showAsAction="never" />
     <item
         android:id="@+id/remove_alias"
         android:title="@string/remove_alias"

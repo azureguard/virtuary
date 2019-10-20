@@ -24,7 +24,7 @@ import com.virtuary.app.util.GlideApp
 import com.virtuary.app.util.PhotoDialogFragment
 import com.virtuary.app.util.SelectPhotoHelper
 import com.virtuary.app.util.hideKeyboard
-import kotlinx.android.synthetic.main.dialog_edit_profile.view.*
+import kotlinx.android.synthetic.main.dialog_standard.view.*
 
 class EditProfileDetails : Fragment(),
     PhotoDialogFragment.PhotoDialogListener,
@@ -98,7 +98,7 @@ class EditProfileDetails : Fragment(),
     private fun createDialog(context: Context, title: String) {
         val builder = MaterialAlertDialogBuilder(context)
         val viewInflated = LayoutInflater.from(context)
-            .inflate(R.layout.dialog_edit_profile, view as ViewGroup?, false)
+            .inflate(R.layout.dialog_standard, view as ViewGroup?, false)
 
         // Set up the input
         val input = viewInflated.findViewById(R.id.input) as EditText
