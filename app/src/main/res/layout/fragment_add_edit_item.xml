@@ -30,8 +30,8 @@
 
             <ImageView
                 android:id="@+id/edit_item_image_icon"
-                android:layout_width="84dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/add_item_icon_size"
+                android:layout_height="@dimen/add_item_icon_size"
                 android:adjustViewBounds="true"
                 android:baselineAlignBottom="false"
                 android:contentDescription="@null"

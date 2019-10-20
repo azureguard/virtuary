@@ -40,7 +40,7 @@ class SelectPhotoHelper(
         return imageUri
     }
 
-        fun showPhotoDialog() {
+    fun showPhotoDialog() {
         // Create an instance of the dialog fragment and show it
         parent.hideKeyboard()
         val dialog = PhotoDialogFragment()
