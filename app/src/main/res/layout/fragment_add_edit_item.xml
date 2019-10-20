@@ -22,6 +22,7 @@
                 android:id="@+id/edit_item_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_image_height"
+                android:background="#A3A3A3"
                 android:contentDescription="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -29,8 +30,8 @@
 
             <ImageView
                 android:id="@+id/edit_item_image_icon"
-                android:layout_width="@dimen/add_item_icon_size"
-                android:layout_height="@dimen/add_item_icon_size"
+                android:layout_width="84dp"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:baselineAlignBottom="false"
                 android:contentDescription="@null"
@@ -40,6 +41,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_add_photo" />
+
+            <View
+                android:id="@+id/edit_item_image_change"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/item_image_height"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/edit_item_title_text"

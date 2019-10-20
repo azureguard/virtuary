@@ -13,7 +13,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
@@ -169,7 +168,7 @@ class AddEditItemFragment : Fragment(),
         })
 
         // Show dialog when the add photo is clicked
-        binding.editItemImageIcon.setOnClickListener {
+        binding.editItemImageChange.setOnClickListener {
             selectPhotoHelper.showPhotoDialog()
         }
 
@@ -209,6 +208,7 @@ class AddEditItemFragment : Fragment(),
                     GlideApp.with(context!!).load(it).placeholder(R.drawable.ic_no_image)
                         .centerCrop().into(binding.editItemImage)
                     binding.editItemImageIcon.visibility = View.GONE
+                    binding.editItemImageChange.visibility = View.GONE
                 }
             })
 
