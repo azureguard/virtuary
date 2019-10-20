@@ -109,7 +109,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.string.navigation_drawer_close
         ) {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                syncState()
+                if (!drawer_layout.isDrawerOpen(GravityCompat.START)) {
+                    syncState()
+                }
                 super.onDrawerSlide(drawerView, slideOffset)
             }
         }
@@ -157,7 +159,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // Some required methods to make the action bar runs smoothly
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Sync the animation and the icon of the up or hamburger button
-        if(item.itemId == android.R.id.home) {
+        if (item.itemId == android.R.id.home) {
             drawerToggle.syncState()
         }
 
