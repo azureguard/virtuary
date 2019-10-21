@@ -106,7 +106,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             this,
             callback
         )
-
+        (activity as MainActivity).unlockDrawer()
         return binding.root
     }
 

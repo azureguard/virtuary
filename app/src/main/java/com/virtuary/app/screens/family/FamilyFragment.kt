@@ -8,7 +8,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.ktx.toObjects
@@ -74,6 +73,8 @@ class FamilyFragment : Fragment(), SearchView.OnQueryTextListener {
             callback
         )
 
+        (activity as MainActivity).unlockDrawer()
+
         return binding.root
     }
 
@@ -114,6 +115,7 @@ class FamilyFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun memberOnClick(user: User) {
+        (activity as MainActivity).lockDrawer()
         findNavController().navigate(
             FamilyFragmentDirections.actionFamilyFragmentToMemberFragment(
                 user

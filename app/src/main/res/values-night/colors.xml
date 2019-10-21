@@ -7,4 +7,5 @@
     <color name="colorOnPrimary">#000000</color>
     <color name="colorOnSecondary">#000000</color>
     <color name="overlay">#33ffffff</color>
+    <color name="edit_item_image_bg">#ff222222</color>
 </resources>
