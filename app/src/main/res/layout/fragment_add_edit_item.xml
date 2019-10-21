@@ -22,7 +22,7 @@
                 android:id="@+id/edit_item_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_image_height"
-                android:background="#A3A3A3"
+                android:background="@color/edit_item_image_bg"
                 android:contentDescription="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
