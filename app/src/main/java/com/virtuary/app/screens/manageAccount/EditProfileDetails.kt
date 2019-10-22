@@ -198,4 +198,14 @@ class EditProfileDetails : Fragment(),
     override fun onDialogAuth(password: String, callback: (result: Boolean) -> Unit) {
         viewModel.verifyPassword(password, callback)
     }
+
+    override fun onDestroy() {
+        val list = context?.externalCacheDir?.listFiles { _, name -> name.endsWith(".jpg") }
+        if (list != null) {
+            for (file in list) {
+                file.delete()
+            }
+        }
+        super.onDestroy()
+    }
 }
